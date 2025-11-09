@@ -10,11 +10,17 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
 // Fallback for Bleed component if not available
-let Bleed: any
+type BleedComponent = ({ children }: { children: ReactNode }) => JSX.Element
+
+let Bleed: BleedComponent
 try {
-  Bleed = require('pliny/ui/Bleed').default || require('pliny/ui/Bleed')
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const BleedModule = require('pliny/ui/Bleed')
+  Bleed = BleedModule.default || BleedModule
 } catch {
-  Bleed = ({ children }: { children: ReactNode }) => <div>{children}</div>
+  const FallbackBleed = ({ children }: { children: ReactNode }) => <div>{children}</div>
+  FallbackBleed.displayName = 'FallbackBleed'
+  Bleed = FallbackBleed
 }
 
 interface LayoutProps {
