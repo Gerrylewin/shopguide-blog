@@ -1,27 +1,26 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  title: 'ShopGuide Blog',
+  author: 'Isaac Lewin',
+  headerTitle: 'ShopGuide | Agentic Commerce',
+  description: 'Transform your Shopify store with agentic commerce powered by AI agents. Learn about autonomous shopping experiences, AI-driven customer guidance, and the future of e-commerce.',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://blog.yourshopguide.com',
+  siteRepo: 'https://github.com/Gerrylewin/shopguide-blog',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
-  mastodon: 'https://mastodon.social/@mastodonuser',
-  email: 'address@yoursite.com',
-  github: 'https://github.com',
-  x: 'https://twitter.com/x',
-  // twitter: 'https://twitter.com/Twitter',
-  facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com',
-  linkedin: 'https://www.linkedin.com',
-  threads: 'https://www.threads.net',
-  instagram: 'https://www.instagram.com',
-  medium: 'https://medium.com',
-  bluesky: 'https://bsky.app/',
+  email: 'isaac.lewin@yourshopguide.com',
+  github: '', // ShopGuide doesn't have a public GitHub yet
+  x: 'https://x.com/iliveoffgrid', // Isaac's personal Twitter
+  linkedin: 'https://www.linkedin.com/company/theshopguide', // ShopGuide company LinkedIn
+  instagram: 'https://www.instagram.com/shopguide_ai/', // ShopGuide Instagram
+  facebook: '', // Not provided
+  youtube: '', // Not provided
+  threads: '', // Not provided
+  medium: '', // Not provided
+  bluesky: '', // Not provided
+  mastodon: '', // Not provided
   locale: 'en-US',
   // set to true if you want a navbar fixed to the top
   stickyNav: false,
