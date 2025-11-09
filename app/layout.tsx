@@ -32,6 +32,21 @@ export const metadata: Metadata = {
     template: `%s | ${siteMetadata.title}`,
   },
   description: siteMetadata.description,
+  icons: {
+    icon: [
+      {
+        url: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
+        sizes: 'any',
+      },
+    ],
+    apple: [
+      {
+        url: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
+        sizes: '76x76',
+      },
+    ],
+    shortcut: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
+  },
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
@@ -75,21 +90,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <link
-        rel="apple-touch-icon"
-        sizes="76x76"
-        href={`${basePath}/static/favicons/apple-touch-icon.png`}
+        rel="shortcut icon"
+        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href={`${basePath}/static/favicons/favicon-32x32.png`}
+        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href={`${basePath}/static/favicons/favicon-16x16.png`}
+        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="76x76"
+        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
       />
       <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest`} />
       <link
