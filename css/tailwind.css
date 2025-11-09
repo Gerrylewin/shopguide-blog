@@ -7,34 +7,39 @@
 /* Core theme configuration */
 @theme {
   /* Font families */
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+  /* ShopGuide Typography: Archivo for headings, Questrial for body */
+  --font-sans: var(--font-questrial), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-  /* Colors */
-  /* Copied from https://tailwindcss.com/docs/theme#default-theme-variable-reference */
-  --color-primary-50: oklch(0.971 0.014 343.198);
-  --color-primary-100: oklch(0.948 0.028 342.258);
-  --color-primary-200: oklch(0.899 0.061 343.231);
-  --color-primary-300: oklch(0.823 0.12 346.018);
-  --color-primary-400: oklch(0.718 0.202 349.761);
-  --color-primary-500: oklch(0.656 0.241 354.308);
-  --color-primary-600: oklch(0.592 0.249 0.584);
-  --color-primary-700: oklch(0.525 0.223 3.958);
-  --color-primary-800: oklch(0.459 0.187 3.815);
-  --color-primary-900: oklch(0.408 0.153 2.432);
-  --color-primary-950: oklch(0.284 0.109 3.907);
+  /* ShopGuide Colors */
+  /* Primary color: #2E9AB3 (teal-blue) - RGB(46, 154, 179) */
+  --color-primary-50: oklch(0.96 0.02 200);
+  --color-primary-100: oklch(0.92 0.04 200);
+  --color-primary-200: oklch(0.86 0.07 200);
+  --color-primary-300: oklch(0.78 0.11 200);
+  --color-primary-400: oklch(0.68 0.13 200);
+  --color-primary-500: oklch(0.60 0.15 200); /* #2E9AB3 */
+  --color-primary-600: oklch(0.54 0.16 200);
+  --color-primary-700: oklch(0.48 0.15 200);
+  --color-primary-800: oklch(0.42 0.13 200);
+  --color-primary-900: oklch(0.36 0.11 200);
+  --color-primary-950: oklch(0.30 0.09 200);
 
-  --color-gray-50: oklch(0.985 0.002 247.839);
-  --color-gray-100: oklch(0.967 0.003 264.542);
-  --color-gray-200: oklch(0.928 0.006 264.531);
-  --color-gray-300: oklch(0.872 0.01 258.338);
-  --color-gray-400: oklch(0.707 0.022 261.325);
-  --color-gray-500: oklch(0.551 0.027 264.364);
-  --color-gray-600: oklch(0.446 0.03 256.802);
-  --color-gray-700: oklch(0.373 0.034 259.733);
-  --color-gray-800: oklch(0.278 0.033 256.848);
-  --color-gray-900: oklch(0.21 0.034 264.665);
-  --color-gray-950: oklch(0.13 0.028 261.692);
+  /* Gray scale incorporating ShopGuide colors */
+  /* #E7E7E7 (light gray), #313131 (charcoal), #0D0324 (dark navy) */
+  --color-gray-50: oklch(0.99 0 0);
+  --color-gray-100: oklch(0.96 0 0);
+  --color-gray-200: oklch(0.91 0 0); /* #E7E7E7 - RGB(231, 231, 231) */
+  --color-gray-300: oklch(0.86 0 0);
+  --color-gray-400: oklch(0.70 0 0);
+  --color-gray-500: oklch(0.55 0 0);
+  --color-gray-600: oklch(0.45 0 0);
+  --color-gray-700: oklch(0.22 0 0); /* #313131 - RGB(49, 49, 49) */
+  --color-gray-800: oklch(0.16 0 0);
+  --color-gray-900: oklch(0.12 0 0);
+  --color-gray-950: oklch(0.06 0.01 280); /* #0D0324 - RGB(13, 3, 36) */
 
   /* Line heights */
   --line-height-11: 2.75rem;
@@ -65,6 +70,14 @@
     border-color: var(--color-gray-200, currentColor);
   }
 
+  body {
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+
   a,
   button {
     outline-color: var(--color-primary-500);
@@ -80,6 +93,7 @@
 
 @layer utilities {
   .prose {
+    font-family: var(--font-sans);
     & a {
       color: var(--color-primary-500);
       &:hover {
@@ -89,7 +103,8 @@
         color: var(--color-primary-400);
       }
     }
-    & :where(h1, h2) {
+    & :where(h1, h2, h3, h4, h5, h6) {
+      font-family: var(--font-heading);
       font-weight: 700;
       letter-spacing: var(--tracking-tight);
     }
@@ -102,6 +117,7 @@
   }
 
   .prose-invert {
+    font-family: var(--font-sans);
     & a {
       color: var(--color-primary-500);
       &:hover {
@@ -112,6 +128,7 @@
       }
     }
     & :where(h1, h2, h3, h4, h5, h6) {
+      font-family: var(--font-heading);
       color: var(--color-gray-100);
     }
   }
