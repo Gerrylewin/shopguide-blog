@@ -33,9 +33,12 @@ export const metadata: Metadata = {
   },
   description: siteMetadata.description,
   icons: {
-    icon: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
-    apple: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
-    shortcut: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
+    icon: [
+      { url: '/static/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/static/favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/static/favicons/apple-touch-icon.png',
+    shortcut: '/static/favicons/favicon.ico',
   },
   openGraph: {
     title: siteMetadata.title,
@@ -79,11 +82,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${questrial.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      <link rel="shortcut icon" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
-      <link rel="icon" type="image/png" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
-      <link rel="apple-touch-icon" sizes="76x76" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
+      <link rel="shortcut icon" href={`${basePath}/static/favicons/favicon.ico`} />
+      <link rel="icon" type="image/png" href={`${basePath}/static/favicons/favicon-32x32.png`} />
+      <link rel="icon" type="image/png" sizes="32x32" href={`${basePath}/static/favicons/favicon-32x32.png`} />
+      <link rel="icon" type="image/png" sizes="16x16" href={`${basePath}/static/favicons/favicon-16x16.png`} />
+      <link rel="apple-touch-icon" sizes="180x180" href={`${basePath}/static/favicons/apple-touch-icon.png`} />
       <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest`} />
       <link
         rel="mask-icon"

@@ -19,7 +19,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="mr-3">
             <NextImage
-              src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
+              src="/static/images/shopguide-logo.png"
               alt="ShopGuide Logo"
               width={54}
               height={44}
