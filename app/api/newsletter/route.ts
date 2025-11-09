@@ -2,7 +2,7 @@ import { NewsletterAPI } from 'pliny/newsletter'
 import siteMetadata from '@/data/siteMetadata'
 import { NextRequest, NextResponse } from 'next/server'
 
-export const dynamic = 'force-static'
+export const dynamic = 'force-dynamic'
 
 const GHL_WEBHOOK_URL =
   'https://services.leadconnectorhq.com/hooks/YwFixzedrximlLRmcQo3/webhook-trigger/168165f1-975c-4127-b2be-01d3eac8856f'
@@ -21,9 +21,19 @@ async function handler(req: NextRequest) {
 
   // For POST requests, process the subscription first
   if (req.method === 'POST') {
+    let bodyText: string
     try {
       // Read the body as text first to preserve it
-      const bodyText = await req.text()
+      bodyText = await req.text()
+    } catch (error) {
+      // If we can't read the body, return an error
+      return NextResponse.json(
+        { error: 'Failed to read request body' },
+        { status: 400 }
+      )
+    }
+
+    try {
       const body = JSON.parse(bodyText)
       const email = body.email
 
@@ -58,10 +68,28 @@ async function handler(req: NextRequest) {
         }
       }
 
+      // Ensure we always return a valid response
+      if (!response) {
+        return NextResponse.json({ error: 'No response from newsletter service' }, { status: 500 })
+      }
+
       return response
     } catch (error) {
-      // If there's an error, still try the original handler
-      return originalHandler(req)
+      // If there's an error parsing or processing, try the original handler with the body we have
+      try {
+        const newRequest = new NextRequest(req.url, {
+          method: 'POST',
+          headers: req.headers,
+          body: bodyText,
+        })
+        return originalHandler(newRequest)
+      } catch (fallbackError) {
+        // If all else fails, return a proper error response
+        return NextResponse.json(
+          { error: 'Failed to process newsletter subscription' },
+          { status: 500 }
+        )
+      }
     }
   }
 
