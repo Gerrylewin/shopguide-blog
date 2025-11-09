@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import Image from '@/components/Image'
-import Bleed from 'pliny/ui/Bleed'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
@@ -10,6 +9,14 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
+// Fallback for Bleed component if not available
+let Bleed: any
+try {
+  Bleed = require('pliny/ui/Bleed').default || require('pliny/ui/Bleed')
+} catch {
+  Bleed = ({ children }: { children: ReactNode }) => <div>{children}</div>
+}
+
 interface LayoutProps {
   content: CoreContent<Blog>
   children: ReactNode
@@ -17,7 +24,7 @@ interface LayoutProps {
   prev?: { path: string; title: string }
 }
 
-export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
+export default function PostBanner({ content, next, prev, children }: LayoutProps) {
   const { slug, title, images } = content
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'

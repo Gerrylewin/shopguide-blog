@@ -104,7 +104,13 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     }
   })
 
-  const Layout = layouts[post.layout || defaultLayout]
+  const layoutName = post.layout || defaultLayout
+  const Layout = layouts[layoutName]
+
+  if (!Layout) {
+    console.error(`Layout "${layoutName}" not found. Available layouts:`, Object.keys(layouts))
+    return notFound()
+  }
 
   return (
     <>

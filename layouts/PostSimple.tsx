@@ -16,7 +16,7 @@ interface LayoutProps {
   prev?: { path: string; title: string }
 }
 
-export default function PostLayout({ content, next, prev, children }: LayoutProps) {
+export default function PostSimple({ content, next, prev, children }: LayoutProps) {
   const { path, slug, date, title } = content
 
   return (
