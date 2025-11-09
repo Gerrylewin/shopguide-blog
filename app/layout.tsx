@@ -33,18 +33,8 @@ export const metadata: Metadata = {
   },
   description: siteMetadata.description,
   icons: {
-    icon: [
-      {
-        url: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
-        sizes: 'any',
-      },
-    ],
-    apple: [
-      {
-        url: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
-        sizes: '76x76',
-      },
-    ],
+    icon: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
+    apple: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
     shortcut: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png',
   },
   openGraph: {
@@ -89,32 +79,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${questrial.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      <link
-        rel="shortcut icon"
-        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="76x76"
-        href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png"
-      />
+      <link rel="shortcut icon" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
+      <link rel="icon" type="image/png" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
+      <link rel="apple-touch-icon" sizes="76x76" href="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c81b77350fd16d57f99bd.png" />
       <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest`} />
       <link
         rel="mask-icon"
