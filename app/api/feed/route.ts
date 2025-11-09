@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server'
 import siteMetadata from '@/data/siteMetadata'
 import { allBlogs } from 'contentlayer/generated'
+import type { Blog } from 'contentlayer/generated'
 import { sortPosts } from 'pliny/utils/contentlayer'
 import { escape } from 'pliny/utils/htmlEscaper.js'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600 // Revalidate every hour
 
-function generateRssItem(config: typeof siteMetadata, post: any) {
+function generateRssItem(config: typeof siteMetadata, post: Blog) {
   return `
   <item>
     <guid>${config.siteUrl}/blog/${post.slug}</guid>
@@ -21,7 +22,7 @@ function generateRssItem(config: typeof siteMetadata, post: any) {
 `
 }
 
-function generateRss(config: typeof siteMetadata, posts: any[]) {
+function generateRss(config: typeof siteMetadata, posts: Blog[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -58,7 +59,7 @@ export async function GET() {
         'Content-Type': 'application/rss+xml; charset=utf-8',
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400, max-age=3600',
         'X-Content-Type-Options': 'nosniff',
-        'Vary': 'Accept-Encoding',
+        Vary: 'Accept-Encoding',
       },
     })
   } catch (error) {
@@ -66,4 +67,3 @@ export async function GET() {
     return new NextResponse('Error generating RSS feed', { status: 500 })
   }
 }
-

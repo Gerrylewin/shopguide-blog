@@ -8,7 +8,8 @@ import SearchButton from './SearchButton'
 import NextImage from 'next/image'
 
 const Header = () => {
-  let headerClass = 'flex items-center w-full justify-between py-10 backdrop-blur-xl bg-white/70 dark:bg-gray-950/70 border-b border-white/20 dark:border-gray-800/20 shadow-sm'
+  let headerClass =
+    'flex items-center w-full justify-between py-10 backdrop-blur-xl bg-white/70 dark:bg-gray-950/70 border-b border-white/20 dark:border-gray-800/20 shadow-sm'
   if (siteMetadata.stickyNav) {
     headerClass += ' sticky top-0 z-50'
   }
@@ -16,7 +17,7 @@ const Header = () => {
   return (
     <header className={headerClass}>
       <Link href="https://yourshopguide.com" aria-label={siteMetadata.headerTitle}>
-        <div className="flex items-center -ml-4 sm:-ml-6">
+        <div className="-ml-4 flex items-center sm:-ml-6">
           <div className="mr-5">
             <NextImage
               src="/static/images/shopguide-logo.png"
@@ -34,7 +35,7 @@ const Header = () => {
           )}
         </div>
       </Link>
-      <div className="flex items-center space-x-4 leading-5 sm:space-x-6 ml-8">
+      <div className="ml-8 flex items-center space-x-4 leading-5 sm:space-x-6">
         <div className="no-scrollbar hidden max-w-40 items-center gap-x-4 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
           {headerNavLinks
             .filter((link) => link.href !== '/')
