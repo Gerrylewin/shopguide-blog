@@ -6,11 +6,12 @@ import Image from './Image'
 import CustomLink from './Link'
 import TableWrapper from './TableWrapper'
 
+// Ensure all components are defined to prevent "undefined component" errors
 export const components: MDXComponents = {
-  Image,
-  TOCInline,
-  a: CustomLink,
-  pre: Pre,
-  table: TableWrapper,
-  BlogNewsletterForm,
+  Image: Image || 'img',
+  TOCInline: TOCInline || (() => null),
+  a: CustomLink || 'a',
+  pre: Pre || 'pre',
+  table: TableWrapper || 'table',
+  BlogNewsletterForm: BlogNewsletterForm || (() => null),
 }
