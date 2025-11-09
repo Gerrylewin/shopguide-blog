@@ -12,11 +12,13 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@algolia/client-search": "^5.43.0",
     "@headlessui/react": "2.2.0",
     "@next/bundle-analyzer": "15.2.4",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/postcss": "^4.0.5",
     "@tailwindcss/typography": "^0.5.15",
+    "algoliasearch": "^5.43.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "contentlayer2": "0.5.5",
     "esbuild": "0.25.2",
@@ -43,6 +45,7 @@
     "remark-gfm": "^4.0.0",
     "remark-github-blockquote-alert": "^1.2.1",
     "remark-math": "^6.0.0",
+    "search-insights": "^2.17.3",
     "tailwindcss": "^4.0.5",
     "unist-util-visit": "^5.0.0"
   },
