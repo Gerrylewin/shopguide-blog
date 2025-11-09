@@ -43,9 +43,16 @@ export async function generateMetadata(props: {
   if (post.images) {
     imageList = typeof post.images === 'string' ? [post.images] : post.images
   }
-  const ogImages = imageList.map((img) => {
+  // Ensure all images are absolute URLs
+  const absoluteImageList = imageList.map((img) => {
+    if (img && img.includes('http')) {
+      return img
+    }
+    return siteMetadata.siteUrl + img
+  })
+  const ogImages = absoluteImageList.map((img) => {
     return {
-      url: img && img.includes('http') ? img : siteMetadata.siteUrl + img,
+      url: img,
     }
   })
 
@@ -68,7 +75,7 @@ export async function generateMetadata(props: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary,
-      images: imageList,
+      images: absoluteImageList,
     },
   }
 }

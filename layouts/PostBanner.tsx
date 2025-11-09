@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, ReactElement } from 'react'
 import Image from '@/components/Image'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
@@ -10,7 +10,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
 // Fallback for Bleed component if not available
-type BleedComponent = ({ children }: { children: ReactNode }) => JSX.Element
+type BleedComponent = ({ children }: { children: ReactNode }) => ReactElement
 
 let Bleed: BleedComponent
 try {

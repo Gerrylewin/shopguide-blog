@@ -9,7 +9,7 @@ const siteMetadata = {
   siteUrl: 'https://blog.yourshopguide.com',
   siteRepo: 'https://github.com/Gerrylewin/shopguide-blog',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  socialBanner: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/6910dad5d4e8027467642471.png',
   email: 'isaac.lewin@yourshopguide.com',
   github: '', // ShopGuide doesn't have a public GitHub yet
   x: 'https://x.com/iliveoffgrid', // Isaac's personal Twitter

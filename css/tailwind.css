@@ -72,6 +72,32 @@
 
   body {
     font-family: var(--font-sans);
+    background-image: url('https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c818a006d9050b5fa2fbd.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  body.dark {
+    background-image: url('https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690c8172006d905070fa2baf.png');
+  }
+
+  body.dark::before {
+    background: rgba(13, 3, 36, 0.85);
   }
 
   h1, h2, h3, h4, h5, h6 {
