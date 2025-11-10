@@ -48,14 +48,24 @@ export default function Comments({ slug }: { slug: string }) {
   useEffect(() => {
     if (loadComments && siteMetadata.comments?.provider === 'giscus') {
       const giscusConfig = siteMetadata.comments.giscusConfig
-      if (
-        !giscusConfig?.repo ||
-        !giscusConfig?.repositoryId ||
-        !giscusConfig?.category ||
-        !giscusConfig?.categoryId
-      ) {
+      
+      // Debug: Log the actual values being loaded
+      console.log('Giscus Config:', {
+        repo: giscusConfig?.repo,
+        repositoryId: giscusConfig?.repositoryId,
+        category: giscusConfig?.category,
+        categoryId: giscusConfig?.categoryId,
+      })
+      
+      const missingVars: string[] = []
+      if (!giscusConfig?.repo) missingVars.push('NEXT_PUBLIC_GISCUS_REPO')
+      if (!giscusConfig?.repositoryId) missingVars.push('NEXT_PUBLIC_GISCUS_REPOSITORY_ID')
+      if (!giscusConfig?.category) missingVars.push('NEXT_PUBLIC_GISCUS_CATEGORY')
+      if (!giscusConfig?.categoryId) missingVars.push('NEXT_PUBLIC_GISCUS_CATEGORY_ID')
+      
+      if (missingVars.length > 0) {
         setError(
-          'Comments are not properly configured. Please check your environment variables (NEXT_PUBLIC_GISCUS_REPO, NEXT_PUBLIC_GISCUS_REPOSITORY_ID, NEXT_PUBLIC_GISCUS_CATEGORY, NEXT_PUBLIC_GISCUS_CATEGORY_ID).'
+          `Comments are not properly configured. Missing or empty environment variables: ${missingVars.join(', ')}. Please check your .env.local file and restart your Next.js dev server.`
         )
       }
     }
