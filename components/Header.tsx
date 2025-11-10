@@ -47,7 +47,7 @@ const Header = () => {
             Home
           </Link>
           {headerNavLinks
-            .filter((link) => link.href !== '/')
+            .filter((link) => link.href !== '/' && link.href !== '/tags')
             .map((link) => (
               <Link
                 key={link.title}
