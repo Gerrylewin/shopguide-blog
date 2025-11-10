@@ -15,7 +15,7 @@ const Header = () => {
 
   return (
     <header className={headerClass}>
-      <div className="flex items-center">
+      <div className="flex items-center -ml-4 sm:-ml-6 xl:ml-0">
         <Link href="https://yourshopguide.com" aria-label={siteMetadata.headerTitle}>
           <div className="flex items-center">
             <div className="mr-5 flex-shrink-0">
@@ -38,10 +38,11 @@ const Header = () => {
           </div>
         </Link>
       </div>
-      <div className="ml-8 flex items-center space-x-6 leading-5 sm:ml-12 md:ml-16">
+      <div className="ml-12 flex items-center space-x-6 leading-5 sm:ml-16 md:ml-20">
         <div className="no-scrollbar hidden items-center gap-x-6 overflow-x-auto sm:flex md:gap-x-8">
           <Link
             href="https://blog.yourshopguide.com"
+            target="_self"
             className="hover:text-primary-500 dark:hover:text-primary-400 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
           >
             Home
