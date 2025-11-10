@@ -9,7 +9,7 @@ import NextImage from 'next/image'
 
 const Header = () => {
   let headerClass =
-    'flex items-center w-full justify-between py-10 backdrop-blur-xl bg-white/70 dark:bg-gray-950/70 border-b border-white/20 dark:border-gray-800/20 shadow-sm'
+    'flex items-center w-full justify-between py-10 backdrop-blur-3xl bg-white/30 dark:bg-gray-950/30 border-b border-white/30 dark:border-gray-800/30 shadow-lg'
   if (siteMetadata.stickyNav) {
     headerClass += ' sticky top-0 z-50'
   }
@@ -20,7 +20,7 @@ const Header = () => {
         <div className="-ml-4 flex items-center sm:-ml-6">
           <div className="mr-5">
             <NextImage
-              src="/static/images/shopguide-logo.png"
+              src="/static/images/shopguide-logo-new.png"
               alt="ShopGuide Logo"
               width={54}
               height={44}

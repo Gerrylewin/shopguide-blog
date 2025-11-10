@@ -27,10 +27,7 @@ async function handler(req: NextRequest) {
       bodyText = await req.text()
     } catch (error) {
       // If we can't read the body, return an error
-      return NextResponse.json(
-        { error: 'Failed to read request body' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Failed to read request body' }, { status: 400 })
     }
 
     try {
