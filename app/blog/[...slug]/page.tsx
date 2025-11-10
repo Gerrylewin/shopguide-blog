@@ -119,7 +119,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     }
   })
 
-  const layoutName = post.layout || defaultLayout
+  const layoutName = (post.layout || defaultLayout).trim()
   const Layout = layouts[layoutName]
 
   if (!Layout) {
