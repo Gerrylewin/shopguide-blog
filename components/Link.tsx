@@ -12,7 +12,9 @@ const CustomLink = ({
   const isAnchorLink = href && href.startsWith('#')
 
   if (isInternalLink) {
-    return <Link className="break-words" href={href} {...rest} />
+    // Explicitly remove target for internal links to ensure same-tab navigation
+    const { target: _, ...internalRest } = rest as any
+    return <Link className="break-words" href={href} {...internalRest} />
   }
 
   if (isAnchorLink) {

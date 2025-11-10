@@ -199,3 +199,24 @@ input:-webkit-autofill:focus {
   display: inline-block;
   vertical-align: middle;
 }
+
+/* KBar search input - use brand primary color for border */
+[data-kbar] input,
+.kbar input,
+[data-kbar] input:focus {
+  border-color: var(--color-primary-500) !important;
+  outline-color: var(--color-primary-500) !important;
+}
+
+/* Target KBar input specifically */
+[data-kbar] input[type="text"],
+[data-kbar] input[type="search"] {
+  border-color: var(--color-primary-500) !important;
+}
+
+[data-kbar] input:focus,
+[data-kbar] input:focus-visible {
+  border-color: var(--color-primary-500) !important;
+  outline-color: var(--color-primary-500) !important;
+  box-shadow: 0 0 0 1px var(--color-primary-500) !important;
+}
