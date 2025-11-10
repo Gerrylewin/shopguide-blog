@@ -15,27 +15,35 @@ const Header = () => {
 
   return (
     <header className={headerClass}>
-      <Link href="https://yourshopguide.com" aria-label={siteMetadata.headerTitle}>
-        <div className="-ml-4 flex items-center sm:-ml-6">
-          <div className="mr-5 flex-shrink-0">
-            <NextImage
-              src="/static/images/shopguide-logo-new.png"
-              alt="ShopGuide Logo"
-              width={54}
-              height={44}
-              className="block"
-              priority
-            />
-          </div>
-          {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-2xl font-semibold whitespace-nowrap sm:block">
-              {siteMetadata.headerTitle}
+      <div className="flex items-center">
+        <Link href="https://yourshopguide.com" aria-label={siteMetadata.headerTitle}>
+          <div className="-ml-6 flex items-center sm:-ml-8">
+            <div className="mr-5 flex-shrink-0">
+              <NextImage
+                src="/static/images/shopguide-logo-new.png"
+                alt="ShopGuide Logo"
+                width={54}
+                height={44}
+                className="block"
+                priority
+              />
             </div>
-          ) : (
-            siteMetadata.headerTitle
-          )}
-        </div>
-      </Link>
+            {typeof siteMetadata.headerTitle === 'string' ? (
+              <div className="hidden h-6 text-2xl font-semibold whitespace-nowrap sm:block">
+                {siteMetadata.headerTitle}
+              </div>
+            ) : (
+              siteMetadata.headerTitle
+            )}
+          </div>
+        </Link>
+        <Link
+          href="https://blog.yourshopguide.com"
+          className="hidden ml-6 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100 hover:text-primary-500 dark:hover:text-primary-400 sm:block"
+        >
+          Home
+        </Link>
+      </div>
       <div className="ml-16 flex items-center space-x-6 leading-5 sm:ml-20 md:ml-24 lg:ml-32 xl:space-x-8">
         <div className="no-scrollbar hidden items-center gap-x-6 overflow-x-auto sm:flex md:gap-x-8 lg:gap-x-10">
           {headerNavLinks
