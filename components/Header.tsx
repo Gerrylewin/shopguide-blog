@@ -17,7 +17,7 @@ const Header = () => {
     <header className={headerClass}>
       <div className="flex items-center">
         <Link href="https://yourshopguide.com" aria-label={siteMetadata.headerTitle}>
-          <div className="-ml-6 flex items-center sm:-ml-8">
+          <div className="flex items-center">
             <div className="mr-5 flex-shrink-0">
               <NextImage
                 src="/static/images/shopguide-logo-new.png"
@@ -37,22 +37,22 @@ const Header = () => {
             )}
           </div>
         </Link>
-        <Link
-          href="https://blog.yourshopguide.com"
-          className="hover:text-primary-500 dark:hover:text-primary-400 ml-6 hidden font-medium whitespace-nowrap text-gray-900 sm:block dark:text-gray-100"
-        >
-          Home
-        </Link>
       </div>
-      <div className="ml-16 flex items-center space-x-6 leading-5 sm:ml-20 md:ml-24 lg:ml-32 xl:space-x-8">
-        <div className="no-scrollbar hidden items-center gap-x-6 overflow-x-auto sm:flex md:gap-x-8 lg:gap-x-10">
+      <div className="ml-8 flex items-center space-x-6 leading-5 sm:ml-12 md:ml-16">
+        <div className="no-scrollbar hidden items-center gap-x-6 overflow-x-auto sm:flex md:gap-x-8">
+          <Link
+            href="https://blog.yourshopguide.com"
+            className="hover:text-primary-500 dark:hover:text-primary-400 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
+          >
+            Home
+          </Link>
           {headerNavLinks
             .filter((link) => link.href !== '/')
             .map((link) => (
               <Link
                 key={link.title}
                 href={link.href}
-                className="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
+                className="hover:text-primary-500 dark:hover:text-primary-400 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
               >
                 {link.title}
               </Link>
