@@ -86,9 +86,7 @@ export async function generateMetadata(props: {
 export const generateStaticParams = async () => {
   // Filter out drafts in production
   const isProduction = process.env.NODE_ENV === 'production'
-  const publishedPosts = isProduction
-    ? allBlogs.filter((p) => p.draft !== true)
-    : allBlogs
+  const publishedPosts = isProduction ? allBlogs.filter((p) => p.draft !== true) : allBlogs
   return publishedPosts.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
 }
 
