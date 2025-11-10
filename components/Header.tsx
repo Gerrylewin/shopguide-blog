@@ -39,7 +39,7 @@ const Header = () => {
         </Link>
         <Link
           href="https://blog.yourshopguide.com"
-          className="hidden ml-6 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100 hover:text-primary-500 dark:hover:text-primary-400 sm:block"
+          className="hover:text-primary-500 dark:hover:text-primary-400 ml-6 hidden font-medium whitespace-nowrap text-gray-900 sm:block dark:text-gray-100"
         >
           Home
         </Link>

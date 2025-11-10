@@ -9,10 +9,7 @@ interface ErrorBoundaryState {
   error: Error | null
 }
 
-class CommentsErrorBoundary extends Component<
-  { children: ReactNode },
-  ErrorBoundaryState
-> {
+class CommentsErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryState> {
   constructor(props: { children: ReactNode }) {
     super(props)
     this.state = { hasError: false, error: null }
@@ -88,7 +85,7 @@ export default function Comments({ slug }: { slug: string }) {
       ) : (
         <button
           onClick={() => setLoadComments(true)}
-          className="rounded-lg bg-primary-500 px-4 py-2 text-white transition-colors hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700"
+          className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 rounded-lg px-4 py-2 text-white transition-colors"
         >
           Load Comments
         </button>
