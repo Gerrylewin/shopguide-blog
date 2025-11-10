@@ -18,12 +18,14 @@ const Header = () => {
     <header className={headerClass}>
       <Link href="https://yourshopguide.com" aria-label={siteMetadata.headerTitle}>
         <div className="-ml-4 flex items-center sm:-ml-6">
-          <div className="mr-5">
+          <div className="mr-5 flex-shrink-0">
             <NextImage
               src="/static/images/shopguide-logo-new.png"
               alt="ShopGuide Logo"
               width={54}
               height={44}
+              className="block"
+              priority
             />
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
