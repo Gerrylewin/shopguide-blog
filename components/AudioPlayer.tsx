@@ -90,18 +90,21 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
       </div>
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <audio ref={audioRef} src={src} preload="metadata" />
       <div className="space-y-4">
         {/* Progress Bar */}
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600 dark:text-gray-400">{formatTime(currentTime)}</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">
+            {formatTime(currentTime)}
+          </span>
           <input
             type="range"
             min="0"
             max={duration || 0}
             value={currentTime}
             onChange={handleSeek}
-            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-primary-500"
+            className="accent-primary-500 h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
           />
           <span className="text-sm text-gray-600 dark:text-gray-400">{formatTime(duration)}</span>
         </div>
@@ -110,7 +113,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
         <div className="flex items-center justify-center gap-4">
           <button
             onClick={rewind}
-            className="p-2 rounded-full text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors"
+            className="rounded-full p-2 text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
             aria-label="Rewind 10 seconds"
             title="Rewind 10 seconds"
           >
@@ -120,7 +123,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -132,7 +135,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
 
           <button
             onClick={togglePlayPause}
-            className="p-3 rounded-full bg-primary-500 text-white hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 transition-colors"
+            className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 rounded-full p-3 text-white transition-colors"
             aria-label={isPlaying ? 'Pause' : 'Play'}
             title={isPlaying ? 'Pause' : 'Play'}
           >
@@ -143,7 +146,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-8 h-8"
+                className="h-8 w-8"
               >
                 <path
                   strokeLinecap="round"
@@ -158,7 +161,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-8 h-8"
+                className="h-8 w-8"
               >
                 <path
                   strokeLinecap="round"
@@ -171,7 +174,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
 
           <button
             onClick={fastForward}
-            className="p-2 rounded-full text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors"
+            className="rounded-full p-2 text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
             aria-label="Fast forward 10 seconds"
             title="Fast forward 10 seconds"
           >
@@ -181,7 +184,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -197,9 +200,9 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
           <span className="text-sm text-gray-600 dark:text-gray-400">Speed:</span>
           <button
             onClick={() => handleSpeedChange(1)}
-            className={`px-3 py-1 rounded text-sm transition-colors ${
+            className={`rounded px-3 py-1 text-sm transition-colors ${
               playbackRate === 1
-                ? 'bg-primary-500 text-white dark:bg-primary-600'
+                ? 'dark:bg-primary-600 bg-primary-500 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
             }`}
           >
@@ -207,9 +210,9 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
           </button>
           <button
             onClick={() => handleSpeedChange(2)}
-            className={`px-3 py-1 rounded text-sm transition-colors ${
+            className={`rounded px-3 py-1 text-sm transition-colors ${
               playbackRate === 2
-                ? 'bg-primary-500 text-white dark:bg-primary-600'
+                ? 'dark:bg-primary-600 bg-primary-500 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
             }`}
           >
@@ -217,9 +220,9 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
           </button>
           <button
             onClick={() => handleSpeedChange(4)}
-            className={`px-3 py-1 rounded text-sm transition-colors ${
+            className={`rounded px-3 py-1 text-sm transition-colors ${
               playbackRate === 4
-                ? 'bg-primary-500 text-white dark:bg-primary-600'
+                ? 'dark:bg-primary-600 bg-primary-500 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
             }`}
           >
@@ -230,4 +233,3 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
     </div>
   )
 }
-
