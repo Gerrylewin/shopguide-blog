@@ -31,20 +31,22 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
       if (audioError) {
         console.error('Audio error code:', audioError.code)
         console.error('Audio error message:', audioError.message)
-        
+
         let errorMessage = 'Failed to load audio file.'
         switch (audioError.code) {
           case MediaError.MEDIA_ERR_ABORTED:
             errorMessage = 'Audio loading was aborted.'
             break
           case MediaError.MEDIA_ERR_NETWORK:
-            errorMessage = 'Network error while loading audio. Please check your connection and ensure CORS headers are configured on the server.'
+            errorMessage =
+              'Network error while loading audio. Please check your connection and ensure CORS headers are configured on the server.'
             break
           case MediaError.MEDIA_ERR_DECODE:
             errorMessage = 'Audio file could not be decoded. The file format may not be supported.'
             break
           case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            errorMessage = 'Audio format not supported or file not found. Please check the file URL and format.'
+            errorMessage =
+              'Audio format not supported or file not found. Please check the file URL and format.'
             break
         }
         setError(errorMessage)
@@ -162,14 +164,13 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
           <p className="font-semibold">Audio Error</p>
           <p className="mt-1">{error}</p>
           <p className="mt-2 text-xs">
-            <strong>Note:</strong> If you're seeing a CORS error, you need to configure CORS headers on your R2.dev bucket to allow requests from your domain.
+            <strong>Note:</strong> If you're seeing a CORS error, you need to configure CORS headers
+            on your R2.dev bucket to allow requests from your domain.
           </p>
         </div>
       )}
       {isLoading && !error && (
-        <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-          Loading audio...
-        </div>
+        <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">Loading audio...</div>
       )}
       <div className="space-y-4">
         {/* Progress Bar */}
