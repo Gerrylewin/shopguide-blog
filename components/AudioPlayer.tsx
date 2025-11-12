@@ -13,6 +13,8 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [playbackRate, setPlaybackRate] = useState(1)
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -25,14 +27,38 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
     const handlePause = () => setIsPlaying(false)
     const handleError = (e: Event) => {
       console.error('Audio error:', e)
-      const error = audio.error
-      if (error) {
-        console.error('Audio error code:', error.code)
-        console.error('Audio error message:', error.message)
+      const audioError = audio.error
+      if (audioError) {
+        console.error('Audio error code:', audioError.code)
+        console.error('Audio error message:', audioError.message)
+        
+        let errorMessage = 'Failed to load audio file.'
+        switch (audioError.code) {
+          case MediaError.MEDIA_ERR_ABORTED:
+            errorMessage = 'Audio loading was aborted.'
+            break
+          case MediaError.MEDIA_ERR_NETWORK:
+            errorMessage = 'Network error while loading audio. Please check your connection and ensure CORS headers are configured on the server.'
+            break
+          case MediaError.MEDIA_ERR_DECODE:
+            errorMessage = 'Audio file could not be decoded. The file format may not be supported.'
+            break
+          case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+            errorMessage = 'Audio format not supported or file not found. Please check the file URL and format.'
+            break
+        }
+        setError(errorMessage)
+        setIsLoading(false)
       }
     }
     const handleCanPlay = () => {
       console.log('Audio can play')
+      setError(null)
+      setIsLoading(false)
+    }
+    const handleLoadStart = () => {
+      setIsLoading(true)
+      setError(null)
     }
 
     audio.addEventListener('timeupdate', updateTime)
@@ -42,6 +68,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
     audio.addEventListener('pause', handlePause)
     audio.addEventListener('error', handleError)
     audio.addEventListener('canplay', handleCanPlay)
+    audio.addEventListener('loadstart', handleLoadStart)
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime)
@@ -51,6 +78,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
       audio.removeEventListener('pause', handlePause)
       audio.removeEventListener('error', handleError)
       audio.removeEventListener('canplay', handleCanPlay)
+      audio.removeEventListener('loadstart', handleLoadStart)
     }
   }, [])
 
@@ -65,6 +93,8 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
     if (!audio) return
 
     // Reload the audio when src changes
+    setIsLoading(true)
+    setError(null)
     audio.load()
   }, [src])
 
@@ -127,6 +157,20 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
         <source src={src} type="audio/mp4" />
         Your browser does not support the audio element.
       </audio>
+      {error && (
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
+          <p className="font-semibold">Audio Error</p>
+          <p className="mt-1">{error}</p>
+          <p className="mt-2 text-xs">
+            <strong>Note:</strong> If you're seeing a CORS error, you need to configure CORS headers on your R2.dev bucket to allow requests from your domain.
+          </p>
+        </div>
+      )}
+      {isLoading && !error && (
+        <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+          Loading audio...
+        </div>
+      )}
       <div className="space-y-4">
         {/* Progress Bar */}
         <div className="flex items-center gap-4">
