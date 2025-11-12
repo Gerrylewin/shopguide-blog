@@ -5,6 +5,7 @@ import type { MDXComponents } from 'mdx/types'
 import Image from './Image'
 import CustomLink from './Link'
 import TableWrapper from './TableWrapper'
+import AudioPlayer from './AudioPlayer'
 
 // Ensure all components are defined to prevent "undefined component" errors
 export const components: MDXComponents = {
@@ -14,4 +15,5 @@ export const components: MDXComponents = {
   pre: Pre || 'pre',
   table: TableWrapper || 'table',
   BlogNewsletterForm: BlogNewsletterForm || (() => null),
+  AudioPlayer: AudioPlayer || (() => null),
 }
