@@ -23,12 +23,25 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
     const handleEnded = () => setIsPlaying(false)
     const handlePlay = () => setIsPlaying(true)
     const handlePause = () => setIsPlaying(false)
+    const handleError = (e: Event) => {
+      console.error('Audio error:', e)
+      const error = audio.error
+      if (error) {
+        console.error('Audio error code:', error.code)
+        console.error('Audio error message:', error.message)
+      }
+    }
+    const handleCanPlay = () => {
+      console.log('Audio can play')
+    }
 
     audio.addEventListener('timeupdate', updateTime)
     audio.addEventListener('loadedmetadata', updateDuration)
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('play', handlePlay)
     audio.addEventListener('pause', handlePause)
+    audio.addEventListener('error', handleError)
+    audio.addEventListener('canplay', handleCanPlay)
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime)
@@ -36,6 +49,8 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
       audio.removeEventListener('ended', handleEnded)
       audio.removeEventListener('play', handlePlay)
       audio.removeEventListener('pause', handlePause)
+      audio.removeEventListener('error', handleError)
+      audio.removeEventListener('canplay', handleCanPlay)
     }
   }, [])
 
@@ -44,6 +59,14 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
       audioRef.current.playbackRate = playbackRate
     }
   }, [playbackRate])
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    // Reload the audio when src changes
+    audio.load()
+  }, [src])
 
   const togglePlayPause = async () => {
     const audio = audioRef.current
@@ -100,7 +123,10 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
       </div>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <audio ref={audioRef} src={src} preload="metadata" />
+      <audio ref={audioRef} preload="metadata" crossOrigin="anonymous">
+        <source src={src} type="audio/mp4" />
+        Your browser does not support the audio element.
+      </audio>
       <div className="space-y-4">
         {/* Progress Bar */}
         <div className="flex items-center gap-4">
