@@ -19,6 +19,7 @@
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/postcss": "^4.0.5",
     "@tailwindcss/typography": "^0.5.15",
+    "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "algoliasearch": "^5.43.0",
     "body-scroll-lock": "^4.0.0-beta.0",
