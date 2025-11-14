@@ -42,9 +42,16 @@ export async function generateMetadata(props: {
   const publishedAt = new Date(post.date).toISOString()
   const modifiedAt = new Date(post.lastmod || post.date).toISOString()
   const authors = authorDetails.map((author) => author.name)
+  // Default to ShopGuide logo for social sharing
   let imageList = [siteMetadata.socialBanner]
+  // Only use post.images if it's a non-empty array or a non-empty string
   if (post.images) {
-    imageList = typeof post.images === 'string' ? [post.images] : post.images
+    if (typeof post.images === 'string' && post.images.trim().length > 0) {
+      imageList = [post.images]
+    } else if (Array.isArray(post.images) && post.images.length > 0) {
+      imageList = post.images
+    }
+    // If post.images is empty array or empty string, keep default socialBanner
   }
   // Ensure all images are absolute URLs
   const absoluteImageList = imageList.map((img) => {
