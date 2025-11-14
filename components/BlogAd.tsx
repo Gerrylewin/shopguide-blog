@@ -37,12 +37,12 @@ export default function BlogAd() {
             </div>
 
             {/* Shopify Logo */}
-            <div className="flex justify-center">
-              <div className="relative">
+            <div className="flex justify-end mt-3">
+              <div className="relative pr-1">
                 <img
-                  src="https://cdn.shopify.com/shopifycloud/brochure/assets/brand-assets/shopify-logo-primary-logo-456baa801ee66a0a435671082365958316831c9960c480480dd5e00b9b3f36b09.svg"
+                  src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
                   alt="Shopify"
-                  className="h-auto w-28 brightness-110 transition-all duration-300 group-hover:brightness-125 dark:brightness-90 dark:group-hover:brightness-110"
+                  className="h-auto w-20 transition-all duration-300 group-hover:opacity-90"
                 />
               </div>
             </div>
