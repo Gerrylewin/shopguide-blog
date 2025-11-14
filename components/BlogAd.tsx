@@ -14,7 +14,7 @@ export default function BlogAd() {
         >
           {/* Glitch effect overlay */}
           <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent animate-shimmer" />
+            <div className="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent" />
           </div>
 
           {/* Terminal-style header */}
@@ -30,12 +30,10 @@ export default function BlogAd() {
           {/* Main content */}
           <div className="relative space-y-3">
             <div className="text-center">
-              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">
+              <p className="font-mono text-xs font-semibold tracking-wider text-emerald-400 uppercase">
                 &gt; Deploy AI Agent
               </p>
-              <p className="mt-1 font-mono text-[10px] text-gray-400">
-                for Shopify stores
-              </p>
+              <p className="mt-1 font-mono text-[10px] text-gray-400">for Shopify stores</p>
             </div>
 
             {/* Shopify Logo */}

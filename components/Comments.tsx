@@ -68,12 +68,12 @@ export default function Comments({ slug }: { slug: string }) {
 
       if (!hasValidConfig && loadComments) {
         // Only show error after user tries to load
-        const missingFields = []
+        const missingFields: string[] = []
         if (!giscusConfig?.repo) missingFields.push('NEXT_PUBLIC_GISCUS_REPO')
         if (!giscusConfig?.repositoryId) missingFields.push('NEXT_PUBLIC_GISCUS_REPOSITORY_ID')
         if (!giscusConfig?.category) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY')
         if (!giscusConfig?.categoryId) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY_ID')
-        
+
         setError(
           `Comments are not configured. Missing environment variables: ${missingFields.join(', ')}. Please set them in your .env.local file and restart your dev server.`
         )
