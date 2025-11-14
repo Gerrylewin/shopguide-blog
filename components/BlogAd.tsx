@@ -5,7 +5,7 @@ import Link from '@/components/Link'
 export default function BlogAd() {
   return (
     <div className="hidden xl:block">
-      <div className="fixed right-8 top-24 z-40 w-48">
+      <div className="fixed top-24 right-8 z-40 w-48">
         <Link
           href="https://apps.shopify.com/die-ai-agent-official-app"
           target="_blank"
@@ -42,10 +42,7 @@ function ShopifyLogo() {
         {/* Bag front face (lighter green) */}
         <rect x="8" y="2" width="12" height="12" rx="1" fill="#95BF47" />
         {/* Bag side panel (darker green) */}
-        <path
-          d="M20 2L24 2L24 14L20 14L20 2Z"
-          fill="#5E8E3E"
-        />
+        <path d="M20 2L24 2L24 14L20 14L20 2Z" fill="#5E8E3E" />
         {/* Bag handles */}
         <rect x="10" y="1" width="4" height="2" rx="0.5" fill="#95BF47" />
         <rect x="14" y="1" width="4" height="2" rx="0.5" fill="#95BF47" />
@@ -78,4 +75,3 @@ function ShopifyLogo() {
     </svg>
   )
 }
-

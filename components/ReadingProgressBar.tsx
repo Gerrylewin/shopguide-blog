@@ -10,15 +10,14 @@ const ReadingProgressBar = () => {
       const windowHeight = window.innerHeight
       const documentHeight = document.documentElement.scrollHeight
       const scrollTop = window.scrollY || document.documentElement.scrollTop
-      
+
       // Calculate the total scrollable height
       const totalScrollableHeight = documentHeight - windowHeight
-      
+
       // Calculate progress percentage
-      const scrollProgress = totalScrollableHeight > 0 
-        ? (scrollTop / totalScrollableHeight) * 100 
-        : 0
-      
+      const scrollProgress =
+        totalScrollableHeight > 0 ? (scrollTop / totalScrollableHeight) * 100 : 0
+
       setProgress(Math.min(100, Math.max(0, scrollProgress)))
     }
 
@@ -36,9 +35,9 @@ const ReadingProgressBar = () => {
   }, [])
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-gray-200 dark:bg-gray-800">
+    <div className="fixed top-0 right-0 left-0 z-50 h-1 bg-gray-200 dark:bg-gray-800">
       <div
-        className="h-full bg-primary-500 dark:bg-primary-400 transition-all duration-150 ease-out"
+        className="bg-primary-500 dark:bg-primary-400 h-full transition-all duration-150 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>
@@ -46,4 +45,3 @@ const ReadingProgressBar = () => {
 }
 
 export default ReadingProgressBar
-
