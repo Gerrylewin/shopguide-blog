@@ -37,7 +37,7 @@ export default function BlogAd() {
             </div>
 
             {/* Shopify Logo */}
-            <div className="flex justify-end mt-3">
+            <div className="mt-3 flex justify-end">
               <div className="relative pr-1">
                 <img
                   src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
