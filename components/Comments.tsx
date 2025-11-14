@@ -49,30 +49,36 @@ export default function Comments({ slug }: { slug: string }) {
     if (loadComments && siteMetadata.comments?.provider === 'giscus') {
       const giscusConfig = siteMetadata.comments.giscusConfig
 
-      // Debug: Log the actual values being loaded
-      console.log('Giscus Config:', {
-        repo: giscusConfig?.repo,
-        repositoryId: giscusConfig?.repositoryId,
-        category: giscusConfig?.category,
-        categoryId: giscusConfig?.categoryId,
-      })
+      // Check if all required Giscus config values are present
+      const hasValidConfig =
+        giscusConfig?.repo &&
+        giscusConfig?.repositoryId &&
+        giscusConfig?.category &&
+        giscusConfig?.categoryId
 
-      const missingVars: string[] = []
-      if (!giscusConfig?.repo) missingVars.push('NEXT_PUBLIC_GISCUS_REPO')
-      if (!giscusConfig?.repositoryId) missingVars.push('NEXT_PUBLIC_GISCUS_REPOSITORY_ID')
-      if (!giscusConfig?.category) missingVars.push('NEXT_PUBLIC_GISCUS_CATEGORY')
-      if (!giscusConfig?.categoryId) missingVars.push('NEXT_PUBLIC_GISCUS_CATEGORY_ID')
-
-      if (missingVars.length > 0) {
-        setError(
-          `Comments are not properly configured. Missing or empty environment variables: ${missingVars.join(', ')}. Please check your .env.local file and restart your Next.js dev server.`
-        )
+      if (!hasValidConfig) {
+        setError('Comments are not configured. Please set up Giscus in your .env.local file.')
       }
     }
   }, [loadComments])
 
   if (!siteMetadata.comments?.provider) {
     return null
+  }
+
+  // If Giscus is the provider but config is missing, check before showing error
+  if (siteMetadata.comments?.provider === 'giscus') {
+    const giscusConfig = siteMetadata.comments.giscusConfig
+    const hasValidConfig =
+      giscusConfig?.repo &&
+      giscusConfig?.repositoryId &&
+      giscusConfig?.category &&
+      giscusConfig?.categoryId
+
+    // If config is missing, don't show the component at all (graceful degradation)
+    if (!hasValidConfig) {
+      return null
+    }
   }
 
   if (error) {

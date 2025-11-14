@@ -8,6 +8,8 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import ReadingProgressBar from '@/components/ReadingProgressBar'
+import BlogAd from '@/components/BlogAd'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -20,9 +22,12 @@ export default function PostSimple({ content, next, prev, children }: LayoutProp
   const { path, slug, date, title } = content
 
   return (
-    <SectionContainer>
-      <ScrollTopAndComment />
-      <article>
+    <>
+      <ReadingProgressBar />
+      <BlogAd />
+      <SectionContainer>
+        <ScrollTopAndComment />
+        <article>
         <div>
           <header>
             <div className="space-y-1 border-b border-gray-200 pb-10 text-center dark:border-gray-700">
@@ -78,5 +83,6 @@ export default function PostSimple({ content, next, prev, children }: LayoutProp
         </div>
       </article>
     </SectionContainer>
+    </>
   )
 }

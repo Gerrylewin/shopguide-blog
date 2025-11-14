@@ -8,6 +8,8 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import ReadingProgressBar from '@/components/ReadingProgressBar'
+import BlogAd from '@/components/BlogAd'
 
 // Fallback for Bleed component if not available
 type BleedComponent = ({ children }: { children: ReactNode }) => ReactElement
@@ -36,9 +38,12 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
 
   return (
-    <SectionContainer>
-      <ScrollTopAndComment />
-      <article>
+    <>
+      <ReadingProgressBar />
+      <BlogAd />
+      <SectionContainer>
+        <ScrollTopAndComment />
+        <article>
         <div>
           <div className="space-y-1 pb-10 text-center dark:border-gray-700">
             <div className="w-full">
@@ -87,5 +92,6 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
         </div>
       </article>
     </SectionContainer>
+    </>
   )
 }
