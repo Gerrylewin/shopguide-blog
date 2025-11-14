@@ -220,3 +220,17 @@ input:-webkit-autofill:focus {
   outline-color: var(--color-primary-500) !important;
   box-shadow: 0 0 0 1px var(--color-primary-500) !important;
 }
+
+/* Shimmer animation for ad effects */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}

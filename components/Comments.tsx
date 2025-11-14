@@ -44,25 +44,42 @@ export default function Comments({ slug }: { slug: string }) {
   const [loadComments, setLoadComments] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Validate comments configuration when user clicks to load comments
+  // Validate comments configuration upfront and when user clicks to load comments
   useEffect(() => {
-    if (loadComments) {
-      if (siteMetadata.comments?.provider === 'giscus') {
-        const giscusConfig = siteMetadata.comments.giscusConfig
+    if (siteMetadata.comments?.provider === 'giscus') {
+      const giscusConfig = siteMetadata.comments.giscusConfig
 
-        // Check if all required Giscus config values are present
-        const hasValidConfig =
-          giscusConfig?.repo &&
-          giscusConfig?.repositoryId &&
-          giscusConfig?.category &&
-          giscusConfig?.categoryId
+      // Debug logging in development
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Giscus Config:', {
+          repo: giscusConfig?.repo || 'MISSING',
+          repositoryId: giscusConfig?.repositoryId || 'MISSING',
+          category: giscusConfig?.category || 'MISSING',
+          categoryId: giscusConfig?.categoryId || 'MISSING',
+        })
+      }
 
-        if (!hasValidConfig) {
-          setError('Comments are not configured. Please set up Giscus in your .env.local file.')
-        } else {
-          // Clear any previous error if config is now valid
-          setError(null)
-        }
+      // Check if all required Giscus config values are present
+      const hasValidConfig =
+        giscusConfig?.repo &&
+        giscusConfig?.repositoryId &&
+        giscusConfig?.category &&
+        giscusConfig?.categoryId
+
+      if (!hasValidConfig && loadComments) {
+        // Only show error after user tries to load
+        const missingFields = []
+        if (!giscusConfig?.repo) missingFields.push('NEXT_PUBLIC_GISCUS_REPO')
+        if (!giscusConfig?.repositoryId) missingFields.push('NEXT_PUBLIC_GISCUS_REPOSITORY_ID')
+        if (!giscusConfig?.category) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY')
+        if (!giscusConfig?.categoryId) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY_ID')
+        
+        setError(
+          `Comments are not configured. Missing environment variables: ${missingFields.join(', ')}. Please set them in your .env.local file and restart your dev server.`
+        )
+      } else if (hasValidConfig) {
+        // Clear any previous error if config is now valid
+        setError(null)
       }
     }
   }, [loadComments])

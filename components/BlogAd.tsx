@@ -5,73 +5,61 @@ import Link from '@/components/Link'
 export default function BlogAd() {
   return (
     <div className="hidden lg:block">
-      <div className="fixed top-24 right-8 z-[60] w-48">
+      <div className="fixed top-24 right-8 z-40 w-56">
         <Link
           href="https://apps.shopify.com/die-ai-agent-official-app"
           target="_blank"
           rel="noopener noreferrer"
-          className="group block rounded-lg border border-gray-200 bg-white p-4 shadow-lg transition-all hover:shadow-xl dark:border-gray-700 dark:bg-gray-800"
+          className="group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-5 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
         >
-          <div className="mb-3 text-center">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Try Agentic Commerce for
-            </p>
+          {/* Glitch effect overlay */}
+          <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent animate-shimmer" />
           </div>
-          <div className="flex justify-center">
-            <ShopifyLogo />
+
+          {/* Terminal-style header */}
+          <div className="mb-3 flex items-center gap-2 border-b border-emerald-500/20 pb-2">
+            <div className="flex gap-1.5">
+              <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
+              <div className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
+              <div className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+            </div>
+            <span className="font-mono text-[10px] text-emerald-400/60">agentic_commerce.exe</span>
           </div>
+
+          {/* Main content */}
+          <div className="relative space-y-3">
+            <div className="text-center">
+              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">
+                &gt; Deploy AI Agent
+              </p>
+              <p className="mt-1 font-mono text-[10px] text-gray-400">
+                for Shopify stores
+              </p>
+            </div>
+
+            {/* Shopify Logo */}
+            <div className="flex justify-center">
+              <div className="relative">
+                <img
+                  src="https://cdn.shopify.com/shopifycloud/brochure/assets/brand-assets/shopify-logo-primary-logo-456baa801ee66a0a435671082365958316831c9960c480480dd5e00b9b3f36b09.svg"
+                  alt="Shopify"
+                  className="h-auto w-28 brightness-110 transition-all duration-300 group-hover:brightness-125 dark:brightness-90 dark:group-hover:brightness-110"
+                />
+              </div>
+            </div>
+
+            {/* Terminal prompt */}
+            <div className="mt-3 flex items-center justify-center gap-1 font-mono text-[9px] text-emerald-500/70">
+              <span className="text-emerald-400">$</span>
+              <span className="animate-pulse">npm install agentic-commerce</span>
+            </div>
+          </div>
+
+          {/* Scanline effect */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </Link>
       </div>
     </div>
-  )
-}
-
-function ShopifyLogo() {
-  return (
-    <svg
-      width="120"
-      height="30"
-      viewBox="0 0 120 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="dark:opacity-90"
-      aria-label="Shopify"
-    >
-      {/* Shopping Bag Icon - simplified version */}
-      <g transform="translate(0, 2)">
-        {/* Bag front face (lighter green) */}
-        <rect x="8" y="2" width="12" height="12" rx="1" fill="#95BF47" />
-        {/* Bag side panel (darker green) */}
-        <path d="M20 2L24 2L24 14L20 14L20 2Z" fill="#5E8E3E" />
-        {/* Bag handles */}
-        <rect x="10" y="1" width="4" height="2" rx="0.5" fill="#95BF47" />
-        <rect x="14" y="1" width="4" height="2" rx="0.5" fill="#95BF47" />
-        {/* White S on bag */}
-        <text
-          x="14"
-          y="10"
-          fontSize="9"
-          fontWeight="bold"
-          fill="white"
-          textAnchor="middle"
-          fontFamily="Arial, sans-serif"
-        >
-          S
-        </text>
-      </g>
-      {/* Shopify wordmark */}
-      <text
-        x="32"
-        y="20"
-        fontSize="18"
-        fontWeight="bold"
-        fill="currentColor"
-        className="text-gray-900 dark:text-white"
-        fontFamily="Arial, sans-serif"
-        fontStyle="italic"
-      >
-        shopify
-      </text>
-    </svg>
   )
 }
