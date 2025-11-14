@@ -10,7 +10,7 @@ export default function BlogAd() {
           href="https://apps.shopify.com/die-ai-agent-official-app"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-5 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
+          className="group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
         >
           {/* Glitch effect overlay */}
           <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
