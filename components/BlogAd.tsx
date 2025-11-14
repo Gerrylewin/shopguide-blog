@@ -4,7 +4,7 @@ import Link from '@/components/Link'
 
 export default function BlogAd() {
   return (
-    <div className="hidden xl:block">
+    <div className="hidden lg:block">
       <div className="fixed top-24 right-8 z-[60] w-48">
         <Link
           href="https://apps.shopify.com/die-ai-agent-official-app"

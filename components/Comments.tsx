@@ -44,41 +44,31 @@ export default function Comments({ slug }: { slug: string }) {
   const [loadComments, setLoadComments] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Validate comments configuration
+  // Validate comments configuration when user clicks to load comments
   useEffect(() => {
-    if (loadComments && siteMetadata.comments?.provider === 'giscus') {
-      const giscusConfig = siteMetadata.comments.giscusConfig
+    if (loadComments) {
+      if (siteMetadata.comments?.provider === 'giscus') {
+        const giscusConfig = siteMetadata.comments.giscusConfig
 
-      // Check if all required Giscus config values are present
-      const hasValidConfig =
-        giscusConfig?.repo &&
-        giscusConfig?.repositoryId &&
-        giscusConfig?.category &&
-        giscusConfig?.categoryId
+        // Check if all required Giscus config values are present
+        const hasValidConfig =
+          giscusConfig?.repo &&
+          giscusConfig?.repositoryId &&
+          giscusConfig?.category &&
+          giscusConfig?.categoryId
 
-      if (!hasValidConfig) {
-        setError('Comments are not configured. Please set up Giscus in your .env.local file.')
+        if (!hasValidConfig) {
+          setError('Comments are not configured. Please set up Giscus in your .env.local file.')
+        } else {
+          // Clear any previous error if config is now valid
+          setError(null)
+        }
       }
     }
   }, [loadComments])
 
   if (!siteMetadata.comments?.provider) {
     return null
-  }
-
-  // If Giscus is the provider but config is missing, check before showing error
-  if (siteMetadata.comments?.provider === 'giscus') {
-    const giscusConfig = siteMetadata.comments.giscusConfig
-    const hasValidConfig =
-      giscusConfig?.repo &&
-      giscusConfig?.repositoryId &&
-      giscusConfig?.category &&
-      giscusConfig?.categoryId
-
-    // If config is missing, don't show the component at all (graceful degradation)
-    if (!hasValidConfig) {
-      return null
-    }
   }
 
   if (error) {
