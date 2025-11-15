@@ -87,8 +87,7 @@ export default function Comments({ slug }: { slug: string }) {
           NEXT_PUBLIC_GISCUS_REPOSITORY_ID:
             process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || 'NOT SET',
           NEXT_PUBLIC_GISCUS_CATEGORY: process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'NOT SET',
-          NEXT_PUBLIC_GISCUS_CATEGORY_ID:
-            process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || 'NOT SET',
+          NEXT_PUBLIC_GISCUS_CATEGORY_ID: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || 'NOT SET',
         })
       }
 
