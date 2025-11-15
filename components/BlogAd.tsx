@@ -100,9 +100,7 @@ export default function BlogAd() {
       <div className="hidden lg:block">
         <div
           className={`fixed top-24 right-8 z-40 w-52 transition-all duration-500 ease-out ${
-            showAd
-              ? 'translate-x-0 opacity-100'
-              : 'translate-x-full opacity-0 pointer-events-none'
+            showAd ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-full opacity-0'
           }`}
         >
           <AdContent />
