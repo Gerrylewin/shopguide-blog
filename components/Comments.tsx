@@ -53,13 +53,23 @@ export default function Comments({ slug }: { slug: string }) {
         ...baseConfig,
         // Read env vars directly to ensure they're available in client component
         repo: process.env.NEXT_PUBLIC_GISCUS_REPO || baseConfig?.repo || '',
-        repositoryId: process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || baseConfig?.repositoryId || '',
+        repositoryId:
+          process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || baseConfig?.repositoryId || '',
         category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY || baseConfig?.category || '',
         categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || baseConfig?.categoryId || '',
       }
     }
     return null
   }, [])
+
+  // Create comments config with corrected giscusConfig (must be before early returns)
+  const commentsConfig = useMemo(() => {
+    if (!siteMetadata.comments || !giscusConfig) return null
+    return {
+      ...siteMetadata.comments,
+      giscusConfig,
+    }
+  }, [giscusConfig])
 
   // Validate comments configuration upfront and when user clicks to load comments
   useEffect(() => {
@@ -74,9 +84,11 @@ export default function Comments({ slug }: { slug: string }) {
         })
         console.log('Environment variables:', {
           NEXT_PUBLIC_GISCUS_REPO: process.env.NEXT_PUBLIC_GISCUS_REPO || 'NOT SET',
-          NEXT_PUBLIC_GISCUS_REPOSITORY_ID: process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || 'NOT SET',
+          NEXT_PUBLIC_GISCUS_REPOSITORY_ID:
+            process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || 'NOT SET',
           NEXT_PUBLIC_GISCUS_CATEGORY: process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'NOT SET',
-          NEXT_PUBLIC_GISCUS_CATEGORY_ID: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || 'NOT SET',
+          NEXT_PUBLIC_GISCUS_CATEGORY_ID:
+            process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || 'NOT SET',
         })
       }
 
@@ -117,15 +129,6 @@ export default function Comments({ slug }: { slug: string }) {
       </div>
     )
   }
-
-  // Create comments config with corrected giscusConfig
-  const commentsConfig = useMemo(() => {
-    if (!siteMetadata.comments || !giscusConfig) return null
-    return {
-      ...siteMetadata.comments,
-      giscusConfig,
-    }
-  }, [giscusConfig])
 
   if (!commentsConfig) {
     return null
