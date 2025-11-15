@@ -1,7 +1,7 @@
 'use client'
 
 import { Comments as CommentsComponent } from 'pliny/comments'
-import { useState, useEffect, Component, type ReactNode } from 'react'
+import { useState, useEffect, Component, type ReactNode, useMemo } from 'react'
 import siteMetadata from '@/data/siteMetadata'
 
 interface ErrorBoundaryState {
@@ -44,35 +44,56 @@ export default function Comments({ slug }: { slug: string }) {
   const [loadComments, setLoadComments] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Read environment variables directly in client component to ensure they're available
+  // This ensures NEXT_PUBLIC_ env vars are properly accessed
+  const giscusConfig = useMemo(() => {
+    if (siteMetadata.comments?.provider === 'giscus') {
+      const baseConfig = siteMetadata.comments.giscusConfig
+      return {
+        ...baseConfig,
+        // Read env vars directly to ensure they're available in client component
+        repo: process.env.NEXT_PUBLIC_GISCUS_REPO || baseConfig?.repo || '',
+        repositoryId: process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || baseConfig?.repositoryId || '',
+        category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY || baseConfig?.category || '',
+        categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || baseConfig?.categoryId || '',
+      }
+    }
+    return null
+  }, [])
+
   // Validate comments configuration upfront and when user clicks to load comments
   useEffect(() => {
-    if (siteMetadata.comments?.provider === 'giscus') {
-      const giscusConfig = siteMetadata.comments.giscusConfig
-
+    if (siteMetadata.comments?.provider === 'giscus' && giscusConfig) {
       // Debug logging in development
       if (process.env.NODE_ENV === 'development') {
         console.log('Giscus Config:', {
-          repo: giscusConfig?.repo || 'MISSING',
-          repositoryId: giscusConfig?.repositoryId || 'MISSING',
-          category: giscusConfig?.category || 'MISSING',
-          categoryId: giscusConfig?.categoryId || 'MISSING',
+          repo: giscusConfig.repo || 'MISSING',
+          repositoryId: giscusConfig.repositoryId || 'MISSING',
+          category: giscusConfig.category || 'MISSING',
+          categoryId: giscusConfig.categoryId || 'MISSING',
+        })
+        console.log('Environment variables:', {
+          NEXT_PUBLIC_GISCUS_REPO: process.env.NEXT_PUBLIC_GISCUS_REPO || 'NOT SET',
+          NEXT_PUBLIC_GISCUS_REPOSITORY_ID: process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || 'NOT SET',
+          NEXT_PUBLIC_GISCUS_CATEGORY: process.env.NEXT_PUBLIC_GISCUS_CATEGORY || 'NOT SET',
+          NEXT_PUBLIC_GISCUS_CATEGORY_ID: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || 'NOT SET',
         })
       }
 
       // Check if all required Giscus config values are present
       const hasValidConfig =
-        giscusConfig?.repo &&
-        giscusConfig?.repositoryId &&
-        giscusConfig?.category &&
-        giscusConfig?.categoryId
+        giscusConfig.repo &&
+        giscusConfig.repositoryId &&
+        giscusConfig.category &&
+        giscusConfig.categoryId
 
       if (!hasValidConfig && loadComments) {
         // Only show error after user tries to load
         const missingFields: string[] = []
-        if (!giscusConfig?.repo) missingFields.push('NEXT_PUBLIC_GISCUS_REPO')
-        if (!giscusConfig?.repositoryId) missingFields.push('NEXT_PUBLIC_GISCUS_REPOSITORY_ID')
-        if (!giscusConfig?.category) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY')
-        if (!giscusConfig?.categoryId) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY_ID')
+        if (!giscusConfig.repo) missingFields.push('NEXT_PUBLIC_GISCUS_REPO')
+        if (!giscusConfig.repositoryId) missingFields.push('NEXT_PUBLIC_GISCUS_REPOSITORY_ID')
+        if (!giscusConfig.category) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY')
+        if (!giscusConfig.categoryId) missingFields.push('NEXT_PUBLIC_GISCUS_CATEGORY_ID')
 
         setError(
           `Comments are not configured. Missing environment variables: ${missingFields.join(', ')}. Please set them in your .env.local file and restart your dev server.`
@@ -82,7 +103,7 @@ export default function Comments({ slug }: { slug: string }) {
         setError(null)
       }
     }
-  }, [loadComments])
+  }, [loadComments, giscusConfig])
 
   if (!siteMetadata.comments?.provider) {
     return null
@@ -97,12 +118,25 @@ export default function Comments({ slug }: { slug: string }) {
     )
   }
 
+  // Create comments config with corrected giscusConfig
+  const commentsConfig = useMemo(() => {
+    if (!siteMetadata.comments || !giscusConfig) return null
+    return {
+      ...siteMetadata.comments,
+      giscusConfig,
+    }
+  }, [giscusConfig])
+
+  if (!commentsConfig) {
+    return null
+  }
+
   return (
     <>
       {loadComments ? (
         <CommentsErrorBoundary>
           <div className="min-h-[200px]">
-            <CommentsComponent commentsConfig={siteMetadata.comments} slug={slug} />
+            <CommentsComponent commentsConfig={commentsConfig} slug={slug} />
           </div>
         </CommentsErrorBoundary>
       ) : (

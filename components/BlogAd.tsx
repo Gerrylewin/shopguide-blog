@@ -96,8 +96,7 @@ export function BlogAdInlineWithInsertion() {
       const proseElements = document.querySelectorAll('.prose')
       // Get the main prose element (usually the first one with content)
       const proseElement =
-        Array.from(proseElements).find((el) => el.querySelector('h2') !== null) ||
-        proseElements[0]
+        Array.from(proseElements).find((el) => el.querySelector('h2') !== null) || proseElements[0]
 
       if (!proseElement) return
 
