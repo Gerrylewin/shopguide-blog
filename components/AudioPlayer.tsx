@@ -150,8 +150,8 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
   }
 
   return (
-    <div className="mt-2 mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-      <div className="mb-4">
+    <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+      <div className="mb-3">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
       </div>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
