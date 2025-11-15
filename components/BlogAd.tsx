@@ -74,11 +74,11 @@ export default function BlogAd() {
 export function BlogAdInline() {
   return (
     <div
-      className="block lg:hidden my-8 prose prose-lg max-w-none dark:prose-invert"
+      className="prose prose-lg dark:prose-invert my-8 block max-w-none lg:hidden"
       style={{ display: 'none' }}
       id="blog-ad-inline-mobile"
     >
-      <div className="flex justify-center not-prose">
+      <div className="not-prose flex justify-center">
         <div className="w-full max-w-md">
           <AdContent />
         </div>
@@ -95,9 +95,9 @@ export function BlogAdInlineWithInsertion() {
       // Find the prose element (the one containing the blog content)
       const proseElements = document.querySelectorAll('.prose')
       // Get the main prose element (usually the first one with content)
-      const proseElement = Array.from(proseElements).find(
-        (el) => el.querySelector('h2') !== null
-      ) || proseElements[0]
+      const proseElement =
+        Array.from(proseElements).find((el) => el.querySelector('h2') !== null) ||
+        proseElements[0]
 
       if (!proseElement) return
 
@@ -108,14 +108,16 @@ export function BlogAdInlineWithInsertion() {
       const headings = proseElement.querySelectorAll('h2')
       let referencesHeading: Element | null = null
 
-      headings.forEach((heading) => {
+      for (let i = 0; i < headings.length; i++) {
+        const heading = headings[i]
         if (heading.textContent?.trim().toLowerCase() === 'references') {
           referencesHeading = heading
+          break
         }
-      })
+      }
 
       // If found, insert the ad before it
-      if (referencesHeading?.parentNode) {
+      if (referencesHeading && referencesHeading.parentNode) {
         adElement.style.display = 'block'
         // Remove from current position if already in DOM
         if (adElement.parentNode) {
