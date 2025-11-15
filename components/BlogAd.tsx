@@ -1,7 +1,7 @@
 'use client'
 
 import Link from '@/components/Link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const AdContent = () => (
   <Link
@@ -58,11 +58,53 @@ const AdContent = () => (
 )
 
 export default function BlogAd() {
+  const [showAd, setShowAd] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+
+      // Calculate the total scrollable height
+      const totalScrollableHeight = documentHeight - windowHeight
+
+      // Calculate scroll percentage
+      const scrollPercentage =
+        totalScrollableHeight > 0 ? (scrollTop / totalScrollableHeight) * 100 : 0
+
+      // Show ad when user scrolls 25% down the page
+      if (scrollPercentage >= 25) {
+        setShowAd(true)
+      } else {
+        setShowAd(false)
+      }
+    }
+
+    // Initial calculation
+    handleScroll()
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [])
+
   return (
     <>
-      {/* Desktop: Fixed on the side */}
+      {/* Desktop: Fixed on the side, slides in from right at 25% scroll */}
       <div className="hidden lg:block">
-        <div className="fixed top-24 right-8 z-40 w-52">
+        <div
+          className={`fixed top-24 right-8 z-40 w-52 transition-all duration-500 ease-out ${
+            showAd
+              ? 'translate-x-0 opacity-100'
+              : 'translate-x-full opacity-0 pointer-events-none'
+          }`}
+        >
           <AdContent />
         </div>
       </div>
