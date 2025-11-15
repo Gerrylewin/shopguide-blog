@@ -191,4 +191,4 @@ Built with the [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind
 
 **Made with ❤️ by the ShopGuide team**
 
-For questions or support, visit [blog.yourshopguide.com](https://blog.yourshopguide.com) or contact us at [isaac.lewin@yourshopguide.com](mailto:isaac.lewin@yourshopguide.com).
+For questions or support, visit [blog.yourshopguide.com](https://blog.yourshopguide.com) or contact us at [isaac.lewin@yourshopguide.com](mailto:support@yourshopguide.com).
