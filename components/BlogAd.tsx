@@ -115,7 +115,7 @@ export function BlogAdInlineWithInsertion() {
       })
 
       // If found, insert the ad before it
-      if (referencesHeading && referencesHeading.parentNode) {
+      if (referencesHeading?.parentNode) {
         adElement.style.display = 'block'
         // Remove from current position if already in DOM
         if (adElement.parentNode) {
