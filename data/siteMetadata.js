@@ -3,13 +3,15 @@ const siteMetadata = {
   title: 'ShopGuide Blog',
   author: 'Isaac Lewin',
   headerTitle: 'ShopGuide | Agentic Commerce',
-  description: 'Transform your Shopify store with agentic commerce powered by AI agents. Learn about autonomous shopping experiences, AI-driven customer guidance, and the future of e-commerce.',
+  description:
+    'Transform your Shopify store with agentic commerce powered by AI agents. Learn about autonomous shopping experiences, AI-driven customer guidance, and the future of e-commerce.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://blog.yourshopguide.com',
   siteRepo: 'https://github.com/Gerrylewin/shopguide-blog',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: 'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/6910dad5d4e8027467642471.png',
+  socialBanner:
+    'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/6910dad5d4e8027467642471.png',
   email: 'isaac.lewin@yourshopguide.com',
   github: '', // ShopGuide doesn't have a public GitHub yet
   x: 'https://x.com/iliveoffgrid', // Isaac's personal Twitter

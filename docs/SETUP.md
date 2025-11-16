@@ -88,16 +88,19 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID=your_category_id
 Choose one:
 
 **Resend:**
+
 ```env
 RESEND_API_KEY=re_xxxxxxxxxxxxx
 ```
 
 **SendGrid:**
+
 ```env
 SENDGRID_API_KEY=SG.xxxxxxxxxxxxx
 ```
 
 **AWS SES:**
+
 ```env
 AWS_ACCESS_KEY_ID=your_access_key
 AWS_SECRET_ACCESS_KEY=your_secret_key
@@ -126,9 +129,10 @@ The newsletter system has been set up with the following features:
 ### Fixed Issues
 
 ✅ **JSON Parsing Error**: Fixed the "Unexpected end of JSON input" error by:
-   - Properly handling request body reading
-   - Ensuring all responses are valid JSON
-   - Adding comprehensive error handling
+
+- Properly handling request body reading
+- Ensuring all responses are valid JSON
+- Adding comprehensive error handling
 
 ### File Structure
 
@@ -175,6 +179,7 @@ Emails are stored in a simple JSON file format:
 ```
 
 **Features:**
+
 - Automatic duplicate detection (case-insensitive)
 - Timestamp tracking
 - Simple file-based storage (no database needed)
@@ -182,21 +187,22 @@ Emails are stored in a simple JSON file format:
 ### Managing Subscribers
 
 #### Get All Subscribers
+
 ```bash
 GET /api/newsletter/subscribers
 ```
 
 Response:
+
 ```json
 {
-  "subscribers": [
-    { "email": "user@example.com", "subscribedAt": "2025-01-15T10:30:00.000Z" }
-  ],
+  "subscribers": [{ "email": "user@example.com", "subscribedAt": "2025-01-15T10:30:00.000Z" }],
   "count": 1
 }
 ```
 
 #### Add Subscriber Manually
+
 ```bash
 POST /api/newsletter/subscribers
 Content-Type: application/json
@@ -207,6 +213,7 @@ Content-Type: application/json
 ```
 
 #### Remove Subscriber
+
 ```bash
 DELETE /api/newsletter/subscribers
 Content-Type: application/json
@@ -256,6 +263,7 @@ Currently, the email sending function (`lib/rss-email-sender.ts`) is set up but 
 #### Recommended: Resend (Best for Next.js)
 
 1. Install Resend:
+
 ```bash
 npm install resend
 ```
@@ -263,6 +271,7 @@ npm install resend
 2. Get your API key from [resend.com](https://resend.com)
 
 3. Add to `.env.local`:
+
 ```
 RESEND_API_KEY=re_xxxxxxxxxxxxx
 ```
@@ -272,11 +281,13 @@ RESEND_API_KEY=re_xxxxxxxxxxxxx
 #### Alternative: SendGrid
 
 1. Install SendGrid:
+
 ```bash
 npm install @sendgrid/mail
 ```
 
 2. Add to `.env.local`:
+
 ```
 SENDGRID_API_KEY=SG.xxxxxxxxxxxxx
 ```
@@ -286,6 +297,7 @@ SENDGRID_API_KEY=SG.xxxxxxxxxxxxx
 #### Alternative: AWS SES
 
 1. Install AWS SDK:
+
 ```bash
 npm install @aws-sdk/client-ses
 ```
@@ -301,6 +313,7 @@ const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/...'
 ```
 
 **What gets sent:**
+
 ```json
 {
   "email": "user@example.com",
@@ -310,6 +323,7 @@ const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/...'
 ```
 
 Your GHL automation can use this data to:
+
 - Add the contact to a list
 - Trigger email sequences
 - Tag the contact
@@ -341,6 +355,7 @@ export default DonutChart
 ```
 
 **Important Notes:**
+
 - Add the `'use client'` directive for components using React hooks
 - Export the component as the default export (named exports have issues with MDX)
 
@@ -354,7 +369,7 @@ export const components: MDXComponents = {
   TOCInline,
   a: CustomLink,
   pre: Pre,
-  DonutChart,  // Add your component here
+  DonutChart, // Add your component here
   BlogNewsletterForm,
 }
 ```
@@ -465,7 +480,7 @@ function createSearchIndex(allBlogs) {
   ) {
     writeFileSync(
       `public/${siteMetadata.search.kbarConfig.searchDocumentsPath}`,
-      JSON.stringify(sortPosts(allBlogs))  // Changed from allCoreContent(sortPosts(allBlogs))
+      JSON.stringify(sortPosts(allBlogs)) // Changed from allCoreContent(sortPosts(allBlogs))
     )
     console.log('Local search index generated...')
   }
@@ -643,4 +658,3 @@ If Giscus comments aren't showing:
 **Last Updated**: January 2025
 
 For questions or issues, check the code comments in each file for detailed explanations or review the API route handlers for request/response formats.
-
