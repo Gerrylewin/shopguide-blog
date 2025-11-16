@@ -12,10 +12,7 @@ export async function GET() {
     const subscribers = await getSubscribers()
     return NextResponse.json({ subscribers, count: subscribers.length })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch subscribers' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to fetch subscribers' }, { status: 500 })
   }
 }
 
@@ -39,10 +36,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: 'Subscriber added successfully' }, { status: 201 })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to add subscriber' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to add subscriber' }, { status: 500 })
   }
 }
 
@@ -66,10 +60,6 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json({ message: 'Subscriber removed successfully' }, { status: 200 })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to remove subscriber' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to remove subscriber' }, { status: 500 })
   }
 }
-

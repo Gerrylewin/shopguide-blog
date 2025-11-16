@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 /**
  * POST /api/newsletter/send-post
  * Send a new blog post notification to all subscribers
- * 
+ *
  * This endpoint can be called manually or via a webhook when a new post is published
  */
 export async function POST(req: NextRequest) {
@@ -42,4 +42,3 @@ export async function POST(req: NextRequest) {
     )
   }
 }
-

@@ -11,7 +11,7 @@ interface BlogPost {
 /**
  * Send email notifications for new blog posts to all subscribers
  * This function can be called when a new blog post is published
- * 
+ *
  * Note: You'll need to integrate with an email service provider like:
  * - Resend (recommended for Next.js)
  * - SendGrid
@@ -21,7 +21,7 @@ interface BlogPost {
 export async function sendBlogPostEmails(post: BlogPost) {
   try {
     const subscribers = await getSubscribers()
-    
+
     if (subscribers.length === 0) {
       console.log('No subscribers to notify')
       return { sent: 0, failed: 0 }
@@ -111,11 +111,12 @@ Unsubscribe: ${unsubscribeUrl}
     // For now, just log what would be sent
     console.log(`Would send email to ${subscribers.length} subscribers about: ${post.title}`)
     console.log(`Post URL: ${postUrl}`)
-    
+
     return {
       sent: 0,
       failed: 0,
-      message: 'Email sending not configured. See lib/rss-email-sender.ts for integration instructions.',
+      message:
+        'Email sending not configured. See lib/rss-email-sender.ts for integration instructions.',
       subscribers: subscribers.length,
     }
   } catch (error) {
@@ -129,7 +130,7 @@ Unsubscribe: ${unsubscribeUrl}
  */
 export function generateRSSEmailContent(posts: BlogPost[]) {
   const feedUrl = `${siteMetadata.siteUrl}/feed.xml`
-  
+
   return `
     <!DOCTYPE html>
     <html>
@@ -139,13 +140,17 @@ export function generateRSSEmailContent(posts: BlogPost[]) {
       </head>
       <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <h1>Latest Blog Posts</h1>
-        ${posts.map(post => `
+        ${posts
+          .map(
+            (post) => `
           <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
             <h2><a href="${siteMetadata.siteUrl}/blog/${post.slug}">${post.title}</a></h2>
             <p style="color: #666;">${post.summary || ''}</p>
             <p style="font-size: 12px; color: #999;">Published: ${new Date(post.date).toLocaleDateString()}</p>
           </div>
-        `).join('')}
+        `
+          )
+          .join('')}
         <p style="text-align: center; margin-top: 30px;">
           <a href="${feedUrl}">Subscribe to RSS Feed</a>
         </p>
@@ -153,4 +158,3 @@ export function generateRSSEmailContent(posts: BlogPost[]) {
     </html>
   `
 }
-

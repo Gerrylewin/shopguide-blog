@@ -31,12 +31,10 @@ export async function addSubscriber(email: string): Promise<boolean> {
     await fs.mkdir(dataDir, { recursive: true })
 
     // Read existing emails
-    let subscribers = await getSubscribers()
+    const subscribers = await getSubscribers()
 
     // Check if email already exists
-    const emailExists = subscribers.some(
-      (s) => s.email.toLowerCase() === email.toLowerCase()
-    )
+    const emailExists = subscribers.some((s) => s.email.toLowerCase() === email.toLowerCase())
 
     if (emailExists) {
       return false // Email already subscribed
@@ -65,9 +63,7 @@ export async function removeSubscriber(email: string): Promise<boolean> {
     let subscribers = await getSubscribers()
     const initialLength = subscribers.length
 
-    subscribers = subscribers.filter(
-      (s) => s.email.toLowerCase() !== email.toLowerCase()
-    )
+    subscribers = subscribers.filter((s) => s.email.toLowerCase() !== email.toLowerCase())
 
     if (subscribers.length === initialLength) {
       return false // Email not found
@@ -89,4 +85,3 @@ export async function getSubscriberCount(): Promise<number> {
   const subscribers = await getSubscribers()
   return subscribers.length
 }
-

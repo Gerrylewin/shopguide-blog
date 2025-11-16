@@ -116,9 +116,7 @@ async function handler(req: NextRequest) {
 
       if (isSuccess && email) {
         // Save email locally (don't await - fire and forget)
-        saveEmailLocally(email).catch((err) =>
-          console.error('Background save failed:', err)
-        )
+        saveEmailLocally(email).catch((err) => console.error('Background save failed:', err))
 
         // Send to GHL webhook (don't await - fire and forget)
         fetch(GHL_WEBHOOK_URL, {
