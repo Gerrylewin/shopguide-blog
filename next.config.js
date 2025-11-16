@@ -82,6 +82,10 @@ module.exports = () => {
           protocol: 'https',
           hostname: 'storage.googleapis.com',
         },
+        {
+          protocol: 'https',
+          hostname: 'private-us-east-1.manuscdn.com',
+        },
       ],
       unoptimized,
     },

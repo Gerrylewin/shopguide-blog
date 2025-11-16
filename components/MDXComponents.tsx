@@ -6,6 +6,7 @@ import Image from './Image'
 import CustomLink from './Link'
 import TableWrapper from './TableWrapper'
 import AudioPlayer from './AudioPlayer'
+import AppLogo from './AppLogo'
 
 // Ensure all components are defined to prevent "undefined component" errors
 export const components: MDXComponents = {
@@ -16,4 +17,5 @@ export const components: MDXComponents = {
   table: TableWrapper || 'table',
   BlogNewsletterForm: BlogNewsletterForm || (() => null),
   AudioPlayer: AudioPlayer || (() => null),
+  AppLogo: AppLogo || (() => null),
 }
