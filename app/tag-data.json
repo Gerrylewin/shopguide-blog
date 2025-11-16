@@ -1,9 +1,11 @@
 {
-  "agentic-commerce": 2,
-  "ai-agents": 2,
-  "e-commerce": 2,
-  "shopify": 2,
-  "chatbots": 2,
+  "agentic-commerce": 3,
+  "ai-agents": 3,
+  "e-commerce": 3,
+  "shopify": 3,
+  "chatbots": 3,
   "bfcm": 1,
-  "black-friday": 1
+  "black-friday": 1,
+  "comparison": 1,
+  "shopify-apps": 1
 }
