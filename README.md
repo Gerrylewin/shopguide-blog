@@ -101,12 +101,9 @@ This blog is built with:
 
 ## Getting Started
 
-### Prerequisites
+For complete setup instructions, environment variables, newsletter configuration, customizations, and troubleshooting, see the **[Complete Setup Guide](docs/SETUP.md)**.
 
-- Node.js 18+ 
-- Yarn or npm
-
-### Installation
+### Quick Start
 
 ```bash
 # Clone the repository
@@ -117,32 +114,24 @@ cd shopguide-blog
 
 # Install dependencies
 yarn install
-```
 
-### Development
-
-```bash
 # Start the development server
 yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the blog.
 
-### Building for Production
+### Important Documentation
 
-```bash
-# Build the site
-yarn build
-
-# Start the production server
-yarn start
-```
+- 📘 **[Complete Setup & Configuration Guide](docs/SETUP.md)** - All setup instructions, environment variables, newsletter system, customizations, and troubleshooting
+- 📝 **[README.md](README.md)** - Project overview and quick start (you are here)
 
 ## Project Structure
 
 ```
 shopguide-blog/
 ├── app/                    # Next.js app directory
+│   ├── api/               # API routes (newsletter, feed)
 │   ├── blog/              # Blog pages and routing
 │   ├── about/             # About page
 │   └── layout.tsx         # Root layout
@@ -151,6 +140,11 @@ shopguide-blog/
 │   ├── blog/             # Blog posts (MDX files)
 │   ├── authors/          # Author information
 │   └── siteMetadata.js   # Site configuration
+├── docs/                 # Documentation
+│   └── SETUP.md          # Complete setup guide
+├── lib/                  # Utility libraries
+│   ├── newsletter-storage.ts
+│   └── rss-email-sender.ts
 ├── layouts/              # Page layouts
 ├── public/               # Static assets
 └── scripts/              # Build scripts
