@@ -5,10 +5,12 @@
   "scripts": {
     "start": "next dev",
     "dev": "next dev",
-    "build": "next build && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
+    "build": "yarn format:check && next build && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md,mdx}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md,mdx}\" --ignore-path .gitignore",
     "prepare": "husky"
   },
   "dependencies": {
