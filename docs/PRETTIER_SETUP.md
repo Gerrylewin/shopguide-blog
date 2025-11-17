@@ -11,17 +11,21 @@ We've identified and fixed Prettier formatting errors that were causing build fa
 ## Changes Made
 
 ### 1. Fixed Formatting Issues
+
 - Fixed Tailwind class ordering in `components/SectionContainer.tsx`
 - Formatted all files using Prettier to ensure consistency
 
 ### 2. Added Format Scripts to `package.json`
+
 ```json
 "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md,mdx}\" --ignore-path .gitignore",
 "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md,mdx}\" --ignore-path .gitignore"
 ```
 
 ### 3. Updated Build Script
+
 The build script now runs format check before building:
+
 ```json
 "build": "yarn format:check && next build && ..."
 ```
@@ -29,37 +33,47 @@ The build script now runs format check before building:
 This ensures formatting errors are caught **before** the build runs, preventing Vercel build failures.
 
 ### 4. VS Code Auto-Formatting
+
 Updated `.vscode/settings.json` to:
+
 - Format files automatically on save
 - Use Prettier as the default formatter for all relevant file types
 - Run ESLint fixes on save
 
 ### 5. Created `.prettierignore`
+
 Added a `.prettierignore` file to exclude build outputs, dependencies, and generated files from formatting checks.
 
 ### 6. Pre-Commit Hook (Already Configured)
+
 The project already has Husky + lint-staged configured to:
+
 - Run ESLint on JavaScript/TypeScript files
 - Run Prettier on all relevant files before commits
 
 ## How to Use
 
 ### Format All Files
+
 ```bash
 yarn format
 ```
 
 ### Check Formatting (Without Fixing)
+
 ```bash
 yarn format:check
 ```
 
 ### Before Committing
+
 The pre-commit hook will automatically:
+
 1. Run ESLint fixes on staged JS/TS files
 2. Format staged files with Prettier
 
 ### VS Code Users
+
 Files will automatically format on save if you have the Prettier VS Code extension installed.
 
 ## Why Prettier Errors Happen
@@ -75,11 +89,13 @@ Files will automatically format on save if you have the Prettier VS Code extensi
 ## Prevention Strategies
 
 ### ✅ Automatic (Already Set Up)
+
 1. **Format on Save** - VS Code will format files automatically
 2. **Pre-Commit Hook** - Husky runs Prettier before commits
 3. **Build Check** - Format check runs before every build
 
 ### 📝 Manual (When Needed)
+
 1. Run `yarn format` before committing if you've made many changes
 2. Run `yarn format:check` before pushing to catch any missed issues
 3. Check the build output locally with `yarn build` before pushing
@@ -87,16 +103,19 @@ Files will automatically format on save if you have the Prettier VS Code extensi
 ## Common Prettier Errors
 
 ### Tailwind Class Ordering
+
 **Error:** `Replace 'xl:max-w-5xl xl:px-0 lg:pr-64' with 'lg:pr-64 xl:max-w-5xl xl:px-0'`
 
 **Fix:** Run `yarn format` or let VS Code format on save. The Tailwind plugin will automatically reorder classes.
 
 ### Line Length
+
 **Error:** Lines exceeding 100 characters (printWidth)
 
 **Fix:** Prettier will automatically wrap long lines. Just save the file.
 
 ### Trailing Commas
+
 **Error:** Missing trailing commas in arrays/objects
 
 **Fix:** Prettier adds trailing commas automatically (configured in `prettier.config.js`).
@@ -104,16 +123,19 @@ Files will automatically format on save if you have the Prettier VS Code extensi
 ## Troubleshooting
 
 ### Build Fails with Format Errors
+
 1. Run `yarn format` to fix all files
 2. Commit the formatted files
 3. Try building again
 
 ### Pre-Commit Hook Not Running
+
 1. Ensure Husky is installed: `yarn install`
 2. Check `.husky/pre-commit` exists
 3. Make sure the file is executable (on Unix systems)
 
 ### VS Code Not Formatting
+
 1. Install the Prettier extension: `esbenp.prettier-vscode`
 2. Check `.vscode/settings.json` has the correct settings
 3. Reload VS Code window
@@ -128,10 +150,10 @@ Files will automatically format on save if you have the Prettier VS Code extensi
 ## Summary
 
 With these changes, Prettier errors should be caught and fixed automatically:
+
 - ✅ Format on save (VS Code)
 - ✅ Format before commit (Husky)
 - ✅ Format check before build (package.json script)
 - ✅ Easy manual formatting (`yarn format`)
 
 You should no longer need to rebuild through Vercel to check for formatting errors - they'll be caught locally first!
-
