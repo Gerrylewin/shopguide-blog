@@ -56,7 +56,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
       <BlogAd />
       <SectionContainer>
         <ScrollTopAndComment />
-        <article>
+        <article data-post-slug={slug}>
           <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
             <header className="pt-6 xl:pb-6">
               <div className="space-y-1 text-center">

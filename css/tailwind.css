@@ -130,11 +130,6 @@
     & :where(code):not(pre code) {
       color: var(--color-indigo-500);
     }
-    & img {
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-    }
   }
 
   .prose-invert {
@@ -151,11 +146,6 @@
     & :where(h1, h2, h3, h4, h5, h6) {
       font-family: var(--font-heading);
       color: var(--color-gray-100);
-    }
-    & img {
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
     }
   }
 }
@@ -250,4 +240,15 @@ input:-webkit-autofill:focus {
 
 .animate-shimmer {
   animation: shimmer 2s infinite;
+}
+
+/* Center AppLogo images on mobile for top 10 blog post only */
+@media (max-width: 640px) {
+  article[data-post-slug="top-10-shopify-store-agents-and-chatbots-a-distinction-in-agentic-commerce"] .prose > div:has(> div[class*="border-primary-500"]) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
