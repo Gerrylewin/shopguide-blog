@@ -244,7 +244,9 @@ input:-webkit-autofill:focus {
 
 /* Center AppLogo images on mobile for top 10 blog post only */
 @media (max-width: 640px) {
-  article[data-post-slug="top-10-shopify-store-agents-and-chatbots-a-distinction-in-agentic-commerce"] .prose > div:has(> div[class*="border-primary-500"]) {
+  article[data-post-slug='top-10-shopify-store-agents-and-chatbots-a-distinction-in-agentic-commerce']
+    .prose
+    > div:has(> div[class*='border-primary-500']) {
     display: flex;
     justify-content: center;
     width: 100%;
