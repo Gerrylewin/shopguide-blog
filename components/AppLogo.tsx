@@ -12,9 +12,9 @@ export default function AppLogo({ src, alt, children }: AppLogoProps) {
   const isExternal = src.startsWith('http://') || src.startsWith('https://')
 
   return (
-    <div className="relative my-8 inline-block">
+    <div className="relative my-8 inline-block max-w-full">
       {/* Outer glow container */}
-      <div className="border-primary-500/30 hover:border-primary-400/50 relative inline-block rounded-lg border-2 bg-gray-950/80 p-4 shadow-[0_0_20px_rgba(46,154,179,0.3)] backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_30px_rgba(46,154,179,0.5)] dark:bg-gray-900/80">
+      <div className="border-primary-500/30 hover:border-primary-400/50 relative inline-block max-w-full rounded-lg border-2 bg-gray-950/80 p-2 sm:p-4 shadow-[0_0_20px_rgba(46,154,179,0.3)] backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_30px_rgba(46,154,179,0.5)] dark:bg-gray-900/80">
         {/* Scanline overlay effect */}
         <div className="pointer-events-none absolute inset-0 rounded-lg bg-[linear-gradient(transparent_50%,rgba(46,154,179,0.03)_50%)] bg-[length:100%_4px] opacity-30" />
 
@@ -24,18 +24,18 @@ export default function AppLogo({ src, alt, children }: AppLogoProps) {
         </div>
 
         {/* Image container with gaussian blur background */}
-        <div className="from-primary-500/10 via-primary-400/5 relative overflow-hidden rounded-md bg-gradient-to-br to-transparent p-2">
+        <div className="from-primary-500/10 via-primary-400/5 relative overflow-hidden rounded-md bg-gradient-to-br to-transparent p-1 sm:p-2">
           {/* Brand color glow behind image */}
           <div className="from-primary-500/20 via-primary-400/10 absolute inset-0 bg-gradient-to-br to-transparent blur-xl" />
 
           {/* The actual logo image */}
-          <div className="relative z-10 flex h-[400px] w-[400px] items-center justify-center overflow-hidden rounded-md bg-white/5 backdrop-blur-sm">
+          <div className="relative z-10 flex h-[200px] w-[200px] sm:h-[300px] sm:w-[300px] md:h-[400px] md:w-[400px] items-center justify-center overflow-hidden rounded-md bg-white/5 backdrop-blur-sm">
             <NextImage
               src={src}
               alt={alt}
               width={400}
               height={400}
-              className="object-contain p-4 transition-transform duration-300 hover:scale-105"
+              className="object-contain p-2 sm:p-4 transition-transform duration-300 hover:scale-105"
               unoptimized={isExternal}
             />
           </div>
