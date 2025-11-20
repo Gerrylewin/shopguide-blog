@@ -60,9 +60,14 @@ export async function generateMetadata(props: {
     }
     return siteMetadata.siteUrl + img
   })
+  // LinkedIn prefers images with width and height specified
+  // Using standard social media image dimensions (1200x630 is recommended)
   const ogImages = absoluteImageList.map((img) => {
     return {
       url: img,
+      width: 1200,
+      height: 630,
+      alt: post.title,
     }
   })
 
@@ -77,7 +82,7 @@ export async function generateMetadata(props: {
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,
-      url: './',
+      url: `${siteMetadata.siteUrl}/${post.slug}`,
       images: ogImages,
       authors: authors.length > 0 ? authors : [siteMetadata.author],
     },
