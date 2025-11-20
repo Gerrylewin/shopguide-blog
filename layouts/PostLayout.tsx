@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, ReactElement } from 'react'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
@@ -11,6 +11,20 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
 import BlogAd, { BlogAdInlineWithInsertion } from '@/components/BlogAd'
+
+// Fallback for Bleed component if not available
+type BleedComponent = ({ children }: { children: ReactNode }) => ReactElement
+
+let Bleed: BleedComponent
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const BleedModule = require('pliny/ui/Bleed')
+  Bleed = BleedModule.default || BleedModule
+} catch {
+  const FallbackBleed = ({ children }: { children: ReactNode }) => <div>{children}</div>
+  FallbackBleed.displayName = 'FallbackBleed'
+  Bleed = FallbackBleed
+}
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path) =>
@@ -32,8 +46,9 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, tags, images } = content
   const basePath = path.split('/')[0]
+  const displayImage = images && images.length > 0 ? images[0] : null
 
   return (
     <>
@@ -60,6 +75,16 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </div>
               </div>
             </header>
+            {/* Full-width hero image below title */}
+            {displayImage && (
+              <div className="w-full pb-8 pt-6">
+                <Bleed>
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
+                    <Image src={displayImage} alt={title} fill className="object-cover" />
+                  </div>
+                </Bleed>
+              </div>
+            )}
             <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-5 xl:gap-x-8 xl:divide-y-0 dark:divide-gray-700">
               <dl className="pt-6 pb-10 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
                 <dt className="sr-only">Authors</dt>

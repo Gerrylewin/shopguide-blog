@@ -34,8 +34,7 @@ interface LayoutProps {
 
 export default function PostBanner({ content, next, prev, children }: LayoutProps) {
   const { slug, title, images } = content
-  const displayImage =
-    images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
+  const displayImage = images && images.length > 0 ? images[0] : null
 
   return (
     <>
@@ -46,16 +45,20 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
         <article>
           <div>
             <div className="space-y-1 pb-10 text-center dark:border-gray-700">
-              <div className="w-full">
-                <Bleed>
-                  <div className="relative aspect-2/1 w-full">
-                    <Image src={displayImage} alt={title} fill className="object-cover" />
-                  </div>
-                </Bleed>
-              </div>
-              <div className="relative pt-10">
+              {/* Title first */}
+              <div className="relative pb-8">
                 <PageTitle>{title}</PageTitle>
               </div>
+              {/* Full-width hero image below title */}
+              {displayImage && (
+                <div className="w-full pb-8">
+                  <Bleed>
+                    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
+                      <Image src={displayImage} alt={title} fill className="object-cover" />
+                    </div>
+                  </Bleed>
+                </div>
+              )}
             </div>
             <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
             <BlogAdInlineWithInsertion />
