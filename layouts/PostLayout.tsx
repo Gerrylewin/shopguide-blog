@@ -77,7 +77,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </header>
             {/* Full-width hero image below title */}
             {displayImage && (
-              <div className="w-full pb-8 pt-6">
+              <div className="w-full pt-6 pb-8">
                 <Bleed>
                   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
                     <Image src={displayImage} alt={title} fill className="object-cover" />
