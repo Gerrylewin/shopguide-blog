@@ -1,11 +1,21 @@
 import { getSubscribers } from './newsletter-storage'
 import siteMetadata from '@/data/siteMetadata'
+import { Resend } from 'resend'
+import {
+  generateEmailId,
+  createTrackingRecord,
+  getTrackingPixelUrl,
+  getTrackedLinkUrl,
+} from './newsletter-tracking'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface BlogPost {
   title: string
   slug: string
   date: string
   summary?: string
+  images?: string[]
 }
 
 /**
@@ -27,12 +37,29 @@ export async function sendBlogPostEmails(post: BlogPost) {
       return { sent: 0, failed: 0 }
     }
 
+    // Generate tracking ID for this email send
+    const emailId = generateEmailId()
     const postUrl = `${siteMetadata.siteUrl}/blog/${post.slug}`
     const unsubscribeUrl = `${siteMetadata.siteUrl}/unsubscribe`
 
-    // Email content
+    // Create tracking record
+    await createTrackingRecord(emailId, post.slug, post.title, subscribers.length)
+
+    // Email content with tracking
     const emailSubject = `New Blog Post: ${post.title}`
-    const emailHtml = `
+
+    // Generate email HTML with tracking for each subscriber
+    const generateEmailHtml = (subscriberEmail: string) => {
+      const trackingPixel = getTrackingPixelUrl(emailId, subscriberEmail, siteMetadata.siteUrl)
+      const trackedPostUrl = getTrackedLinkUrl(emailId, subscriberEmail, postUrl, siteMetadata.siteUrl)
+      const trackedUnsubscribeUrl = getTrackedLinkUrl(
+        emailId,
+        subscriberEmail,
+        unsubscribeUrl,
+        siteMetadata.siteUrl
+      )
+
+      return `
       <!DOCTYPE html>
       <html>
         <head>
@@ -45,12 +72,14 @@ export async function sendBlogPostEmails(post: BlogPost) {
             <h1 style="color: #333; margin-top: 0;">${siteMetadata.title}</h1>
           </div>
           
+          ${post.images && post.images.length > 0 ? `<img src="${post.images[0]}" alt="${post.title}" style="max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 20px;" />` : ''}
+          
           <h2 style="color: #2c3e50;">${post.title}</h2>
           
           ${post.summary ? `<p style="font-size: 16px; color: #666;">${post.summary}</p>` : ''}
           
           <div style="margin: 30px 0;">
-            <a href="${postUrl}" 
+            <a href="${trackedPostUrl}" 
                style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">
               Read Full Article →
             </a>
@@ -60,11 +89,15 @@ export async function sendBlogPostEmails(post: BlogPost) {
           
           <p style="font-size: 12px; color: #999; text-align: center;">
             You're receiving this because you subscribed to our newsletter.<br>
-            <a href="${unsubscribeUrl}" style="color: #999;">Unsubscribe</a>
+            <a href="${trackedUnsubscribeUrl}" style="color: #999;">Unsubscribe</a>
           </p>
+          
+          <!-- Tracking pixel -->
+          <img src="${trackingPixel}" width="1" height="1" style="display: block; width: 1px; height: 1px; border: 0;" alt="" />
         </body>
       </html>
     `
+    }
 
     const emailText = `
 ${siteMetadata.title}
@@ -80,44 +113,54 @@ You're receiving this because you subscribed to our newsletter.
 Unsubscribe: ${unsubscribeUrl}
     `.trim()
 
-    // TODO: Integrate with your email service provider
-    // Example with Resend (you'll need to install: npm install resend)
-    /*
-    import { Resend } from 'resend'
-    const resend = new Resend(process.env.RESEND_API_KEY)
-    
+    // Check if Resend API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set in environment variables')
+      return {
+        sent: 0,
+        failed: 0,
+        message: 'Resend API key not configured. Please set RESEND_API_KEY in your environment variables.',
+        subscribers: subscribers.length,
+        emailId,
+      }
+    }
+
     let sent = 0
     let failed = 0
-    
+    const failedEmails: string[] = []
+
+    // Send emails to all subscribers
     for (const subscriber of subscribers) {
       try {
+        const trackedPostUrl = getTrackedLinkUrl(emailId, subscriber.email, postUrl, siteMetadata.siteUrl)
+        const emailHtml = generateEmailHtml(subscriber.email)
+
+        // Use verified domain from Resend, or fallback to test domain
+        // For production: Verify your domain in Resend and use: `newsletter@yourshopguide.com`
+        // For testing: Use Resend's test domain: `onboarding@resend.dev`
+        const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
+
         await resend.emails.send({
-          from: `Newsletter <newsletter@${siteMetadata.siteUrl.replace('https://', '')}>`,
+          from: `Newsletter <${fromEmail}>`,
           to: subscriber.email,
           subject: emailSubject,
           html: emailHtml,
-          text: emailText,
+          text: `${siteMetadata.title}\n\n${post.title}\n\n${post.summary || ''}\n\nRead the full article: ${trackedPostUrl}\n\n---\nYou're receiving this because you subscribed to our newsletter.\nUnsubscribe: ${unsubscribeUrl}`,
         })
         sent++
       } catch (error) {
         console.error(`Failed to send email to ${subscriber.email}:`, error)
         failed++
+        failedEmails.push(subscriber.email)
       }
     }
-    
-    return { sent, failed }
-    */
-
-    // For now, just log what would be sent
-    console.log(`Would send email to ${subscribers.length} subscribers about: ${post.title}`)
-    console.log(`Post URL: ${postUrl}`)
 
     return {
-      sent: 0,
-      failed: 0,
-      message:
-        'Email sending not configured. See lib/rss-email-sender.ts for integration instructions.',
+      sent,
+      failed,
+      emailId,
       subscribers: subscribers.length,
+      failedEmails: failedEmails.length > 0 ? failedEmails : undefined,
     }
   } catch (error) {
     console.error('Failed to send blog post emails:', error)

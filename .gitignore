@@ -51,6 +51,7 @@ next-env.d.ts
 
 # newsletter subscribers data (contains email addresses)
 /data/newsletter-subscribers.json
+/data/newsletter-tracking.json
 
 # lock files (keep only yarn.lock, ignore package-lock.json if using yarn)
 package-lock.json

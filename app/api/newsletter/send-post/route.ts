@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { title, slug, date, summary } = body
+    const { title, slug, date, summary, images } = body
 
     // Validate required fields
     if (!title || !slug || !date) {
@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
       slug,
       date,
       summary,
+      images,
     })
 
     return NextResponse.json({
