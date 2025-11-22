@@ -1,7 +1,8 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 
-const EMAILS_FILE_PATH = path.join(process.cwd(), 'data', 'newsletter-subscribers.json')
+// Use absolute path resolution for better reliability
+const EMAILS_FILE_PATH = path.resolve(process.cwd(), 'data', 'newsletter-subscribers.json')
 
 export interface Subscriber {
   email: string
@@ -28,15 +29,20 @@ export async function addSubscriber(email: string): Promise<boolean> {
   try {
     // Ensure data directory exists
     const dataDir = path.dirname(EMAILS_FILE_PATH)
+    console.log('🔵 [NEWSLETTER STORAGE] Ensuring data directory exists:', dataDir)
     await fs.mkdir(dataDir, { recursive: true })
+    console.log('✅ [NEWSLETTER STORAGE] Data directory ready')
 
     // Read existing emails
+    console.log('🔵 [NEWSLETTER STORAGE] Reading existing subscribers...')
     const subscribers = await getSubscribers()
+    console.log('✅ [NEWSLETTER STORAGE] Found', subscribers.length, 'existing subscribers')
 
     // Check if email already exists
     const emailExists = subscribers.some((s) => s.email.toLowerCase() === email.toLowerCase())
 
     if (emailExists) {
+      console.log('⚠️ [NEWSLETTER STORAGE] Email already exists:', email)
       return false // Email already subscribed
     }
 
@@ -47,10 +53,18 @@ export async function addSubscriber(email: string): Promise<boolean> {
     })
 
     // Write back to file
+    console.log('🔵 [NEWSLETTER STORAGE] Writing subscribers to file:', EMAILS_FILE_PATH)
     await fs.writeFile(EMAILS_FILE_PATH, JSON.stringify(subscribers, null, 2), 'utf-8')
+    console.log('✅ [NEWSLETTER STORAGE] Successfully wrote subscribers file')
     return true
   } catch (error) {
-    console.error('Failed to add subscriber:', error)
+    console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber:', error)
+    const errorDetails = error instanceof Error 
+      ? { message: error.message, stack: error.stack, name: error.name }
+      : { error: String(error) }
+    console.error('❌ [NEWSLETTER STORAGE] Error details:', errorDetails)
+    console.error('❌ [NEWSLETTER STORAGE] File path:', EMAILS_FILE_PATH)
+    console.error('❌ [NEWSLETTER STORAGE] Process cwd:', process.cwd())
     throw error
   }
 }

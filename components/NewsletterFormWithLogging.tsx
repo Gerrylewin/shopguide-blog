@@ -85,7 +85,12 @@ export default function NewsletterFormWithLogging() {
         setEmail('')
       } else {
         setStatus('error')
-        setMessage(data.error || 'Something went wrong. Please try again.')
+        const errorMessage = data.error || 'Something went wrong. Please try again.'
+        setMessage(errorMessage)
+        // Log full error details for debugging
+        if (data.details) {
+          console.error('🟢 [CLIENT] Full error details:', data.details)
+        }
       }
     } catch (error) {
       setStatus('error')
