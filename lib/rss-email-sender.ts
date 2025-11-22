@@ -8,8 +8,6 @@ import {
   getTrackedLinkUrl,
 } from './newsletter-tracking'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 interface BlogPost {
   title: string
   slug: string
@@ -130,6 +128,9 @@ Unsubscribe: ${unsubscribeUrl}
         emailId,
       }
     }
+
+    // Initialize Resend lazily to avoid build-time errors
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     let sent = 0
     let failed = 0

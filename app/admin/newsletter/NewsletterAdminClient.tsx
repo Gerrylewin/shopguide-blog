@@ -23,6 +23,12 @@ interface TrackingData {
   clicks: Array<{ email: string; clickedAt: string; url: string }>
 }
 
+interface SendStatus {
+  status: 'sending' | 'success' | 'error'
+  data?: { sent?: number }
+  error?: string
+}
+
 interface Props {
   posts: Post[]
   trackingData: TrackingData[]
@@ -30,10 +36,10 @@ interface Props {
 
 export default function NewsletterAdminClient({ posts, trackingData }: Props) {
   const [sending, setSending] = useState<string | null>(null)
-  const [sendStatus, setSendStatus] = useState<Record<string, any>>({})
+  const [sendStatus, setSendStatus] = useState<Record<string, SendStatus>>({})
 
   const handleSend = async (post: Post) => {
-    const postSlug = Array.isArray(post.slug) ? post.slug.join('/') : post.slug
+    const postSlug = post.slug
     setSending(postSlug)
     setSendStatus((prev) => ({ ...prev, [postSlug]: { status: 'sending' } }))
 
@@ -89,14 +95,13 @@ export default function NewsletterAdminClient({ posts, trackingData }: Props) {
   }
 
   const getPostStats = (postSlug: string) => {
-    const slug = Array.isArray(postSlug) ? postSlug.join('/') : postSlug
-    return trackingData.find((t) => t.postSlug === slug)
+    return trackingData.find((t) => t.postSlug === postSlug)
   }
 
   return (
     <div className="space-y-6">
       {posts.map((post) => {
-        const postSlug = Array.isArray(post.slug) ? post.slug.join('/') : post.slug
+        const postSlug = post.slug
         const stats = getPostStats(postSlug)
         const status = sendStatus[postSlug]
         const isSending = sending === postSlug
