@@ -23,13 +23,7 @@ export async function GET(req: NextRequest) {
     const userAgent = req.headers.get('user-agent') || undefined
 
     // Record the click
-    await recordClick(
-      emailId,
-      decodeURIComponent(email),
-      decodeURIComponent(url),
-      ip,
-      userAgent
-    )
+    await recordClick(emailId, decodeURIComponent(email), decodeURIComponent(url), ip, userAgent)
 
     // Redirect to the original URL
     return NextResponse.redirect(decodeURIComponent(url))
@@ -43,4 +37,3 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to track click' }, { status: 500 })
   }
 }
-

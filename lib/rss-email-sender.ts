@@ -51,7 +51,12 @@ export async function sendBlogPostEmails(post: BlogPost) {
     // Generate email HTML with tracking for each subscriber
     const generateEmailHtml = (subscriberEmail: string) => {
       const trackingPixel = getTrackingPixelUrl(emailId, subscriberEmail, siteMetadata.siteUrl)
-      const trackedPostUrl = getTrackedLinkUrl(emailId, subscriberEmail, postUrl, siteMetadata.siteUrl)
+      const trackedPostUrl = getTrackedLinkUrl(
+        emailId,
+        subscriberEmail,
+        postUrl,
+        siteMetadata.siteUrl
+      )
       const trackedUnsubscribeUrl = getTrackedLinkUrl(
         emailId,
         subscriberEmail,
@@ -119,7 +124,8 @@ Unsubscribe: ${unsubscribeUrl}
       return {
         sent: 0,
         failed: 0,
-        message: 'Resend API key not configured. Please set RESEND_API_KEY in your environment variables.',
+        message:
+          'Resend API key not configured. Please set RESEND_API_KEY in your environment variables.',
         subscribers: subscribers.length,
         emailId,
       }
@@ -132,7 +138,12 @@ Unsubscribe: ${unsubscribeUrl}
     // Send emails to all subscribers
     for (const subscriber of subscribers) {
       try {
-        const trackedPostUrl = getTrackedLinkUrl(emailId, subscriber.email, postUrl, siteMetadata.siteUrl)
+        const trackedPostUrl = getTrackedLinkUrl(
+          emailId,
+          subscriber.email,
+          postUrl,
+          siteMetadata.siteUrl
+        )
         const emailHtml = generateEmailHtml(subscriber.email)
 
         // Use verified domain from Resend, or fallback to test domain

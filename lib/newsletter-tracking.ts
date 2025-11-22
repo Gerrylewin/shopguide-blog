@@ -162,4 +162,3 @@ export function getTrackedLinkUrl(
 ): string {
   return `${baseUrl}/api/newsletter/track/click?emailId=${emailId}&email=${encodeURIComponent(email)}&url=${encodeURIComponent(originalUrl)}`
 }
-

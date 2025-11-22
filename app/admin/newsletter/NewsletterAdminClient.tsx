@@ -104,26 +104,26 @@ export default function NewsletterAdminClient({ posts, trackingData }: Props) {
         return (
           <div
             key={postSlug}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700"
+            className="rounded-lg border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800"
           >
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col gap-6 md:flex-row">
               {/* Post Preview */}
               <div className="flex-1">
                 {post.images && post.images.length > 0 && (
                   <img
                     src={post.images[0]}
                     alt={post.title}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
+                    className="mb-4 h-48 w-full rounded-lg object-cover"
                   />
                 )}
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {post.title}
                 </h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
                   {formatDate(post.date, siteMetadata.locale)}
                 </p>
                 {post.summary && (
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">{post.summary}</p>
+                  <p className="mb-4 text-gray-600 dark:text-gray-400">{post.summary}</p>
                 )}
                 <Link
                   href={`/blog/${postSlug}`}
@@ -134,50 +134,42 @@ export default function NewsletterAdminClient({ posts, trackingData }: Props) {
               </div>
 
               {/* Actions & Stats */}
-              <div className="md:w-80 space-y-4">
+              <div className="space-y-4 md:w-80">
                 {/* Send Button */}
                 <div>
                   <button
                     onClick={() => handleSend(post)}
                     disabled={isSending || !!stats}
-                    className={`w-full px-4 py-2 rounded-lg font-medium transition-colors ${
+                    className={`w-full rounded-lg px-4 py-2 font-medium transition-colors ${
                       stats
-                        ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed'
+                        ? 'cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-600'
                         : isSending
-                          ? 'bg-blue-400 text-white cursor-wait'
-                          : 'bg-blue-600 hover:bg-blue-700 text-white'
+                          ? 'cursor-wait bg-blue-400 text-white'
+                          : 'bg-blue-600 text-white hover:bg-blue-700'
                     }`}
                   >
-                    {isSending
-                      ? 'Sending...'
-                      : stats
-                        ? 'Already Sent'
-                        : 'Send Newsletter'}
+                    {isSending ? 'Sending...' : stats ? 'Already Sent' : 'Send Newsletter'}
                   </button>
 
                   {/* Status Messages */}
                   {status?.status === 'success' && (
-                    <div className="mt-2 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                    <div className="mt-2 rounded-lg border border-green-200 bg-green-50 p-3 dark:border-green-800 dark:bg-green-900/20">
                       <p className="text-sm text-green-800 dark:text-green-200">
                         ✅ Sent successfully! {status.data?.sent} emails sent.
                       </p>
                     </div>
                   )}
                   {status?.status === 'error' && (
-                    <div className="mt-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                      <p className="text-sm text-red-800 dark:text-red-200">
-                        ❌ {status.error}
-                      </p>
+                    <div className="mt-2 rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
+                      <p className="text-sm text-red-800 dark:text-red-200">❌ {status.error}</p>
                     </div>
                   )}
                 </div>
 
                 {/* Statistics */}
                 {stats && (
-                  <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-3">
-                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-                      Statistics
-                    </h3>
+                  <div className="space-y-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-700/50">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Statistics</h3>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
                         <div className="text-gray-500 dark:text-gray-400">Sent</div>
@@ -224,4 +216,3 @@ export default function NewsletterAdminClient({ posts, trackingData }: Props) {
     </div>
   )
 }
-
