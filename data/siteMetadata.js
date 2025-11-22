@@ -53,7 +53,8 @@ const siteMetadata = {
   newsletter: {
     // Custom newsletter system using local storage + Resend
     // No external newsletter provider needed
-    provider: null,
+    // Set to 'custom' to enable the form (NewsletterFormWithLogging intercepts API calls)
+    provider: 'custom',
   },
   comments: {
     // If you want to use an analytics provider you have to add it to the
