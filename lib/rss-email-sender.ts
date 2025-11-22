@@ -136,9 +136,9 @@ Unsubscribe: ${unsubscribeUrl}
         const emailHtml = generateEmailHtml(subscriber.email)
 
         // Use verified domain from Resend, or fallback to test domain
-        // For production: Verify your domain in Resend and use: `newsletter@yourshopguide.com`
-        // For testing: Use Resend's test domain: `onboarding@resend.dev`
-        const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
+        // Your verified domain: updates.yourshopguide.com
+        // Use: newsletter@updates.yourshopguide.com (or any email on your verified domain)
+        const fromEmail = process.env.RESEND_FROM_EMAIL || 'newsletter@updates.yourshopguide.com'
 
         await resend.emails.send({
           from: `Newsletter <${fromEmail}>`,
