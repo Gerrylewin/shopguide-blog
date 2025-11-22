@@ -7,7 +7,7 @@ import siteMetadata from '@/data/siteMetadata'
 
 interface Post {
   title: string
-  slug: string[]
+  slug: string
   date: string
   summary?: string
   images?: string[]
