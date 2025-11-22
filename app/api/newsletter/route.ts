@@ -146,13 +146,14 @@ async function handler(req: NextRequest) {
       return NextResponse.json(
         {
           error: 'Failed to process newsletter subscription',
-          details: process.env.NODE_ENV === 'development' 
-            ? {
-                message: errorMessage,
-                stack: errorStack,
-                type: error?.constructor?.name,
-              }
-            : undefined,
+          details:
+            process.env.NODE_ENV === 'development'
+              ? {
+                  message: errorMessage,
+                  stack: errorStack,
+                  type: error?.constructor?.name,
+                }
+              : undefined,
         },
         { status: 500 }
       )

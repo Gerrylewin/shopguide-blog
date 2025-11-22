@@ -59,9 +59,10 @@ export async function addSubscriber(email: string): Promise<boolean> {
     return true
   } catch (error) {
     console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber:', error)
-    const errorDetails = error instanceof Error 
-      ? { message: error.message, stack: error.stack, name: error.name }
-      : { error: String(error) }
+    const errorDetails =
+      error instanceof Error
+        ? { message: error.message, stack: error.stack, name: error.name }
+        : { error: String(error) }
     console.error('❌ [NEWSLETTER STORAGE] Error details:', errorDetails)
     console.error('❌ [NEWSLETTER STORAGE] File path:', EMAILS_FILE_PATH)
     console.error('❌ [NEWSLETTER STORAGE] Process cwd:', process.cwd())
