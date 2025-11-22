@@ -93,6 +93,34 @@ async function handler(req: NextRequest) {
     }
 
     try {
+      // Check if ButtonDown API key is configured
+      if (!process.env.BUTTONDOWN_API_KEY) {
+        console.error('BUTTONDOWN_API_KEY is not set in environment variables')
+        // Still try to save locally and send to GHL even if ButtonDown fails
+        if (email) {
+          saveEmailLocally(email).catch((err) => console.error('Background save failed:', err))
+          fetch(GHL_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email,
+              source: 'newsletter_subscription',
+              timestamp: new Date().toISOString(),
+            }),
+          }).catch((webhookError) => {
+            console.error('Failed to send to GHL webhook:', webhookError)
+          })
+        }
+        return NextResponse.json(
+          {
+            error: 'Newsletter service is not configured. Please contact the site administrator.',
+          },
+          { status: 500 }
+        )
+      }
+
       // Recreate the request for the original handler using the body we already read
       const newRequest = new NextRequest(req.url, {
         method: 'POST',
@@ -108,13 +136,50 @@ async function handler(req: NextRequest) {
 
       // Ensure we have a valid response
       if (!response) {
+        console.error('No response from ButtonDown API')
         return NextResponse.json({ error: 'No response from newsletter service' }, { status: 500 })
       }
 
-      // Check if subscription was successful (status 200-299)
-      const isSuccess = response.status >= 200 && response.status < 300
+      // Clone response before reading so we can log and return
+      const responseClone = response.clone()
+      const responseStatus = response.status
 
-      if (isSuccess && email) {
+      // Read and log the response for debugging
+      let responseData: any
+      try {
+        responseData = await responseClone.json()
+        console.log('ButtonDown API response:', {
+          status: responseStatus,
+          data: responseData,
+          email: email,
+        })
+      } catch (jsonError) {
+        // Response might not be JSON, clone again and try reading as text
+        try {
+          const textClone = response.clone()
+          const text = await textClone.text()
+          console.log('ButtonDown API response (non-JSON):', {
+            status: responseStatus,
+            text: text,
+            email: email,
+          })
+          responseData = { message: text || 'Subscription processed' }
+        } catch (textError) {
+          // If both fail, create a default response
+          console.error('Failed to read ButtonDown response:', textError)
+          responseData = {
+            error: 'Failed to parse response from newsletter service',
+            message: 'Subscription may have failed',
+          }
+        }
+      }
+
+      // Check if subscription was successful (status 200-299)
+      const isSuccess = responseStatus >= 200 && responseStatus < 300
+
+      // Always save locally and send to GHL, even if ButtonDown fails
+      // This ensures we don't lose subscribers if ButtonDown has issues
+      if (email) {
         // Save email locally (don't await - fire and forget)
         saveEmailLocally(email).catch((err) => console.error('Background save failed:', err))
 
@@ -128,25 +193,31 @@ async function handler(req: NextRequest) {
             email: email,
             source: 'newsletter_subscription',
             timestamp: new Date().toISOString(),
+            buttondownSuccess: isSuccess, // Include whether ButtonDown succeeded
           }),
         }).catch((webhookError) => {
           console.error('Failed to send to GHL webhook:', webhookError)
         })
       }
 
-      // Ensure response is valid JSON
-      try {
-        const responseData = await response.json()
-        return NextResponse.json(responseData, { status: response.status })
-      } catch (jsonError) {
-        // If response is not JSON, return a success message
-        return NextResponse.json(
-          { message: 'Subscription successful' },
-          { status: response.status }
-        )
+      if (!isSuccess) {
+        // Log the error for debugging
+        console.error('ButtonDown subscription failed:', {
+          status: responseStatus,
+          response: responseData,
+          email: email,
+        })
+        // Note: Email was still saved locally and sent to GHL above
       }
+
+      // Return the response from ButtonDown (which includes error messages)
+      return NextResponse.json(responseData, { status: responseStatus })
     } catch (error) {
       console.error('Newsletter subscription error:', error)
+      // Still try to save locally even if ButtonDown fails
+      if (email) {
+        saveEmailLocally(email).catch((err) => console.error('Background save failed:', err))
+      }
       return NextResponse.json(
         {
           error: 'Failed to process newsletter subscription',
