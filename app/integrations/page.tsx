@@ -25,6 +25,7 @@ export default function Integrations() {
                 description={d.description}
                 imgSrc={d.imgSrc}
                 href={d.href}
+                target="_self"
               />
             ))}
           </div>
