@@ -16,17 +16,19 @@ export async function getSubscribers(): Promise<Subscriber[]> {
   try {
     const fileContent = await fs.readFile(EMAILS_FILE_PATH, 'utf-8')
     const trimmedContent = fileContent.trim()
-    
+
     // If file is empty or only whitespace, return empty array
     if (!trimmedContent) {
       return []
     }
-    
+
     try {
       const parsed = JSON.parse(trimmedContent)
       // Validate it's an array
       if (!Array.isArray(parsed)) {
-        console.error('❌ [NEWSLETTER STORAGE] File content is not an array, resetting to empty array')
+        console.error(
+          '❌ [NEWSLETTER STORAGE] File content is not an array, resetting to empty array'
+        )
         // Backup the corrupted file
         const backupPath = EMAILS_FILE_PATH + '.backup.' + Date.now()
         await fs.writeFile(backupPath, fileContent, 'utf-8')
@@ -66,7 +68,7 @@ export async function addSubscriber(email: string): Promise<boolean> {
     // Log file path for debugging
     console.log('🔵 [NEWSLETTER STORAGE] File path:', EMAILS_FILE_PATH)
     console.log('🔵 [NEWSLETTER STORAGE] Process cwd:', process.cwd())
-    
+
     // Ensure data directory exists
     const dataDir = path.dirname(EMAILS_FILE_PATH)
     console.log('🔵 [NEWSLETTER STORAGE] Ensuring data directory exists:', dataDir)
