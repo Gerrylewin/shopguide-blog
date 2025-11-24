@@ -1,8 +1,10 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { kv } from '@vercel/kv'
 
 // Use absolute path resolution for better reliability
 const EMAILS_FILE_PATH = path.resolve(process.cwd(), 'data', 'newsletter-subscribers.json')
+const KV_KEY = 'newsletter:subscribers'
 
 export interface Subscriber {
   email: string
@@ -10,10 +12,37 @@ export interface Subscriber {
 }
 
 /**
- * Get all newsletter subscribers
+ * Check if Vercel KV is available
+ */
+function isKVAvailable(): boolean {
+  return !!(process.env.KV_URL && process.env.KV_REST_API_TOKEN)
+}
+
+/**
+ * Get all newsletter subscribers from KV or file system
  */
 export async function getSubscribers(): Promise<Subscriber[]> {
+  // Use Vercel KV if available (production)
+  if (isKVAvailable()) {
+    try {
+      console.log('🔵 [NEWSLETTER STORAGE] Using Vercel KV storage')
+      const subscribers = await kv.get<Subscriber[]>(KV_KEY)
+      if (!subscribers || !Array.isArray(subscribers)) {
+        console.log('🔵 [NEWSLETTER STORAGE] No subscribers found in KV, returning empty array')
+        return []
+      }
+      console.log('✅ [NEWSLETTER STORAGE] Found', subscribers.length, 'subscribers in KV')
+      return subscribers
+    } catch (error) {
+      console.error('❌ [NEWSLETTER STORAGE] Error reading from KV:', error)
+      // Fallback to empty array if KV fails
+      return []
+    }
+  }
+
+  // Fallback to file system (local development)
   try {
+    console.log('🔵 [NEWSLETTER STORAGE] Using file system storage')
     const fileContent = await fs.readFile(EMAILS_FILE_PATH, 'utf-8')
     const trimmedContent = fileContent.trim()
 
@@ -89,7 +118,42 @@ export async function getSubscribers(): Promise<Subscriber[]> {
  */
 export async function addSubscriber(email: string): Promise<boolean> {
   try {
-    // Log file path for debugging
+    const normalizedEmail = email.toLowerCase()
+
+    // Use Vercel KV if available (production)
+    if (isKVAvailable()) {
+      try {
+        console.log('🔵 [NEWSLETTER STORAGE] Using Vercel KV storage')
+        const subscribers = await getSubscribers()
+
+        // Check if email already exists
+        const emailExists = subscribers.some((s) => s.email.toLowerCase() === normalizedEmail)
+
+        if (emailExists) {
+          console.log('⚠️ [NEWSLETTER STORAGE] Email already exists in KV:', normalizedEmail)
+          return false // Email already subscribed
+        }
+
+        // Add new subscriber
+        const newSubscriber: Subscriber = {
+          email: normalizedEmail,
+          subscribedAt: new Date().toISOString(),
+        }
+        subscribers.push(newSubscriber)
+
+        // Save to KV
+        console.log('🔵 [NEWSLETTER STORAGE] Saving to KV...')
+        await kv.set(KV_KEY, subscribers)
+        console.log('✅ [NEWSLETTER STORAGE] Successfully saved subscriber to KV')
+        return true
+      } catch (error) {
+        console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber to KV:', error)
+        throw error
+      }
+    }
+
+    // Fallback to file system (local development)
+    console.log('🔵 [NEWSLETTER STORAGE] Using file system storage')
     console.log('🔵 [NEWSLETTER STORAGE] File path:', EMAILS_FILE_PATH)
     console.log('🔵 [NEWSLETTER STORAGE] Process cwd:', process.cwd())
     console.log('🔵 [NEWSLETTER STORAGE] Vercel environment:', !!process.env.VERCEL)
@@ -114,16 +178,16 @@ export async function addSubscriber(email: string): Promise<boolean> {
     console.log('✅ [NEWSLETTER STORAGE] Found', subscribers.length, 'existing subscribers')
 
     // Check if email already exists
-    const emailExists = subscribers.some((s) => s.email.toLowerCase() === email.toLowerCase())
+    const emailExists = subscribers.some((s) => s.email.toLowerCase() === normalizedEmail)
 
     if (emailExists) {
-      console.log('⚠️ [NEWSLETTER STORAGE] Email already exists:', email)
+      console.log('⚠️ [NEWSLETTER STORAGE] Email already exists:', normalizedEmail)
       return false // Email already subscribed
     }
 
     // Add new subscriber
     subscribers.push({
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       subscribedAt: new Date().toISOString(),
     })
 
@@ -139,9 +203,10 @@ export async function addSubscriber(email: string): Promise<boolean> {
       const errorCode = (writeError as NodeJS.ErrnoException).code
       if (errorCode === 'EROFS' || errorCode === 'EACCES' || process.env.VERCEL) {
         console.warn(
-          '⚠️ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Local storage skipped, but subscription will continue via webhook.'
+          '⚠️ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Please set up Vercel KV for persistent storage.'
         )
         // Return true to indicate "success" - the subscription will be handled by webhook
+        // But warn that storage isn't working
         return true
       }
       // For other errors, re-throw
@@ -165,10 +230,27 @@ export async function addSubscriber(email: string): Promise<boolean> {
  */
 export async function removeSubscriber(email: string): Promise<boolean> {
   try {
+    const normalizedEmail = email.toLowerCase()
+
+    // Use Vercel KV if available
+    if (isKVAvailable()) {
+      const subscribers = await getSubscribers()
+      const initialLength = subscribers.length
+      const filtered = subscribers.filter((s) => s.email.toLowerCase() !== normalizedEmail)
+
+      if (filtered.length === initialLength) {
+        return false // Email not found
+      }
+
+      await kv.set(KV_KEY, filtered)
+      return true
+    }
+
+    // Fallback to file system
     let subscribers = await getSubscribers()
     const initialLength = subscribers.length
 
-    subscribers = subscribers.filter((s) => s.email.toLowerCase() !== email.toLowerCase())
+    subscribers = subscribers.filter((s) => s.email.toLowerCase() !== normalizedEmail)
 
     if (subscribers.length === initialLength) {
       return false // Email not found
