@@ -138,22 +138,32 @@ async function handler(req: NextRequest) {
       console.error('❌ [NEWSLETTER API] Newsletter subscription error:', error)
       const errorMessage = error instanceof Error ? error.message : String(error)
       const errorStack = error instanceof Error ? error.stack : undefined
+      const errorName = error instanceof Error ? error.name : undefined
+      const errorType = error?.constructor?.name || typeof error
+
       console.error('❌ [NEWSLETTER API] Error details:', {
         message: errorMessage,
         stack: errorStack,
-        type: error?.constructor?.name,
+        name: errorName,
+        type: errorType,
+        NODE_ENV: process.env.NODE_ENV,
       })
+
+      // Always include details in development, and also log them
+      const isDevelopment = process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
+      const errorDetails = isDevelopment
+        ? {
+            message: errorMessage,
+            stack: errorStack,
+            name: errorName,
+            type: errorType,
+          }
+        : undefined
+
       return NextResponse.json(
         {
           error: 'Failed to process newsletter subscription',
-          details:
-            process.env.NODE_ENV === 'development'
-              ? {
-                  message: errorMessage,
-                  stack: errorStack,
-                  type: error?.constructor?.name,
-                }
-              : undefined,
+          details: errorDetails,
         },
         { status: 500 }
       )

@@ -15,9 +15,45 @@ export interface Subscriber {
 export async function getSubscribers(): Promise<Subscriber[]> {
   try {
     const fileContent = await fs.readFile(EMAILS_FILE_PATH, 'utf-8')
-    return JSON.parse(fileContent)
+    const trimmedContent = fileContent.trim()
+    
+    // If file is empty or only whitespace, return empty array
+    if (!trimmedContent) {
+      return []
+    }
+    
+    try {
+      const parsed = JSON.parse(trimmedContent)
+      // Validate it's an array
+      if (!Array.isArray(parsed)) {
+        console.error('❌ [NEWSLETTER STORAGE] File content is not an array, resetting to empty array')
+        // Backup the corrupted file
+        const backupPath = EMAILS_FILE_PATH + '.backup.' + Date.now()
+        await fs.writeFile(backupPath, fileContent, 'utf-8')
+        console.log('✅ [NEWSLETTER STORAGE] Backed up corrupted file to:', backupPath)
+        // Reset to empty array
+        await fs.writeFile(EMAILS_FILE_PATH, '[]', 'utf-8')
+        return []
+      }
+      return parsed
+    } catch (parseError) {
+      console.error('❌ [NEWSLETTER STORAGE] JSON parse error, file may be corrupted:', parseError)
+      // Backup the corrupted file
+      const backupPath = EMAILS_FILE_PATH + '.backup.' + Date.now()
+      await fs.writeFile(backupPath, fileContent, 'utf-8')
+      console.log('✅ [NEWSLETTER STORAGE] Backed up corrupted file to:', backupPath)
+      // Reset to empty array
+      await fs.writeFile(EMAILS_FILE_PATH, '[]', 'utf-8')
+      return []
+    }
   } catch (error) {
-    // File doesn't exist yet, return empty array
+    // File doesn't exist yet or can't be read, return empty array
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      console.log('🔵 [NEWSLETTER STORAGE] File does not exist yet, returning empty array')
+      return []
+    }
+    // For other errors, log and return empty array
+    console.error('❌ [NEWSLETTER STORAGE] Error reading subscribers file:', error)
     return []
   }
 }
@@ -27,6 +63,10 @@ export async function getSubscribers(): Promise<Subscriber[]> {
  */
 export async function addSubscriber(email: string): Promise<boolean> {
   try {
+    // Log file path for debugging
+    console.log('🔵 [NEWSLETTER STORAGE] File path:', EMAILS_FILE_PATH)
+    console.log('🔵 [NEWSLETTER STORAGE] Process cwd:', process.cwd())
+    
     // Ensure data directory exists
     const dataDir = path.dirname(EMAILS_FILE_PATH)
     console.log('🔵 [NEWSLETTER STORAGE] Ensuring data directory exists:', dataDir)
