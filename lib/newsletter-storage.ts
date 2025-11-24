@@ -29,29 +29,53 @@ export async function getSubscribers(): Promise<Subscriber[]> {
         console.error(
           '❌ [NEWSLETTER STORAGE] File content is not an array, resetting to empty array'
         )
-        // Backup the corrupted file
-        const backupPath = EMAILS_FILE_PATH + '.backup.' + Date.now()
-        await fs.writeFile(backupPath, fileContent, 'utf-8')
-        console.log('✅ [NEWSLETTER STORAGE] Backed up corrupted file to:', backupPath)
-        // Reset to empty array
-        await fs.writeFile(EMAILS_FILE_PATH, '[]', 'utf-8')
+        // In serverless environments, we can't write backups or fix files
+        if (!process.env.VERCEL) {
+          try {
+            const backupPath = EMAILS_FILE_PATH + '.backup.' + Date.now()
+            await fs.writeFile(backupPath, fileContent, 'utf-8')
+            console.log('✅ [NEWSLETTER STORAGE] Backed up corrupted file to:', backupPath)
+            await fs.writeFile(EMAILS_FILE_PATH, '[]', 'utf-8')
+          } catch (writeError) {
+            console.warn(
+              '⚠️ [NEWSLETTER STORAGE] Could not fix corrupted file (read-only):',
+              writeError
+            )
+          }
+        }
         return []
       }
       return parsed
     } catch (parseError) {
       console.error('❌ [NEWSLETTER STORAGE] JSON parse error, file may be corrupted:', parseError)
-      // Backup the corrupted file
-      const backupPath = EMAILS_FILE_PATH + '.backup.' + Date.now()
-      await fs.writeFile(backupPath, fileContent, 'utf-8')
-      console.log('✅ [NEWSLETTER STORAGE] Backed up corrupted file to:', backupPath)
-      // Reset to empty array
-      await fs.writeFile(EMAILS_FILE_PATH, '[]', 'utf-8')
+      // In serverless environments, we can't write backups or fix files
+      if (!process.env.VERCEL) {
+        try {
+          const backupPath = EMAILS_FILE_PATH + '.backup.' + Date.now()
+          await fs.writeFile(backupPath, fileContent, 'utf-8')
+          console.log('✅ [NEWSLETTER STORAGE] Backed up corrupted file to:', backupPath)
+          await fs.writeFile(EMAILS_FILE_PATH, '[]', 'utf-8')
+        } catch (writeError) {
+          console.warn(
+            '⚠️ [NEWSLETTER STORAGE] Could not fix corrupted file (read-only):',
+            writeError
+          )
+        }
+      }
       return []
     }
   } catch (error) {
     // File doesn't exist yet or can't be read, return empty array
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+    const errorCode = (error as NodeJS.ErrnoException).code
+    if (errorCode === 'ENOENT') {
       console.log('🔵 [NEWSLETTER STORAGE] File does not exist yet, returning empty array')
+      return []
+    }
+    // In serverless environments, file system errors are expected
+    if (process.env.VERCEL) {
+      console.log(
+        '🔵 [NEWSLETTER STORAGE] Read-only file system (serverless), returning empty array'
+      )
       return []
     }
     // For other errors, log and return empty array
@@ -68,12 +92,21 @@ export async function addSubscriber(email: string): Promise<boolean> {
     // Log file path for debugging
     console.log('🔵 [NEWSLETTER STORAGE] File path:', EMAILS_FILE_PATH)
     console.log('🔵 [NEWSLETTER STORAGE] Process cwd:', process.cwd())
+    console.log('🔵 [NEWSLETTER STORAGE] Vercel environment:', !!process.env.VERCEL)
 
     // Ensure data directory exists
     const dataDir = path.dirname(EMAILS_FILE_PATH)
     console.log('🔵 [NEWSLETTER STORAGE] Ensuring data directory exists:', dataDir)
-    await fs.mkdir(dataDir, { recursive: true })
-    console.log('✅ [NEWSLETTER STORAGE] Data directory ready')
+    try {
+      await fs.mkdir(dataDir, { recursive: true })
+      console.log('✅ [NEWSLETTER STORAGE] Data directory ready')
+    } catch (mkdirError) {
+      console.warn(
+        '⚠️ [NEWSLETTER STORAGE] Could not create directory (may be read-only):',
+        mkdirError
+      )
+      // Continue anyway - might be able to read existing file
+    }
 
     // Read existing emails
     console.log('🔵 [NEWSLETTER STORAGE] Reading existing subscribers...')
@@ -96,9 +129,24 @@ export async function addSubscriber(email: string): Promise<boolean> {
 
     // Write back to file
     console.log('🔵 [NEWSLETTER STORAGE] Writing subscribers to file:', EMAILS_FILE_PATH)
-    await fs.writeFile(EMAILS_FILE_PATH, JSON.stringify(subscribers, null, 2), 'utf-8')
-    console.log('✅ [NEWSLETTER STORAGE] Successfully wrote subscribers file')
-    return true
+    try {
+      await fs.writeFile(EMAILS_FILE_PATH, JSON.stringify(subscribers, null, 2), 'utf-8')
+      console.log('✅ [NEWSLETTER STORAGE] Successfully wrote subscribers file')
+      return true
+    } catch (writeError) {
+      // In serverless environments (like Vercel), file system is read-only
+      // This is expected and not a critical error - the webhook will still be sent
+      const errorCode = (writeError as NodeJS.ErrnoException).code
+      if (errorCode === 'EROFS' || errorCode === 'EACCES' || process.env.VERCEL) {
+        console.warn(
+          '⚠️ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Local storage skipped, but subscription will continue via webhook.'
+        )
+        // Return true to indicate "success" - the subscription will be handled by webhook
+        return true
+      }
+      // For other errors, re-throw
+      throw writeError
+    }
   } catch (error) {
     console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber:', error)
     const errorDetails =
