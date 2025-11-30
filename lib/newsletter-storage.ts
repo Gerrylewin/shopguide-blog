@@ -193,6 +193,22 @@ export async function addSubscriber(email: string): Promise<boolean> {
 
     // Write back to file
     console.log('🔵 [NEWSLETTER STORAGE] Writing subscribers to file:', EMAILS_FILE_PATH)
+
+    // Check if we're in a read-only environment BEFORE attempting write
+    if (process.env.VERCEL) {
+      console.error(
+        '❌ [NEWSLETTER STORAGE] Cannot write to file system in Vercel production environment. File system is read-only.'
+      )
+      console.error(
+        '❌ [NEWSLETTER STORAGE] Please configure Vercel KV by setting KV_URL and KV_REST_API_TOKEN environment variables in Vercel dashboard.'
+      )
+      console.error(
+        '❌ [NEWSLETTER STORAGE] Email subscription will still be sent to GHL webhook, but not saved locally.'
+      )
+      // Return true so the API doesn't fail, but log the issue
+      return true
+    }
+
     try {
       // Ensure the file has proper formatting
       const fileContent = JSON.stringify(subscribers, null, 2)
@@ -224,8 +240,11 @@ export async function addSubscriber(email: string): Promise<boolean> {
       // In serverless environments (like Vercel), file system is read-only
       // This is expected and not a critical error - the webhook will still be sent
       if (errorCode === 'EROFS' || errorCode === 'EACCES' || process.env.VERCEL) {
-        console.warn(
-          '⚠️ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Please set up Vercel KV for persistent storage.'
+        console.error(
+          '❌ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Please set up Vercel KV for persistent storage.'
+        )
+        console.error(
+          '❌ [NEWSLETTER STORAGE] Set KV_URL and KV_REST_API_TOKEN environment variables in Vercel dashboard.'
         )
         // Return true to indicate "success" - the subscription will be handled by webhook
         // But warn that storage isn't working
