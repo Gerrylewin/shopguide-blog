@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { createClient } from '@supabase/supabase-js'
 import { kv } from '@vercel/kv'
 
 // Use absolute path resolution for better reliability
@@ -12,6 +13,23 @@ export interface Subscriber {
 }
 
 /**
+ * Check if Supabase is available
+ */
+function isSupabaseAvailable(): boolean {
+  return !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
+}
+
+/**
+ * Get Supabase client
+ */
+function getSupabaseClient() {
+  if (!isSupabaseAvailable()) {
+    throw new Error('Supabase is not configured')
+  }
+  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+}
+
+/**
  * Check if Vercel KV is available
  */
 function isKVAvailable(): boolean {
@@ -19,10 +37,38 @@ function isKVAvailable(): boolean {
 }
 
 /**
- * Get all newsletter subscribers from KV or file system
+ * Get all newsletter subscribers from Supabase, KV, or file system
  */
 export async function getSubscribers(): Promise<Subscriber[]> {
-  // Use Vercel KV if available (production)
+  // Priority 1: Supabase (works everywhere, free tier available)
+  if (isSupabaseAvailable()) {
+    try {
+      console.log('🔵 [NEWSLETTER STORAGE] Using Supabase storage')
+      const supabase = getSupabaseClient()
+
+      const { data, error } = await supabase
+        .from('newsletter_subscribers')
+        .select('email, subscribed_at')
+        .order('subscribed_at', { ascending: false })
+
+      if (error) {
+        console.error('❌ [NEWSLETTER STORAGE] Error reading from Supabase:', error)
+        // Fall through to next storage method
+      } else if (data) {
+        const subscribers: Subscriber[] = data.map((row) => ({
+          email: row.email,
+          subscribedAt: row.subscribed_at,
+        }))
+        console.log('✅ [NEWSLETTER STORAGE] Found', subscribers.length, 'subscribers in Supabase')
+        return subscribers
+      }
+    } catch (error) {
+      console.error('❌ [NEWSLETTER STORAGE] Error with Supabase:', error)
+      // Fall through to next storage method
+    }
+  }
+
+  // Priority 2: Vercel KV (if available)
   if (isKVAvailable()) {
     try {
       console.log('🔵 [NEWSLETTER STORAGE] Using Vercel KV storage')
@@ -35,12 +81,11 @@ export async function getSubscribers(): Promise<Subscriber[]> {
       return subscribers
     } catch (error) {
       console.error('❌ [NEWSLETTER STORAGE] Error reading from KV:', error)
-      // Fallback to empty array if KV fails
-      return []
+      // Fall through to file system
     }
   }
 
-  // Fallback to file system (local development)
+  // Priority 3: File system (local development only)
   try {
     console.log('🔵 [NEWSLETTER STORAGE] Using file system storage')
     const fileContent = await fs.readFile(EMAILS_FILE_PATH, 'utf-8')
@@ -119,8 +164,46 @@ export async function getSubscribers(): Promise<Subscriber[]> {
 export async function addSubscriber(email: string): Promise<boolean> {
   try {
     const normalizedEmail = email.toLowerCase()
+    const subscribedAt = new Date().toISOString()
 
-    // Use Vercel KV if available (production)
+    // Priority 1: Supabase (works everywhere)
+    if (isSupabaseAvailable()) {
+      try {
+        console.log('🔵 [NEWSLETTER STORAGE] Using Supabase storage')
+        const supabase = getSupabaseClient()
+
+        // Check if email already exists
+        const { data: existing } = await supabase
+          .from('newsletter_subscribers')
+          .select('email')
+          .eq('email', normalizedEmail)
+          .single()
+
+        if (existing) {
+          console.log('⚠️ [NEWSLETTER STORAGE] Email already exists in Supabase:', normalizedEmail)
+          return false // Email already subscribed
+        }
+
+        // Add new subscriber
+        const { error } = await supabase.from('newsletter_subscribers').insert({
+          email: normalizedEmail,
+          subscribed_at: subscribedAt,
+        })
+
+        if (error) {
+          console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber to Supabase:', error)
+          throw error
+        }
+
+        console.log('✅ [NEWSLETTER STORAGE] Successfully saved subscriber to Supabase')
+        return true
+      } catch (error) {
+        console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber to Supabase:', error)
+        // Fall through to next storage method
+      }
+    }
+
+    // Priority 2: Vercel KV (if available)
     if (isKVAvailable()) {
       try {
         console.log('🔵 [NEWSLETTER STORAGE] Using Vercel KV storage')
@@ -137,7 +220,7 @@ export async function addSubscriber(email: string): Promise<boolean> {
         // Add new subscriber
         const newSubscriber: Subscriber = {
           email: normalizedEmail,
-          subscribedAt: new Date().toISOString(),
+          subscribedAt: subscribedAt,
         }
         subscribers.push(newSubscriber)
 
@@ -148,15 +231,29 @@ export async function addSubscriber(email: string): Promise<boolean> {
         return true
       } catch (error) {
         console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber to KV:', error)
-        throw error
+        // Fall through to file system
       }
     }
 
-    // Fallback to file system (local development)
+    // Priority 3: File system (local development only)
+    // Check if we're in a read-only environment BEFORE attempting write
+    if (process.env.VERCEL) {
+      console.error(
+        '❌ [NEWSLETTER STORAGE] Cannot write to file system in Vercel production environment. File system is read-only.'
+      )
+      console.error(
+        '❌ [NEWSLETTER STORAGE] Please configure Supabase (recommended) or Vercel KV for persistent storage.'
+      )
+      console.error(
+        '❌ [NEWSLETTER STORAGE] Email subscription will still be sent to GHL webhook, but not saved locally.'
+      )
+      // Return true so the API doesn't fail, but log the issue
+      return true
+    }
+
     console.log('🔵 [NEWSLETTER STORAGE] Using file system storage')
     console.log('🔵 [NEWSLETTER STORAGE] File path:', EMAILS_FILE_PATH)
     console.log('🔵 [NEWSLETTER STORAGE] Process cwd:', process.cwd())
-    console.log('🔵 [NEWSLETTER STORAGE] Vercel environment:', !!process.env.VERCEL)
 
     // Ensure data directory exists
     const dataDir = path.dirname(EMAILS_FILE_PATH)
@@ -188,26 +285,11 @@ export async function addSubscriber(email: string): Promise<boolean> {
     // Add new subscriber
     subscribers.push({
       email: normalizedEmail,
-      subscribedAt: new Date().toISOString(),
+      subscribedAt: subscribedAt,
     })
 
     // Write back to file
     console.log('🔵 [NEWSLETTER STORAGE] Writing subscribers to file:', EMAILS_FILE_PATH)
-
-    // Check if we're in a read-only environment BEFORE attempting write
-    if (process.env.VERCEL) {
-      console.error(
-        '❌ [NEWSLETTER STORAGE] Cannot write to file system in Vercel production environment. File system is read-only.'
-      )
-      console.error(
-        '❌ [NEWSLETTER STORAGE] Please configure Vercel KV by setting KV_URL and KV_REST_API_TOKEN environment variables in Vercel dashboard.'
-      )
-      console.error(
-        '❌ [NEWSLETTER STORAGE] Email subscription will still be sent to GHL webhook, but not saved locally.'
-      )
-      // Return true so the API doesn't fail, but log the issue
-      return true
-    }
 
     try {
       // Ensure the file has proper formatting
@@ -241,10 +323,7 @@ export async function addSubscriber(email: string): Promise<boolean> {
       // This is expected and not a critical error - the webhook will still be sent
       if (errorCode === 'EROFS' || errorCode === 'EACCES' || process.env.VERCEL) {
         console.error(
-          '❌ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Please set up Vercel KV for persistent storage.'
-        )
-        console.error(
-          '❌ [NEWSLETTER STORAGE] Set KV_URL and KV_REST_API_TOKEN environment variables in Vercel dashboard.'
+          '❌ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Please set up Supabase or Vercel KV for persistent storage.'
         )
         // Return true to indicate "success" - the subscription will be handled by webhook
         // But warn that storage isn't working
@@ -273,7 +352,22 @@ export async function removeSubscriber(email: string): Promise<boolean> {
   try {
     const normalizedEmail = email.toLowerCase()
 
-    // Use Vercel KV if available
+    // Priority 1: Supabase
+    if (isSupabaseAvailable()) {
+      const supabase = getSupabaseClient()
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .delete()
+        .eq('email', normalizedEmail)
+
+      if (error) {
+        console.error('❌ [NEWSLETTER STORAGE] Failed to remove subscriber from Supabase:', error)
+        throw error
+      }
+      return true
+    }
+
+    // Priority 2: Vercel KV
     if (isKVAvailable()) {
       const subscribers = await getSubscribers()
       const initialLength = subscribers.length
@@ -287,7 +381,7 @@ export async function removeSubscriber(email: string): Promise<boolean> {
       return true
     }
 
-    // Fallback to file system
+    // Priority 3: File system
     let subscribers = await getSubscribers()
     const initialLength = subscribers.length
 
