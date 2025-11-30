@@ -15,19 +15,25 @@ Your Cloudflare D1 database has been created:
 2. Navigate to **Workers & Pages** → **D1**
 3. Click on **newsletter-storage** database
 4. Click the **Console** tab
-5. Paste this SQL and click **Run**:
+5. **Run these SQL statements ONE AT A TIME** (Cloudflare D1 console requires separate queries):
 
+**First query** - Create the table:
 ```sql
 CREATE TABLE IF NOT EXISTS newsletter_subscribers (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   email TEXT UNIQUE NOT NULL,
   subscribed_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+```
+Click **Execute** - You should see "Success" message.
 
+**Second query** - Create the index:
+```sql
 CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_email ON newsletter_subscribers(email);
 ```
+Click **Execute** again - You should see "Success" message.
 
-You should see "Success" message.
+⚠️ **Important**: Run each query separately, don't paste both at once!
 
 ## Step 2: Get Your API Token
 
