@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 /**
  * POST /api/newsletter/check-new-posts
  * Manually trigger a check for new blog posts and send emails
- * 
+ *
  * This endpoint can be called:
  * - Manually via API
  * - Via a webhook when a new blog post is published
@@ -18,15 +18,15 @@ export async function POST(req: NextRequest) {
     // Optional: Add authentication/authorization here
     const authHeader = req.headers.get('authorization')
     const expectedToken = process.env.NEWSLETTER_API_TOKEN
-    
+
     if (expectedToken && authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-    
+
     console.log('🔵 [NEWSLETTER CHECK] Checking for new blog posts to email...')
-    
+
     const result = await checkAndSendNewPosts(allBlogs)
-    
+
     return NextResponse.json({
       message: 'Blog post check completed',
       ...result,
@@ -51,16 +51,12 @@ export async function GET() {
   try {
     const { getSentPosts } = await import('@/lib/blog-post-tracker')
     const sentPosts = await getSentPosts()
-    
+
     return NextResponse.json({
       sentPosts: sentPosts.length,
       posts: sentPosts,
     })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to get sent posts' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to get sent posts' }, { status: 500 })
   }
 }
-

@@ -49,9 +49,8 @@ export async function sendBlogPostEmails(post: BlogPost) {
     const emailSubject = `New Blog Post: ${post.title}`
 
     // Generate main points HTML if available
-    const mainPointsHtml = post.mainPoints && post.mainPoints.length > 0 
-      ? formatMainPointsAsHTML(post.mainPoints) 
-      : ''
+    const mainPointsHtml =
+      post.mainPoints && post.mainPoints.length > 0 ? formatMainPointsAsHTML(post.mainPoints) : ''
 
     // Generate email HTML with tracking for each subscriber
     const generateEmailHtml = (subscriberEmail: string) => {
@@ -91,21 +90,29 @@ export async function sendBlogPostEmails(post: BlogPost) {
                   
                   <!-- Content container -->
                   <div style="padding: 30px 20px;">
-                    ${post.images && post.images.length > 0 ? `
+                    ${
+                      post.images && post.images.length > 0
+                        ? `
                       <img src="${post.images[0]}" alt="${post.title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; display: block;" />
-                    ` : ''}
+                    `
+                        : ''
+                    }
                     
                     <h2 style="color: #0D0324; margin: 0 0 20px 0; font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 28px; font-weight: 600; line-height: 1.3;">
                       ${post.title}
                     </h2>
                     
-                    ${post.summary ? `
+                    ${
+                      post.summary
+                        ? `
                       <div style="background-color: #E7E7E7; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #2E9AB3;">
                         <p style="font-size: 16px; color: #313131; margin: 0; line-height: 1.7;">
                           ${post.summary}
                         </p>
                       </div>
-                    ` : ''}
+                    `
+                        : ''
+                    }
                     
                     ${mainPointsHtml}
                     

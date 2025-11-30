@@ -10,7 +10,7 @@ const GHL_WEBHOOK_URL =
 async function sendToGHLWebhook(email: string, success: boolean) {
   try {
     console.log('🔵 [GHL WEBHOOK] Sending to GHL webhook:', GHL_WEBHOOK_URL)
-    
+
     // GHL webhooks typically expect email in specific field names
     // Try multiple formats to ensure compatibility
     const payloads = [
@@ -18,7 +18,7 @@ async function sendToGHLWebhook(email: string, success: boolean) {
       { contactEmail: email, email: email },
       { email: email },
     ]
-    
+
     // Try the most common format first
     const response = await fetch(GHL_WEBHOOK_URL, {
       method: 'POST',
@@ -34,13 +34,17 @@ async function sendToGHLWebhook(email: string, success: boolean) {
         success: success,
       }),
     })
-    
+
     const responseText = await response.text()
     console.log('🔵 [GHL WEBHOOK] Response status:', response.status)
     console.log('🔵 [GHL WEBHOOK] Response body:', responseText)
-    
+
     if (!response.ok) {
-      console.warn('⚠️ [GHL WEBHOOK] Webhook returned non-OK status:', response.status, responseText)
+      console.warn(
+        '⚠️ [GHL WEBHOOK] Webhook returned non-OK status:',
+        response.status,
+        responseText
+      )
     } else {
       console.log('✅ [GHL WEBHOOK] GHL webhook sent successfully')
     }

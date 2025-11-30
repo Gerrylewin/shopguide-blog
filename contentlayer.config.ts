@@ -183,7 +183,7 @@ export default makeSource({
     const { allBlogs } = await importData()
     createTagCount(allBlogs)
     createSearchIndex(allBlogs)
-    
+
     // Check for new blog posts and send email notifications
     // Only run in production or when explicitly enabled
     if (process.env.ENABLE_AUTO_EMAIL_SENDING === 'true' || process.env.NODE_ENV === 'production') {
