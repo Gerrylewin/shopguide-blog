@@ -68,7 +68,7 @@ async function executeD1Query(query: string, params: any[] = []): Promise<any> {
   if (result.result && Array.isArray(result.result) && result.result.length > 0) {
     return result.result[0]
   }
-  
+
   return result.result
 }
 
@@ -83,7 +83,7 @@ export async function getD1Subscribers(): Promise<Subscriber[]> {
 
     // Cloudflare D1 returns: { results: [...], success: true, meta: {...} }
     const rows = result?.results || []
-    
+
     if (!Array.isArray(rows)) {
       return []
     }
