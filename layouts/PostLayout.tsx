@@ -65,7 +65,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>
-                        {new Date(date + 'T12:00:00').toLocaleDateString(
+                        {new Date(date).toLocaleDateString(
                           siteMetadata.locale,
                           postDateTemplate
                         )}
