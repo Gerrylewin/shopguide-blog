@@ -4,7 +4,7 @@ import { addSubscriber, getSubscribers } from '@/lib/newsletter-storage'
 export const dynamic = 'force-dynamic'
 
 const GHL_WEBHOOK_URL =
-  'https://services.leadconnectorhq.com/hooks/YwFixzedrximlLRmcQo3/webhook-trigger/168165f1-975c-4127-b2be-01d3eac8856f'
+  'https://services.leadconnectorhq.com/hooks/YwFixzedrximlLRmcQo3/webhook-trigger/cd4a2975-f836-4de6-8c86-ad61618ff1e6'
 
 // Helper function to send email to GHL webhook
 async function sendToGHLWebhook(email: string, success: boolean) {
