@@ -62,6 +62,13 @@ async function executeD1Query(query: string, params: any[] = []): Promise<any> {
     throw new Error(`Cloudflare D1 query failed: ${JSON.stringify(result.errors)}`)
   }
 
+  // Cloudflare D1 REST API returns: { success: true, result: [{ results: [...], meta: {...} }] }
+  // For SELECT queries, the actual rows are in result.result[0].results
+  // For INSERT/DELETE queries, metadata is in result.result[0].meta
+  if (result.result && Array.isArray(result.result) && result.result.length > 0) {
+    return result.result[0]
+  }
+  
   return result.result
 }
 
@@ -74,11 +81,14 @@ export async function getD1Subscribers(): Promise<Subscriber[]> {
       'SELECT email, subscribed_at FROM newsletter_subscribers ORDER BY subscribed_at DESC'
     )
 
-    if (!result || !Array.isArray(result)) {
+    // Cloudflare D1 returns: { results: [...], success: true, meta: {...} }
+    const rows = result?.results || []
+    
+    if (!Array.isArray(rows)) {
       return []
     }
 
-    return result.map((row: any) => ({
+    return rows.map((row: any) => ({
       email: row.email,
       subscribedAt: row.subscribed_at,
     }))
@@ -119,7 +129,9 @@ export async function checkD1SubscriberExists(email: string): Promise<boolean> {
       [email.toLowerCase()]
     )
 
-    return result && Array.isArray(result) && result.length > 0
+    // Cloudflare D1 returns: { results: [...], success: true, meta: {...} }
+    const rows = result?.results || []
+    return Array.isArray(rows) && rows.length > 0
   } catch (error) {
     console.error('❌ [CLOUDFLARE D1] Error checking subscriber:', error)
     return false
