@@ -78,7 +78,9 @@ async function main() {
     console.log(`✅ Successfully removed ${normalizedEmail} from Cloudflare D1`)
   } else {
     console.log(`⚠️  Email ${normalizedEmail} was not found in Cloudflare D1`)
-    console.log("\n💡 If you're testing on a deployed site, check your Vercel environment variables:")
+    console.log(
+      "\n💡 If you're testing on a deployed site, check your Vercel environment variables:"
+    )
     console.log('   - CLOUDFLARE_ACCOUNT_ID')
     console.log('   - CLOUDFLARE_API_TOKEN')
     console.log('   - CLOUDFLARE_D1_DATABASE_ID')
