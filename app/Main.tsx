@@ -37,12 +37,7 @@ export default function Home({ posts }) {
                         <dd className="pt-2">
                           <Link href={`/blog/${slug}`} aria-label={title}>
                             <div className="relative aspect-video w-full overflow-hidden rounded-lg transition-opacity hover:opacity-80">
-                              <Image
-                                src={displayImage}
-                                alt={title}
-                                fill
-                                className="object-cover"
-                              />
+                              <Image src={displayImage} alt={title} fill className="object-cover" />
                             </div>
                           </Link>
                         </dd>
