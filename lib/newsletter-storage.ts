@@ -194,13 +194,31 @@ export async function addSubscriber(email: string): Promise<boolean> {
     // Write back to file
     console.log('🔵 [NEWSLETTER STORAGE] Writing subscribers to file:', EMAILS_FILE_PATH)
     try {
-      await fs.writeFile(EMAILS_FILE_PATH, JSON.stringify(subscribers, null, 2), 'utf-8')
-      console.log('✅ [NEWSLETTER STORAGE] Successfully wrote subscribers file')
+      // Ensure the file has proper formatting
+      const fileContent = JSON.stringify(subscribers, null, 2)
+      await fs.writeFile(EMAILS_FILE_PATH, fileContent, 'utf-8')
+      
+      // Verify the write was successful by reading it back
+      const verifyContent = await fs.readFile(EMAILS_FILE_PATH, 'utf-8')
+      const verifyParsed = JSON.parse(verifyContent)
+      if (verifyParsed.length !== subscribers.length) {
+        console.warn('⚠️ [NEWSLETTER STORAGE] Write verification failed - file length mismatch')
+      }
+      
+      console.log('✅ [NEWSLETTER STORAGE] Successfully wrote subscribers file with', subscribers.length, 'subscribers')
       return true
     } catch (writeError) {
+      const errorCode = (writeError as NodeJS.ErrnoException).code
+      console.error('❌ [NEWSLETTER STORAGE] Write error details:', {
+        code: errorCode,
+        message: writeError instanceof Error ? writeError.message : String(writeError),
+        path: EMAILS_FILE_PATH,
+        cwd: process.cwd(),
+        vercel: !!process.env.VERCEL,
+      })
+      
       // In serverless environments (like Vercel), file system is read-only
       // This is expected and not a critical error - the webhook will still be sent
-      const errorCode = (writeError as NodeJS.ErrnoException).code
       if (errorCode === 'EROFS' || errorCode === 'EACCES' || process.env.VERCEL) {
         console.warn(
           '⚠️ [NEWSLETTER STORAGE] File system is read-only (serverless environment). Please set up Vercel KV for persistent storage.'

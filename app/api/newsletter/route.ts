@@ -10,19 +10,40 @@ const GHL_WEBHOOK_URL =
 async function sendToGHLWebhook(email: string, success: boolean) {
   try {
     console.log('🔵 [GHL WEBHOOK] Sending to GHL webhook:', GHL_WEBHOOK_URL)
-    await fetch(GHL_WEBHOOK_URL, {
+    
+    // GHL webhooks typically expect email in specific field names
+    // Try multiple formats to ensure compatibility
+    const payloads = [
+      { email: email, Email: email }, // Try both lowercase and capitalized
+      { contactEmail: email, email: email },
+      { email: email },
+    ]
+    
+    // Try the most common format first
+    const response = await fetch(GHL_WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         email: email,
+        Email: email, // Include capitalized version for GHL compatibility
+        contactEmail: email, // Alternative field name
         source: 'newsletter_subscription',
         timestamp: new Date().toISOString(),
         success: success,
       }),
     })
-    console.log('✅ [GHL WEBHOOK] GHL webhook sent successfully')
+    
+    const responseText = await response.text()
+    console.log('🔵 [GHL WEBHOOK] Response status:', response.status)
+    console.log('🔵 [GHL WEBHOOK] Response body:', responseText)
+    
+    if (!response.ok) {
+      console.warn('⚠️ [GHL WEBHOOK] Webhook returned non-OK status:', response.status, responseText)
+    } else {
+      console.log('✅ [GHL WEBHOOK] GHL webhook sent successfully')
+    }
   } catch (webhookError) {
     console.error('❌ [GHL WEBHOOK] Failed to send to GHL webhook:', webhookError)
     // Don't throw - webhook failure shouldn't fail the subscription

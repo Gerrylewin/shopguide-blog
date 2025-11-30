@@ -183,5 +183,24 @@ export default makeSource({
     const { allBlogs } = await importData()
     createTagCount(allBlogs)
     createSearchIndex(allBlogs)
+    
+    // Check for new blog posts and send email notifications
+    // Only run in production or when explicitly enabled
+    if (process.env.ENABLE_AUTO_EMAIL_SENDING === 'true' || process.env.NODE_ENV === 'production') {
+      try {
+        // Dynamic import to avoid build-time errors if email sending fails
+        const { checkAndSendNewPosts } = await import('./lib/blog-post-tracker')
+        const result = await checkAndSendNewPosts(allBlogs)
+        console.log('📧 Blog post email check:', {
+          checked: result.checked,
+          sent: result.sent,
+          skipped: result.skipped,
+          errors: result.errors.length > 0 ? result.errors : undefined,
+        })
+      } catch (error) {
+        // Don't fail the build if email sending fails
+        console.warn('⚠️ Failed to check for new blog posts to email:', error)
+      }
+    }
   },
 })

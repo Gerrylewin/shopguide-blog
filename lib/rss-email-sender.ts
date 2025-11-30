@@ -7,6 +7,7 @@ import {
   getTrackingPixelUrl,
   getTrackedLinkUrl,
 } from './newsletter-tracking'
+import { extractMainPoints, formatMainPointsAsHTML, generateEmailSummary } from './blog-post-utils'
 
 interface BlogPost {
   title: string
@@ -14,6 +15,7 @@ interface BlogPost {
   date: string
   summary?: string
   images?: string[]
+  mainPoints?: string[] // Optional: pre-extracted main points
 }
 
 /**
@@ -46,6 +48,11 @@ export async function sendBlogPostEmails(post: BlogPost) {
     // Email content with tracking
     const emailSubject = `New Blog Post: ${post.title}`
 
+    // Generate main points HTML if available
+    const mainPointsHtml = post.mainPoints && post.mainPoints.length > 0 
+      ? formatMainPointsAsHTML(post.mainPoints) 
+      : ''
+
     // Generate email HTML with tracking for each subscriber
     const generateEmailHtml = (subscriberEmail: string) => {
       const trackingPixel = getTrackingPixelUrl(emailId, subscriberEmail, siteMetadata.siteUrl)
@@ -70,33 +77,64 @@ export async function sendBlogPostEmails(post: BlogPost) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>${post.title}</title>
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background-color: #f4f4f4; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
-            <h1 style="color: #333; margin-top: 0;">${siteMetadata.title}</h1>
-          </div>
-          
-          ${post.images && post.images.length > 0 ? `<img src="${post.images[0]}" alt="${post.title}" style="max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 20px;" />` : ''}
-          
-          <h2 style="color: #2c3e50;">${post.title}</h2>
-          
-          ${post.summary ? `<p style="font-size: 16px; color: #666;">${post.summary}</p>` : ''}
-          
-          <div style="margin: 30px 0;">
-            <a href="${trackedPostUrl}" 
-               style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">
-              Read Full Article →
-            </a>
-          </div>
-          
-          <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-          
-          <p style="font-size: 12px; color: #999; text-align: center;">
-            You're receiving this because you subscribed to our newsletter.<br>
-            <a href="${trackedUnsubscribeUrl}" style="color: #999;">Unsubscribe</a>
-          </p>
-          
-          <!-- Tracking pixel -->
-          <img src="${trackingPixel}" width="1" height="1" style="display: block; width: 1px; height: 1px; border: 0;" alt="" />
+        <body style="font-family: 'Questrial', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #313131; background-color: #ffffff; margin: 0; padding: 0;">
+          <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff;">
+            <tr>
+              <td style="padding: 0;">
+                <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+                  <!-- Header with brand color -->
+                  <div style="background: linear-gradient(135deg, #2E9AB3 0%, #1e7a8f 100%); padding: 30px 20px; text-align: center;">
+                    <h1 style="color: #ffffff; margin: 0; font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 24px; font-weight: 600;">
+                      ${siteMetadata.title}
+                    </h1>
+                  </div>
+                  
+                  <!-- Content container -->
+                  <div style="padding: 30px 20px;">
+                    ${post.images && post.images.length > 0 ? `
+                      <img src="${post.images[0]}" alt="${post.title}" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 25px; display: block;" />
+                    ` : ''}
+                    
+                    <h2 style="color: #0D0324; margin: 0 0 20px 0; font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 28px; font-weight: 600; line-height: 1.3;">
+                      ${post.title}
+                    </h2>
+                    
+                    ${post.summary ? `
+                      <div style="background-color: #E7E7E7; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #2E9AB3;">
+                        <p style="font-size: 16px; color: #313131; margin: 0; line-height: 1.7;">
+                          ${post.summary}
+                        </p>
+                      </div>
+                    ` : ''}
+                    
+                    ${mainPointsHtml}
+                    
+                    <!-- CTA Button with brand color -->
+                    <div style="margin: 30px 0; text-align: center;">
+                      <a href="${trackedPostUrl}" 
+                         style="background-color: #2E9AB3; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: 600; font-size: 16px; transition: background-color 0.3s;">
+                        Read Full Article →
+                      </a>
+                    </div>
+                    
+                    <!-- Divider -->
+                    <hr style="border: none; border-top: 2px solid #E7E7E7; margin: 35px 0;" />
+                    
+                    <!-- Footer -->
+                    <p style="font-size: 13px; color: #666; text-align: center; margin: 0 0 10px 0;">
+                      You're receiving this because you subscribed to our newsletter.
+                    </p>
+                    <p style="font-size: 13px; color: #666; text-align: center; margin: 0;">
+                      <a href="${trackedUnsubscribeUrl}" style="color: #2E9AB3; text-decoration: underline;">Unsubscribe</a>
+                    </p>
+                  </div>
+                  
+                  <!-- Tracking pixel -->
+                  <img src="${trackingPixel}" width="1" height="1" style="display: block; width: 1px; height: 1px; border: 0; margin: 0;" alt="" />
+                </div>
+              </td>
+            </tr>
+          </table>
         </body>
       </html>
     `
