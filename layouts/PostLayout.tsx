@@ -58,14 +58,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
         <ScrollTopAndComment />
         <article data-post-slug={slug}>
           <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
-            <header className="pt-6 xl:pb-6">
+            <header className="pt-6 xl:pb-6 xl:ml-2.5">
               <div className="space-y-1 text-center">
                 <dl className="space-y-10">
                   <div>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>
-                        {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                        {new Date(date + 'T12:00:00').toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                       </time>
                     </dd>
                   </div>
@@ -77,7 +77,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </header>
             {/* Full-width hero image below title */}
             {displayImage && (
-              <div className="w-full pt-6 pb-8">
+              <div className="w-full pt-6 pb-8 xl:ml-2.5">
                 <Bleed>
                   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
                     <Image src={displayImage} alt={title} fill className="object-cover" />
@@ -85,7 +85,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </Bleed>
               </div>
             )}
-            <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-5 xl:gap-x-8 xl:divide-y-0 dark:divide-gray-700">
+            <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-5 xl:gap-x-8 xl:divide-y-0 xl:ml-2.5 dark:divide-gray-700">
               <dl className="pt-6 pb-10 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
                 <dt className="sr-only">Authors</dt>
                 <dd>

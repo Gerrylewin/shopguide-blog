@@ -99,7 +99,7 @@ export default function BlogAd() {
       {/* Desktop: Fixed on the side, slides in from right at 25% scroll */}
       <div className="hidden lg:block">
         <div
-          className={`fixed top-24 right-8 z-40 w-52 transition-all duration-500 ease-out ${
+          className={`fixed top-24 right-4 z-40 w-52 transition-all duration-500 ease-out ${
             showAd ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-full opacity-0'
           }`}
         >

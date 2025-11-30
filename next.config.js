@@ -86,6 +86,10 @@ module.exports = () => {
           protocol: 'https',
           hostname: 'private-us-east-1.manuscdn.com',
         },
+        {
+          protocol: 'https',
+          hostname: 'shopgblog-wvpm3pdv.manus.space',
+        },
       ],
       unoptimized,
     },
