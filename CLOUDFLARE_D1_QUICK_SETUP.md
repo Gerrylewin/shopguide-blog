@@ -18,6 +18,7 @@ Your Cloudflare D1 database has been created:
 5. **Run these SQL statements ONE AT A TIME** (Cloudflare D1 console requires separate queries):
 
 **First query** - Create the table:
+
 ```sql
 CREATE TABLE IF NOT EXISTS newsletter_subscribers (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,12 +26,15 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
   subscribed_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 ```
+
 Click **Execute** - You should see "Success" message.
 
 **Second query** - Create the index:
+
 ```sql
 CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_email ON newsletter_subscribers(email);
 ```
+
 Click **Execute** again - You should see "Success" message.
 
 ⚠️ **Important**: Run each query separately, don't paste both at once!
@@ -51,15 +55,18 @@ Click **Execute** again - You should see "Success" message.
 4. Add these three variables:
 
 ### Variable 1: CLOUDFLARE_ACCOUNT_ID
+
 - **Value**: `eaabbba4ca3d9e87724080904f8da93a`
 - **Environment**: Production, Preview, Development
 
 ### Variable 2: CLOUDFLARE_API_TOKEN
+
 - **Value**: (paste your API token from Step 2)
 - **Environment**: Production, Preview, Development
 - ⚠️ **Mark as "Sensitive"**
 
 ### Variable 3: CLOUDFLARE_D1_DATABASE_ID
+
 - **Value**: `b31cfb5b-cd34-469d-97cc-250866c9314a`
 - **Environment**: Production, Preview, Development
 
@@ -89,6 +96,7 @@ After redeploying, visit:
 `https://blog.yourshopguide.com/api/newsletter/debug`
 
 This will show you:
+
 - ✅ Cloudflare D1 is configured
 - ✅ Current subscriber count
 - ✅ List of subscribers
@@ -98,15 +106,16 @@ Then test the newsletter signup form - emails will be saved to Cloudflare D1!
 ## Summary
 
 You now have:
+
 - ✅ D1 Database created
 - ✅ Account ID: `eaabbba4ca3d9e87724080904f8da93a`
 - ✅ Database ID: `b31cfb5b-cd34-469d-97cc-250866c9314a`
 
 **Next steps:**
+
 1. Create the table (Step 1 - via dashboard)
 2. Get API token (Step 2)
 3. Add environment variables (Step 3)
 4. Redeploy (Step 5)
 
 That's it! 🎉
-
