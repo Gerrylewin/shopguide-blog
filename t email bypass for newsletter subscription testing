@@ -1,0 +1,11 @@
+ CLOUDFLARE_D1_QUICK_SETUP.md | 121 [31m-------------------------[m
+ app/api/newsletter/route.ts  |   8 [32m+[m[31m-[m
+ docs/CLOUDFLARE_D1_SETUP.md  | 204 [31m-------------------------------------------[m
+ docs/PRETTIER_SETUP.md       | 159 [31m---------------------------------[m
+ docs/SETUP.md                |  78 [32m++++++++++[m[31m-------[m
+ docs/SUPABASE_SETUP.md       | 184 [31m--------------------------------------[m
+ docs/VERCEL_KV_SETUP.md      | 107 [31m-----------------------[m
+ lib/newsletter-storage.ts    | 121 [32m++++++++++++++++++[m[31m-------[m
+ schema-index.sql             |   2 [31m-[m
+ schema.sql                   |   5 [31m--[m
+ 10 files changed, 146 insertions(+), 843 deletions(-)

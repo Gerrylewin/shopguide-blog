@@ -68,6 +68,16 @@ Create a `.env.local` file in the root directory with the following variables:
 BUTTONDOWN_API_KEY=your_buttondown_api_key_here
 ```
 
+### Cloudflare D1 (Already Configured)
+
+```env
+CLOUDFLARE_ACCOUNT_ID=eaabbba4ca3d9e87724080904f8da93a
+CLOUDFLARE_API_TOKEN=your_api_token_here
+CLOUDFLARE_D1_DATABASE_ID=b31cfb5b-cd34-469d-97cc-250866c9314a
+```
+
+**Note**: These should already be set in your Vercel environment variables. For local development, add them to `.env.local`.
+
 ### Analytics (Umami)
 
 ```env
@@ -121,10 +131,24 @@ BASE_PATH=/your-subdirectory
 
 The newsletter system has been set up with the following features:
 
-1. **Dual Storage**: Emails are saved both to your ButtonDown account (via Pliny) AND locally in a JSON file
-2. **GoHighLevel Integration**: Subscriptions automatically trigger a webhook to your GHL automation
-3. **Local Email Database**: A simple JSON-based storage system for managing subscribers
+1. **Cloudflare D1 Database**: Emails are stored in Cloudflare D1 (already configured and ready to use)
+2. **ButtonDown Integration**: Emails are also sent to your ButtonDown account (via Pliny)
+3. **GoHighLevel Integration**: Subscriptions automatically trigger a webhook to your GHL automation
 4. **RSS Email Sender**: Utility to send new blog post notifications to all subscribers
+
+### Cloudflare D1 Setup (Already Complete)
+
+✅ **Database is already configured:**
+
+- Database Name: `newsletter-storage`
+- Database ID: `b31cfb5b-cd34-469d-97cc-250866c9314a`
+- Account ID: `eaabbba4ca3d9e87724080904f8da93a`
+
+The database table and indexes have been created. Environment variables should be set in Vercel:
+
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_D1_DATABASE_ID`
 
 ### Fixed Issues
 
@@ -138,18 +162,15 @@ The newsletter system has been set up with the following features:
 
 ```
 app/api/newsletter/
-├── route.ts                    # Main subscription endpoint (handles ButtonDown + GHL + local storage)
+├── route.ts                    # Main subscription endpoint (handles ButtonDown + GHL + Cloudflare D1)
 ├── subscribers/
 │   └── route.ts               # Manage subscribers (GET, POST, DELETE)
 └── send-post/
     └── route.ts               # Send blog post notifications
 
 lib/
-├── newsletter-storage.ts      # Local JSON-based email storage utilities
+├── newsletter-storage.ts      # Cloudflare D1 database utilities
 └── rss-email-sender.ts        # Email sending utilities for blog posts
-
-data/
-└── newsletter-subscribers.json # Local email storage (gitignored for privacy)
 ```
 
 ### How It Works
@@ -158,31 +179,27 @@ data/
 
 When a user subscribes via the newsletter form:
 
-1. **ButtonDown Integration**: The email is sent to ButtonDown (your newsletter provider)
-2. **Local Storage**: The email is saved to `data/newsletter-subscribers.json`
+1. **Cloudflare D1 Storage**: The email is saved to Cloudflare D1 database
+2. **ButtonDown Integration**: The email is sent to ButtonDown (your newsletter provider)
 3. **GHL Webhook**: A webhook is sent to your GoHighLevel automation
 4. **Response**: A success response is returned to the user
 
-All three operations happen independently - if one fails, the others still succeed.
+All operations happen independently - if one fails, the others still succeed.
 
-#### Local Email Storage
+#### Cloudflare D1 Database Storage
 
-Emails are stored in a simple JSON file format:
+Emails are stored in Cloudflare D1 with the following schema:
 
-```json
-[
-  {
-    "email": "user@example.com",
-    "subscribedAt": "2025-01-15T10:30:00.000Z"
-  }
-]
-```
+- `id`: Auto-incrementing primary key
+- `email`: Unique email address (case-insensitive)
+- `subscribed_at`: Timestamp of subscription
 
 **Features:**
 
-- Automatic duplicate detection (case-insensitive)
+- Automatic duplicate detection (enforced by database UNIQUE constraint)
 - Timestamp tracking
-- Simple file-based storage (no database needed)
+- Scalable cloud-based storage
+- Fast queries with indexed email field
 
 ### Managing Subscribers
 
@@ -581,11 +598,12 @@ If you still see JSON parsing errors:
 3. Verify ButtonDown API credentials are correct
 4. Ensure the request body is being sent correctly from the form
 
-#### Emails Not Saving Locally
+#### Emails Not Saving to Cloudflare D1
 
-1. Check that `data/` directory exists and is writable
-2. Check server logs for file system errors
-3. Verify file permissions
+1. Verify Cloudflare D1 environment variables are set correctly
+2. Check server logs for database connection errors
+3. Verify the database table exists (should already be created)
+4. Test the connection via `/api/newsletter/debug` endpoint
 
 #### GHL Webhook Not Firing
 
@@ -624,11 +642,11 @@ If Giscus comments aren't showing:
 
 ## Privacy & Security
 
-- ✅ Subscriber emails are stored locally in `data/newsletter-subscribers.json`
-- ✅ This file is gitignored (won't be committed to your repo)
+- ✅ Subscriber emails are stored in Cloudflare D1 (cloud database)
+- ✅ Database is secure and managed by Cloudflare
 - ✅ Consider adding authentication to `/api/newsletter/subscribers` endpoints if you expose them publicly
-- ✅ For production, consider using a proper database (PostgreSQL, MongoDB, etc.) instead of JSON files
 - ✅ Never commit `.env.local` or `.env` files to version control
+- ✅ Keep your Cloudflare API token secure and never expose it in client-side code
 
 ---
 

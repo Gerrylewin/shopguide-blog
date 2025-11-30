@@ -127,11 +127,17 @@ async function handler(req: NextRequest) {
     }
 
     try {
+      // TEST MODE: Check if this is the test email
+      const isTestEmail = email.toLowerCase() === 'isaac.g.lewin@gmail.com'
+      if (isTestEmail) {
+        console.log('🧪 [NEWSLETTER API] Test email detected - allowing subscription for testing')
+      }
+
       // Save email to local storage (primary source of truth)
       console.log('🔵 [NEWSLETTER API] Saving email to local storage...')
       const added = await addSubscriber(email)
 
-      if (!added) {
+      if (!added && !isTestEmail) {
         console.log('⚠️ [NEWSLETTER API] Email already subscribed:', email)
         // Still send to GHL to update CRM
         await sendToGHLWebhook(email, false)
