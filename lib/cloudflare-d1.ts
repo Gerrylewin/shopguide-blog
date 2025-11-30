@@ -148,9 +148,11 @@ export async function removeD1Subscriber(email: string): Promise<boolean> {
     ])
 
     // Check if any rows were affected
+    // DELETE returns: { success: true, meta: { changes: number } }
     return result && result.meta && result.meta.changes > 0
   } catch (error) {
     console.error('❌ [CLOUDFLARE D1] Error removing subscriber:', error)
-    throw error
+    // Return false if email doesn't exist or other non-critical errors
+    return false
   }
 }

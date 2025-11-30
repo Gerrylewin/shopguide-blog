@@ -6,9 +6,6 @@ import {
   removeD1Subscriber,
 } from './cloudflare-d1'
 
-// Test email that can subscribe multiple times (for testing purposes)
-const TEST_EMAIL = 'isaac.g.lewin@gmail.com'
-
 export interface Subscriber {
   email: string
   subscribedAt: string
@@ -42,25 +39,11 @@ export async function addSubscriber(email: string): Promise<boolean> {
   const normalizedEmail = email.toLowerCase()
   const subscribedAt = new Date().toISOString()
 
-  // TEST MODE: Allow test email to bypass duplicate check
-  const isTestEmail = normalizedEmail === TEST_EMAIL.toLowerCase()
-  if (isTestEmail) {
-    console.log(
-      '🧪 [NEWSLETTER STORAGE] Test email detected - allowing multiple subscriptions for testing'
-    )
-    // Remove existing entry first to allow re-subscription
-    try {
-      await removeD1Subscriber(normalizedEmail)
-    } catch (error) {
-      // Ignore if email doesn't exist - that's fine
-    }
-  } else {
-    // Check if email already exists
-    const emailExists = await checkD1SubscriberExists(normalizedEmail)
-    if (emailExists) {
-      console.log('⚠️ [NEWSLETTER STORAGE] Email already exists:', normalizedEmail)
-      return false
-    }
+  // Check if email already exists
+  const emailExists = await checkD1SubscriberExists(normalizedEmail)
+  if (emailExists) {
+    console.log('⚠️ [NEWSLETTER STORAGE] Email already exists:', normalizedEmail)
+    return false
   }
 
   // Add new subscriber
