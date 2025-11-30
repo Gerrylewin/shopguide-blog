@@ -1505,6 +1505,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cloudflare/workers-types@npm:^4.20251128.0":
+  version: 4.20251128.0
+  resolution: "@cloudflare/workers-types@npm:4.20251128.0"
+  checksum: 475cf35317d97933555e699148555c101337ccbf36cbde01a45511fec03ef8389763fab41373ff0e3a30d240300d66d32296fe1e4c5fe770629fc87fc4675472
+  languageName: node
+  linkType: hard
+
 "@contentlayer2/cli@npm:0.5.5":
   version: 0.5.5
   resolution: "@contentlayer2/cli@npm:0.5.5"
@@ -12105,6 +12112,7 @@ __metadata:
   resolution: "tailwind-nextjs-starter-blog@workspace:."
   dependencies:
     "@algolia/client-search": ^5.43.0
+    "@cloudflare/workers-types": ^4.20251128.0
     "@docsearch/react": ^3.6.2
     "@eslint/eslintrc": ^3.2.0
     "@eslint/js": ^9.16.0

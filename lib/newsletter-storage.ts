@@ -2,6 +2,13 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { createClient } from '@supabase/supabase-js'
 import { kv } from '@vercel/kv'
+import {
+  isCloudflareD1Available,
+  getD1Subscribers,
+  addD1Subscriber,
+  checkD1SubscriberExists,
+  removeD1Subscriber,
+} from './cloudflare-d1'
 
 // Use absolute path resolution for better reliability
 const EMAILS_FILE_PATH = path.resolve(process.cwd(), 'data', 'newsletter-subscribers.json')
@@ -10,6 +17,13 @@ const KV_KEY = 'newsletter:subscribers'
 export interface Subscriber {
   email: string
   subscribedAt: string
+}
+
+/**
+ * Check if Cloudflare D1 is available
+ */
+function isCloudflareD1AvailableCheck(): boolean {
+  return isCloudflareD1Available()
 }
 
 /**
@@ -37,10 +51,27 @@ function isKVAvailable(): boolean {
 }
 
 /**
- * Get all newsletter subscribers from Supabase, KV, or file system
+ * Get all newsletter subscribers from Cloudflare D1, Supabase, KV, or file system
  */
 export async function getSubscribers(): Promise<Subscriber[]> {
-  // Priority 1: Supabase (works everywhere, free tier available)
+  // Priority 1: Cloudflare D1 (if already using Cloudflare)
+  if (isCloudflareD1AvailableCheck()) {
+    try {
+      console.log('🔵 [NEWSLETTER STORAGE] Using Cloudflare D1 storage')
+      const subscribers = await getD1Subscribers()
+      console.log(
+        '✅ [NEWSLETTER STORAGE] Found',
+        subscribers.length,
+        'subscribers in Cloudflare D1'
+      )
+      return subscribers
+    } catch (error) {
+      console.error('❌ [NEWSLETTER STORAGE] Error with Cloudflare D1:', error)
+      // Fall through to next storage method
+    }
+  }
+
+  // Priority 2: Supabase (works everywhere, free tier available)
   if (isSupabaseAvailable()) {
     try {
       console.log('🔵 [NEWSLETTER STORAGE] Using Supabase storage')
@@ -166,7 +197,38 @@ export async function addSubscriber(email: string): Promise<boolean> {
     const normalizedEmail = email.toLowerCase()
     const subscribedAt = new Date().toISOString()
 
-    // Priority 1: Supabase (works everywhere)
+    // Priority 1: Cloudflare D1 (if already using Cloudflare)
+    if (isCloudflareD1AvailableCheck()) {
+      try {
+        console.log('🔵 [NEWSLETTER STORAGE] Using Cloudflare D1 storage')
+
+        // Check if email already exists
+        const emailExists = await checkD1SubscriberExists(normalizedEmail)
+
+        if (emailExists) {
+          console.log(
+            '⚠️ [NEWSLETTER STORAGE] Email already exists in Cloudflare D1:',
+            normalizedEmail
+          )
+          return false // Email already subscribed
+        }
+
+        // Add new subscriber
+        const success = await addD1Subscriber(normalizedEmail, subscribedAt)
+
+        if (success) {
+          console.log('✅ [NEWSLETTER STORAGE] Successfully saved subscriber to Cloudflare D1')
+          return true
+        }
+
+        return false
+      } catch (error) {
+        console.error('❌ [NEWSLETTER STORAGE] Failed to add subscriber to Cloudflare D1:', error)
+        // Fall through to next storage method
+      }
+    }
+
+    // Priority 2: Supabase (works everywhere)
     if (isSupabaseAvailable()) {
       try {
         console.log('🔵 [NEWSLETTER STORAGE] Using Supabase storage')
@@ -352,7 +414,13 @@ export async function removeSubscriber(email: string): Promise<boolean> {
   try {
     const normalizedEmail = email.toLowerCase()
 
-    // Priority 1: Supabase
+    // Priority 1: Cloudflare D1
+    if (isCloudflareD1AvailableCheck()) {
+      const success = await removeD1Subscriber(normalizedEmail)
+      return success
+    }
+
+    // Priority 2: Supabase
     if (isSupabaseAvailable()) {
       const supabase = getSupabaseClient()
       const { error } = await supabase
