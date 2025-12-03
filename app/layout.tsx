@@ -85,19 +85,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${questrial.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      {/* Google tag (gtag.js) */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-3BNNFQ6N5R"
-        strategy="afterInteractive"
+      {/* Google tag (gtag.js) - placed in head by Next.js */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BNNFQ6N5R"></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3BNNFQ6N5R');
+          `,
+        }}
       />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-3BNNFQ6N5R');
-        `}
-      </Script>
       <link rel="shortcut icon" href={`${basePath}/static/favicons/favicon.ico`} />
       <link rel="icon" type="image/png" href={`${basePath}/static/favicons/favicon-32x32.png`} />
       <link
