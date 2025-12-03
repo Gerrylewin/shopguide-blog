@@ -21,8 +21,8 @@ const CustomLink = ({
     return <a className="break-words" href={href} {...rest} />
   }
 
-  // Use provided target, or default to _blank for external links
-  const linkTarget = target || '_blank'
+  // Use provided target, or default to same tab for external links (for seamless experience)
+  const linkTarget = target // Use explicitly provided target, or undefined (same tab)
   const linkRel = target === '_blank' ? 'noopener noreferrer' : undefined
 
   return <a className="break-words" target={linkTarget} rel={linkRel} href={href} {...rest} />

@@ -13,6 +13,7 @@ import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
+import Script from 'next/script'
 
 const archivo = Archivo({
   subsets: ['latin'],
@@ -84,6 +85,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${questrial.variable} scroll-smooth`}
       suppressHydrationWarning
     >
+      {/* Google tag (gtag.js) */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-3BNNFQ6N5R"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-3BNNFQ6N5R');
+        `}
+      </Script>
       <link rel="shortcut icon" href={`${basePath}/static/favicons/favicon.ico`} />
       <link rel="icon" type="image/png" href={`${basePath}/static/favicons/favicon-32x32.png`} />
       <link
