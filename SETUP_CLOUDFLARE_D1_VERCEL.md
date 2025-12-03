@@ -74,6 +74,3 @@ The code is correct and working. The issue was simply that the environment varia
 3. GHL webhook still worked (it's independent)
 
 Now with the env vars set, Cloudflare D1 will be used and emails will be saved properly!
-
-
-
