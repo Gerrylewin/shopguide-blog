@@ -7,6 +7,7 @@ import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import NextImage from 'next/image'
 
+// Header component with navigation and theme switching
 const Header = () => {
   let headerClass = 'flex items-center w-full justify-between py-10'
   if (siteMetadata.stickyNav) {
