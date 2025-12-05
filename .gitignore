@@ -56,3 +56,6 @@ next-env.d.ts
 
 # lock files (keep only yarn.lock, ignore package-lock.json if using yarn)
 package-lock.json
+
+.vercel
+.env*.local
