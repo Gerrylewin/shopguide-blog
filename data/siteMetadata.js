@@ -43,9 +43,9 @@ const siteMetadata = {
     //   src: '', // e.g. https://plausible.my-domain.com/js/script.js
     // },
     // simpleAnalytics: {},
-    // posthogAnalytics: {
-    //   posthogProjectApiKey: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
-    // },
+    posthogAnalytics: {
+      posthogProjectApiKey: 'phc_kvJ3pTMrXx2oOOPFXH9z2epaoyoHUH5MLA6tMLIUXJk',
+    },
     // googleAnalytics: {
     //   googleAnalyticsId: '', // e.g. G-XXXXXXX
     // },
