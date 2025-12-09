@@ -110,7 +110,7 @@
 @layer utilities {
   .prose {
     font-family: var(--font-sans);
-    & a {
+    & :where(a):not(:where([class])) {
       color: var(--color-primary-500);
       &:hover {
         color: var(--color-primary-600);
@@ -134,7 +134,7 @@
 
   .prose-invert {
     font-family: var(--font-sans);
-    & a {
+    & :where(a):not(:where([class])) {
       color: var(--color-primary-500);
       &:hover {
         color: var(--color-primary-400);
