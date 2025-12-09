@@ -143,6 +143,22 @@ export function BlogAdInlineWithInsertion() {
       const adElement = document.getElementById('blog-ad-inline-mobile')
       if (!adElement) return
 
+      // If there's an About Author section, anchor the ad before it
+      const aboutAuthorAnchor =
+        proseElement.querySelector('#about-author') ||
+        Array.from(proseElement.querySelectorAll('h2')).find(
+          (heading) => heading.textContent?.trim().toLowerCase() === 'about author'
+        )
+
+      if (aboutAuthorAnchor && aboutAuthorAnchor.parentNode) {
+        adElement.style.display = 'block'
+        if (adElement.parentNode) {
+          adElement.parentNode.removeChild(adElement)
+        }
+        aboutAuthorAnchor.parentNode.insertBefore(adElement, aboutAuthorAnchor)
+        return
+      }
+
       // Look for h2 with "References" text
       const headings = proseElement.querySelectorAll('h2')
       let referencesHeading: Element | null = null
