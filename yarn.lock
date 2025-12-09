@@ -3159,6 +3159,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@posthog/core@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@posthog/core@npm:1.7.1"
+  dependencies:
+    cross-spawn: ^7.0.6
+  checksum: 1d0f4ea99a8db76c5e5dd570825545f5d200c2776666bf9ccd7922a9f52fc5444c4dbb331bcb5d167665a9d0179a5728cdc35b655cdfe08643940eaa5b5e20cb
+  languageName: node
+  linkType: hard
+
 "@protobufjs/aspromise@npm:^1.1.1, @protobufjs/aspromise@npm:^1.1.2":
   version: 1.1.2
   resolution: "@protobufjs/aspromise@npm:1.1.2"
@@ -5225,6 +5234,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^3.38.1":
+  version: 3.47.0
+  resolution: "core-js@npm:3.47.0"
+  checksum: 33ed738fbf1d8596400915ed8ff02538cc89e805d7298e52dbac34b9aecd62400cf84905ce6d5fabd5cc96cb61395907d67d8b89067263f3d7fff8e79a230109
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:^1.0.3, core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -6518,6 +6534,13 @@ __metadata:
   dependencies:
     node-fetch: ~2.6.1
   checksum: 7fd497dd5f7db890e80193de5bc1cd0115a62400272cd9a992849288e66886fcdb0724ea1ed161be7b8db2daeafda8c58d0259acdda42d6561155dbcdbb0720a
+  languageName: node
+  linkType: hard
+
+"fflate@npm:^0.4.8":
+  version: 0.4.8
+  resolution: "fflate@npm:0.4.8"
+  checksum: 29d8cbe44d5e7f53e7f5a160ac7f9cc025480c7b3bfd85c5f898cbe20dfa2dad4732daa534982664bf30b35896a90af44ea33ede5d94c5ffd1b8b0c0a0a56ca2
   languageName: node
   linkType: hard
 
@@ -10056,6 +10079,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"posthog-js@npm:^1.0.0":
+  version: 1.302.2
+  resolution: "posthog-js@npm:1.302.2"
+  dependencies:
+    "@posthog/core": 1.7.1
+    core-js: ^3.38.1
+    fflate: ^0.4.8
+    preact: ^10.19.3
+    web-vitals: ^4.2.4
+  checksum: b716b5568146960707fdc429ecb3bd4b341e216aec4b97e17185a1715f101797881463ecf3dd62df6e1ac7d84a4d2d62bcd7a7a7d512d04e0ccb484419d2c3da
+  languageName: node
+  linkType: hard
+
+"preact@npm:^10.19.3":
+  version: 10.28.0
+  resolution: "preact@npm:10.28.0"
+  checksum: 8984790f059b60d55f6e823fce715e6cc9cd490da0070321ca441d94866ac09fd5a8e9432a71faf66bbaa48ea8d81bf09ec902f25ce215105753c8bd273a6e3e
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -12037,6 +12080,7 @@ __metadata:
     next-themes: ^0.4.6
     pliny: 0.4.1
     postcss: ^8.4.24
+    posthog-js: ^1.0.0
     prettier: ^3.0.0
     prettier-plugin-tailwindcss: ^0.6.11
     react: 19.0.1
@@ -12669,6 +12713,13 @@ __metadata:
   version: 2.0.1
   resolution: "web-namespaces@npm:2.0.1"
   checksum: b6d9f02f1a43d0ef0848a812d89c83801d5bbad57d8bb61f02eb6d7eb794c3736f6cc2e1191664bb26136594c8218ac609f4069722c6f56d9fc2d808fa9271c6
+  languageName: node
+  linkType: hard
+
+"web-vitals@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "web-vitals@npm:4.2.4"
+  checksum: 5b3ffe1db33f23aebf8cc8560ac574401a95939baafde5841835c1bb1c01f9a2478442f319f77aa0d7914739fc2f6b020c5d5b128c16c5c77ca6be2f9dfbbde6
   languageName: node
   linkType: hard
 
