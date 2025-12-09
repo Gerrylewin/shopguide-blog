@@ -38,22 +38,22 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
   }, [images.length])
 
   return (
-    <div className="my-8 relative group">
+    <div className="group relative my-8">
       {/* Hacker-style border container */}
-      <div className="relative border-2 border-primary-500/30 bg-gray-900/50 backdrop-blur-sm p-2 rounded-sm shadow-[0_0_20px_rgba(46,154,179,0.3)]">
+      <div className="border-primary-500/30 relative rounded-sm border-2 bg-gray-900/50 p-2 shadow-[0_0_20px_rgba(46,154,179,0.3)] backdrop-blur-sm">
         {/* Glitch effect overlay */}
-        <div className="absolute inset-0 pointer-events-none opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-500/20 to-transparent animate-pulse" />
+        <div className="pointer-events-none absolute inset-0 opacity-5">
+          <div className="via-primary-500/20 absolute inset-0 animate-pulse bg-gradient-to-r from-transparent to-transparent" />
         </div>
 
         {/* Main image container */}
         <div className="relative aspect-video w-full overflow-hidden bg-black/50">
           <div
-            className="flex transition-transform duration-500 ease-in-out h-full"
+            className="flex h-full transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {images.map((src, index) => (
-              <div key={index} className="min-w-full h-full relative">
+              <div key={index} className="relative h-full min-w-full">
                 <Image
                   src={src}
                   alt={`${alt} ${index + 1}`}
@@ -69,29 +69,29 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
         {/* Navigation arrows */}
         <button
           onClick={goToPrevious}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-primary-500/20 hover:bg-primary-500/40 border border-primary-500/50 text-primary-400 px-3 py-2 rounded-sm transition-all duration-200 backdrop-blur-sm font-mono text-sm hover:shadow-[0_0_15px_rgba(46,154,179,0.5)]"
+          className="bg-primary-500/20 hover:bg-primary-500/40 border-primary-500/50 text-primary-400 absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-sm border px-3 py-2 font-mono text-sm backdrop-blur-sm transition-all duration-200 hover:shadow-[0_0_15px_rgba(46,154,179,0.5)]"
           aria-label="Previous image"
         >
           {'<'}
         </button>
         <button
           onClick={goToNext}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-primary-500/20 hover:bg-primary-500/40 border border-primary-500/50 text-primary-400 px-3 py-2 rounded-sm transition-all duration-200 backdrop-blur-sm font-mono text-sm hover:shadow-[0_0_15px_rgba(46,154,179,0.5)]"
+          className="bg-primary-500/20 hover:bg-primary-500/40 border-primary-500/50 text-primary-400 absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-sm border px-3 py-2 font-mono text-sm backdrop-blur-sm transition-all duration-200 hover:shadow-[0_0_15px_rgba(46,154,179,0.5)]"
           aria-label="Next image"
         >
           {'>'}
         </button>
 
         {/* Dots indicator */}
-        <div className="flex justify-center gap-2 mt-4">
+        <div className="mt-4 flex justify-center gap-2">
           {images.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
               className={`h-2 rounded-full transition-all duration-200 ${
                 index === currentIndex
-                  ? 'w-8 bg-primary-500 shadow-[0_0_10px_rgba(46,154,179,0.8)]'
-                  : 'w-2 bg-primary-500/30 hover:bg-primary-500/50'
+                  ? 'bg-primary-500 w-8 shadow-[0_0_10px_rgba(46,154,179,0.8)]'
+                  : 'bg-primary-500/30 hover:bg-primary-500/50 w-2'
               }`}
               aria-label={`Go to image ${index + 1}`}
             />
@@ -99,16 +99,15 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
         </div>
 
         {/* Image counter - hacker style */}
-        <div className="absolute top-2 right-2 bg-black/70 border border-primary-500/30 px-2 py-1 rounded-sm font-mono text-xs text-primary-400 backdrop-blur-sm">
+        <div className="border-primary-500/30 text-primary-400 absolute top-2 right-2 rounded-sm border bg-black/70 px-2 py-1 font-mono text-xs backdrop-blur-sm">
           {currentIndex + 1}/{images.length}
         </div>
       </div>
 
       {/* Keyboard navigation hint (only visible on hover) */}
-      <div className="text-center mt-2 text-xs text-gray-500 dark:text-gray-400 font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="mt-2 text-center font-mono text-xs text-gray-500 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-400">
         [← →] navigate | [click] select
       </div>
     </div>
   )
 }
-
