@@ -10,6 +10,7 @@ interface ImageGalleryProps {
 
 export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
@@ -23,19 +24,30 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
     setCurrentIndex(index)
   }
 
-  // Keyboard navigation
+  const openLightbox = (index: number) => {
+    setCurrentIndex(index)
+    setIsLightboxOpen(true)
+  }
+
+  const closeLightbox = () => {
+    setIsLightboxOpen(false)
+  }
+
+  // Keyboard navigation + lightbox close
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowLeft') {
         setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
       } else if (event.key === 'ArrowRight') {
         setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+      } else if (event.key === 'Escape' && isLightboxOpen) {
+        setIsLightboxOpen(false)
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [images.length])
+  }, [images.length, isLightboxOpen])
 
   return (
     <div className="group relative my-8">
@@ -47,7 +59,19 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
         </div>
 
         {/* Main image container */}
-        <div className="relative aspect-video w-full overflow-hidden bg-black/50">
+        <div
+          className="relative aspect-video w-full overflow-hidden bg-black/50"
+          role="button"
+          tabIndex={0}
+          onClick={() => openLightbox(currentIndex)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault()
+              openLightbox(currentIndex)
+            }
+          }}
+          aria-label="Open image in larger view"
+        >
           <div
             className="flex h-full transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -108,6 +132,47 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
       <div className="mt-2 text-center font-mono text-xs text-gray-500 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-400">
         [← →] navigate | [click] select
       </div>
+
+      {isLightboxOpen && (
+        <div
+          className="bg-black/85 fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded image view"
+        >
+          <div
+            className="relative w-full max-w-5xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              onClick={closeLightbox}
+              className="bg-black/70 hover:bg-black/60 border-primary-500/50 text-primary-100 absolute right-2 top-2 z-10 rounded-full border px-3 py-1 text-sm font-semibold shadow-[0_0_15px_rgba(46,154,179,0.45)] transition-colors"
+              aria-label="Close expanded image"
+            >
+              Close
+            </button>
+
+            <div className="relative h-[70vh] w-full overflow-hidden rounded-md border border-primary-500/40 bg-black/70 shadow-[0_0_25px_rgba(46,154,179,0.4)]">
+              <Image
+                src={images[currentIndex]}
+                alt={`${alt} ${currentIndex + 1} enlarged`}
+                fill
+                className="object-contain"
+                sizes="100vw"
+                priority
+              />
+            </div>
+
+            <div className="text-primary-200/80 mt-3 flex items-center justify-between text-sm font-mono">
+              <span>{alt}</span>
+              <span>
+                {currentIndex + 1}/{images.length}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
