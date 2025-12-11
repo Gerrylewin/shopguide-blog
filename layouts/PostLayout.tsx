@@ -43,6 +43,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const { filePath, path, slug, date, title, tags, images } = content
   const basePath = path.split('/')[0]
   const displayImage = images && images.length > 0 ? images[0] : null
+  const hideInlineAd = slug === 'ai-agent-vs-chatbot-how-to-tell-youre-leaking-conversions'
 
   return (
     <>
@@ -117,7 +118,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dl>
               <div className="divide-y divide-gray-200 xl:col-span-4 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
                 <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
-                <BlogAdInlineWithInsertion />
+                {!hideInlineAd && <BlogAdInlineWithInsertion />}
                 <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
                   <Link href={discussUrl(path)} rel="nofollow">
                     Discuss on Twitter
