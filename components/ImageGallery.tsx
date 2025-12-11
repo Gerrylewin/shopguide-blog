@@ -135,25 +135,22 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
 
       {isLightboxOpen && (
         <div
-          className="bg-black/85 fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
           onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
           aria-label="Expanded image view"
         >
-          <div
-            className="relative w-full max-w-5xl"
-            onClick={(event) => event.stopPropagation()}
-          >
+          <div className="relative w-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
             <button
               onClick={closeLightbox}
-              className="bg-black/70 hover:bg-black/60 border-primary-500/50 text-primary-100 absolute right-2 top-2 z-10 rounded-full border px-3 py-1 text-sm font-semibold shadow-[0_0_15px_rgba(46,154,179,0.45)] transition-colors"
+              className="border-primary-500/50 text-primary-100 absolute top-2 right-2 z-10 rounded-full border bg-black/70 px-3 py-1 text-sm font-semibold shadow-[0_0_15px_rgba(46,154,179,0.45)] transition-colors hover:bg-black/60"
               aria-label="Close expanded image"
             >
               Close
             </button>
 
-            <div className="relative h-[70vh] w-full overflow-hidden rounded-md border border-primary-500/40 bg-black/70 shadow-[0_0_25px_rgba(46,154,179,0.4)]">
+            <div className="border-primary-500/40 relative h-[70vh] w-full overflow-hidden rounded-md border bg-black/70 shadow-[0_0_25px_rgba(46,154,179,0.4)]">
               <Image
                 src={images[currentIndex]}
                 alt={`${alt} ${currentIndex + 1} enlarged`}
@@ -164,7 +161,7 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
               />
             </div>
 
-            <div className="text-primary-200/80 mt-3 flex items-center justify-between text-sm font-mono">
+            <div className="text-primary-200/80 mt-3 flex items-center justify-between font-mono text-sm">
               <span>{alt}</span>
               <span>
                 {currentIndex + 1}/{images.length}
