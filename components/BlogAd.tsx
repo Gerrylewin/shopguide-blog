@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from '@/components/Link'
 import { useEffect, useState } from 'react'
 
@@ -36,11 +37,14 @@ const AdContent = () => (
 
       {/* Shopify Logo */}
       <div className="mt-2 flex justify-center">
-        <div className="relative">
-          <img
+        <div className="relative h-10 w-16">
+          <Image
             src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
             alt="Shopify"
-            className="h-auto w-16 transition-all duration-300 group-hover:opacity-90"
+            fill
+            sizes="64px"
+            className="object-contain transition-all duration-300 group-hover:opacity-90"
+            priority
           />
         </div>
       </div>

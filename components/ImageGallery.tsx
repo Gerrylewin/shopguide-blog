@@ -134,14 +134,25 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
       </div>
 
       {isLightboxOpen && (
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
-          onClick={closeLightbox}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Expanded image view"
-        >
-          <div className="relative w-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
+          <button
+            type="button"
+            className="absolute inset-0 h-full w-full cursor-pointer"
+            aria-label="Close expanded image"
+            onClick={closeLightbox}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                event.preventDefault()
+                closeLightbox()
+              }
+            }}
+          />
+          <div
+            className="relative z-10 w-full max-w-5xl"
+            role="dialog"
+            aria-modal="true"
+            tabIndex={-1}
+          >
             <button
               onClick={closeLightbox}
               className="border-primary-500/50 text-primary-100 absolute top-2 right-2 z-10 rounded-full border bg-black/70 px-3 py-1 text-sm font-semibold shadow-[0_0_15px_rgba(46,154,179,0.45)] transition-colors hover:bg-black/60"

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from '@/components/Link'
 import { formatDate } from 'pliny/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
@@ -115,11 +116,16 @@ export default function NewsletterAdminClient({ posts, trackingData }: Props) {
               {/* Post Preview */}
               <div className="flex-1">
                 {post.images && post.images.length > 0 && (
-                  <img
-                    src={post.images[0]}
-                    alt={post.title}
-                    className="mb-4 h-48 w-full rounded-lg object-cover"
-                  />
+                  <div className="relative mb-4 h-48 w-full overflow-hidden rounded-lg">
+                    <Image
+                      src={post.images[0]}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
+                      priority
+                    />
+                  </div>
                 )}
                 <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {post.title}
