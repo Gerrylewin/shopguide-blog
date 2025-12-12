@@ -84,6 +84,19 @@ CLOUDFLARE_D1_DATABASE_ID=b31cfb5b-cd34-469d-97cc-250866c9314a
 NEXT_PUBLIC_UMAMI_ID=your_umami_website_id
 ```
 
+### Analytics (GA4 Measurement Protocol)
+
+```env
+# Public GA4 web measurement ID (used by gtag.js)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-3BNNFQ6N5R
+
+# Private GA4 Measurement Protocol secret (server-side only)
+GA_MP_API_SECRET=your_measurement_protocol_api_secret
+
+# Optional: shared key required in the x-api-key header when calling /api/analytics/mp
+# ANALYTICS_COLLECT_TOKEN=your_internal_api_key
+```
+
 ### Comments (Giscus)
 
 ```env

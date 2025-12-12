@@ -16,6 +16,8 @@ import { Metadata } from 'next'
 import Script from 'next/script'
 import { PostHogProvider } from '@/components/PostHogProvider'
 
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-3BNNFQ6N5R'
+
 const archivo = Archivo({
   subsets: ['latin'],
   display: 'swap',
@@ -88,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       {/* Google tag (gtag.js) */}
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-3BNNFQ6N5R"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="beforeInteractive"
       />
       <Script id="google-analytics" strategy="beforeInteractive">
@@ -96,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-3BNNFQ6N5R');
+          gtag('config', '${GA_MEASUREMENT_ID}');
         `}
       </Script>
       <link rel="shortcut icon" href={`${basePath}/static/favicons/favicon.ico`} />
