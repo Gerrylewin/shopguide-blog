@@ -89,6 +89,61 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${questrial.variable} scroll-smooth`}
       suppressHydrationWarning
     >
+      {/* Console filter - runs immediately to intercept unwanted messages */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              if (typeof window === 'undefined') return;
+              
+              // Store original console methods
+              const originalConsole = {
+                warn: console.warn.bind(console),
+                error: console.error.bind(console),
+                info: console.info.bind(console)
+              };
+              
+              // Patterns to filter out unwanted messages
+              const filterPatterns = [
+                /\\[DEPRECATED\\].*zustand/i,
+                /Default export is deprecated.*zustand/i,
+                /preloaded using link preload but not used/i,
+                /Copilot in Edge/i,
+                /Explain Console errors/i,
+                /Don't show again/i
+              ];
+              
+              // Filter function to check if message should be suppressed
+              function shouldSuppress(...args) {
+                const message = args.map(arg => 
+                  typeof arg === 'string' ? arg : (typeof arg === 'object' ? JSON.stringify(arg) : String(arg))
+                ).join(' ');
+                
+                return filterPatterns.some(pattern => pattern.test(message));
+              }
+              
+              // Override console methods to filter unwanted messages
+              console.warn = function(...args) {
+                if (!shouldSuppress(...args)) {
+                  originalConsole.warn.apply(console, args);
+                }
+              };
+              
+              console.error = function(...args) {
+                if (!shouldSuppress(...args)) {
+                  originalConsole.error.apply(console, args);
+                }
+              };
+              
+              console.info = function(...args) {
+                if (!shouldSuppress(...args)) {
+                  originalConsole.info.apply(console, args);
+                }
+              };
+            })();
+          `,
+        }}
+      />
       {/* Google tag (gtag.js) */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -105,30 +160,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Script id="branded-console" strategy="afterInteractive">
         {`
           (function() {
-            // Clear console completely
-            if (typeof console.clear === 'function') {
-              console.clear();
-            }
-            
-            // Brand colors - ShopGuide blue: #2E9AB3 (RGB: 46, 154, 179)
-            const brandBlue = '#2E9AB3';
-            const brandBlueRGB = '46, 154, 179';
-            const lightBlue = '#4db8d1';
-            
-            // Styled console message
-            const styles = {
-              header: \`font-size: 20px; font-weight: 700; color: \${brandBlue}; padding: 8px 0; letter-spacing: 2px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\`,
-              subtitle: \`font-size: 11px; color: \${lightBlue}; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px;\`,
-              accent: \`font-size: 14px; color: \${brandBlue}; font-weight: 600; margin-top: 12px;\`,
-              text: \`font-size: 13px; color: #555; line-height: 1.8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\`,
-              link: \`font-size: 13px; color: \${brandBlue}; text-decoration: underline; font-weight: 600;\`,
-              stat: \`font-size: 13px; color: #fff; font-weight: 700; background: \${brandBlue}; padding: 3px 8px; border-radius: 3px;\`,
-              divider: \`color: rgba(\${brandBlueRGB}, 0.15); font-size: 10px;\`
-            };
-            
-            // Minimalistic AI-themed header
-            console.log(
-              \`%c
+            // Clear console and show branded message after page loads
+            function showBrandedMessage() {
+              if (typeof console.clear === 'function') {
+                console.clear();
+              }
+              
+              // Brand colors - ShopGuide blue: #2E9AB3 (RGB: 46, 154, 179)
+              const brandBlue = '#2E9AB3';
+              const brandBlueRGB = '46, 154, 179';
+              const lightBlue = '#4db8d1';
+              
+              // Styled console message
+              const styles = {
+                header: \`font-size: 20px; font-weight: 700; color: \${brandBlue}; padding: 8px 0; letter-spacing: 2px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\`,
+                subtitle: \`font-size: 11px; color: \${lightBlue}; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px;\`,
+                accent: \`font-size: 14px; color: \${brandBlue}; font-weight: 600; margin-top: 12px;\`,
+                text: \`font-size: 13px; color: #555; line-height: 1.8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\`,
+                link: \`font-size: 13px; color: \${brandBlue}; text-decoration: underline; font-weight: 600;\`,
+                stat: \`font-size: 13px; color: #fff; font-weight: 700; background: \${brandBlue}; padding: 3px 8px; border-radius: 3px;\`,
+                divider: \`color: rgba(\${brandBlueRGB}, 0.15); font-size: 10px;\`
+              };
+              
+              // Minimalistic AI-themed header
+              console.log(
+                \`%c
 ╔═══════════════════════════════════════════════╗
 ║                                               ║
 ║              SHOPGUIDE                        ║
@@ -136,40 +192,62 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ║        Agentic Commerce for Shopify          ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝\`,
-              styles.header
-            );
+                styles.header
+              );
+              
+              console.log('%cAGENTIC COMMERCE FOR SHOPIFY', styles.subtitle);
+              console.log('');
+              console.log('%c🤖 AI-Powered Shopping Agents', styles.accent);
+              console.log('');
+              console.log('%cTransform your Shopify store with autonomous AI agents that drive real conversions.', styles.text);
+              console.log('');
+              console.log(
+                \`%c💰 Revenue Generated: %c$100,000+%c across our merchant network\`,
+                styles.text,
+                styles.stat,
+                styles.text
+              );
+              console.log('');
+              console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', styles.divider);
+              console.log('');
+              console.log('%c🚀 Ready to transform your store?', styles.accent);
+              console.log('');
+              console.log(
+                \`%c👉 Shopify App: %chttps://apps.shopify.com/die-ai-agent-official-app\`,
+                styles.text,
+                styles.link
+              );
+              console.log(
+                \`%c🌐 Learn More: %chttps://yourshopguide.com\`,
+                styles.text,
+                styles.link
+              );
+              console.log('');
+              console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', styles.divider);
+              console.log('');
+              console.log('%cBuilt with ❤️ by the ShopGuide team', styles.text);
+            }
             
-            console.log('%cAGENTIC COMMERCE FOR SHOPIFY', styles.subtitle);
-            console.log('');
-            console.log('%c🤖 AI-Powered Shopping Agents', styles.accent);
-            console.log('');
-            console.log('%cTransform your Shopify store with autonomous AI agents that drive real conversions.', styles.text);
-            console.log('');
-            console.log(
-              \`%c💰 Revenue Generated: %c$100,000+%c across our merchant network\`,
-              styles.text,
-              styles.stat,
-              styles.text
-            );
-            console.log('');
-            console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', styles.divider);
-            console.log('');
-            console.log('%c🚀 Ready to transform your store?', styles.accent);
-            console.log('');
-            console.log(
-              \`%c👉 Shopify App: %chttps://apps.shopify.com/die-ai-agent-official-app\`,
-              styles.text,
-              styles.link
-            );
-            console.log(
-              \`%c🌐 Learn More: %chttps://yourshopguide.com\`,
-              styles.text,
-              styles.link
-            );
-            console.log('');
-            console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', styles.divider);
-            console.log('');
-            console.log('%cBuilt with ❤️ by the ShopGuide team', styles.text);
+            // Show message after DOM is ready and after a delay to ensure all scripts have run
+            if (typeof document !== 'undefined') {
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                  setTimeout(showBrandedMessage, 300);
+                });
+              } else {
+                setTimeout(showBrandedMessage, 300);
+              }
+              
+              // Also show on window load as a fallback
+              if (typeof window !== 'undefined') {
+                window.addEventListener('load', function() {
+                  setTimeout(showBrandedMessage, 500);
+                });
+              }
+            } else {
+              // Fallback if document is not available
+              setTimeout(showBrandedMessage, 500);
+            }
           })();
         `}
       </Script>
