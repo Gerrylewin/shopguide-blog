@@ -69,6 +69,12 @@ module.exports = () => {
     reactStrictMode: true,
     trailingSlash: false,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+    // Optimize CSS loading - inlines critical CSS to reduce render-blocking
+    // Note: CSS preload warnings in console are expected - Next.js preloads CSS
+    // for potential navigation, which improves performance despite the browser warning
+    experimental: {
+      optimizeCss: true,
+    },
     eslint: {
       dirs: ['app', 'components', 'layouts', 'scripts'],
     },
