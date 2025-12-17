@@ -15,6 +15,7 @@ import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import Script from 'next/script'
 import { PostHogProvider } from '@/components/PostHogProvider'
+import { GoogleAnalyticsProvider } from '@/components/GoogleAnalytics'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-3BNNFQ6N5R'
 
@@ -91,9 +92,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       {/* Google tag (gtag.js) */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
       />
-      <Script id="google-analytics" strategy="beforeInteractive">
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -135,18 +136,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         suppressHydrationWarning
       >
         <PostHogProvider>
-          <ThemeProviders>
-            <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
-            <SpeedInsights />
-            <VercelAnalytics />
-            <SectionContainer>
-              <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-                <Header />
-                <main className="mb-auto">{children}</main>
-              </SearchProvider>
-              <Footer />
-            </SectionContainer>
-          </ThemeProviders>
+          <GoogleAnalyticsProvider>
+            <ThemeProviders>
+              <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
+              <SpeedInsights />
+              <VercelAnalytics />
+              <SectionContainer>
+                <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+                  <Header />
+                  <main className="mb-auto">{children}</main>
+                </SearchProvider>
+                <Footer />
+              </SectionContainer>
+            </ThemeProviders>
+          </GoogleAnalyticsProvider>
         </PostHogProvider>
       </body>
     </html>
