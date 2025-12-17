@@ -3,14 +3,22 @@
 import { useEffect, Suspense, useRef } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 
-declare global {
-  interface Window {
-    dataLayer: unknown[]
-    gtag: (...args: unknown[]) => void
-  }
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-3BNNFQ6N5R'
+
+// Type guard for gtag
+function isGtagAvailable(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof (window as { gtag?: (...args: unknown[]) => void }).gtag === 'function'
+  )
 }
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-3BNNFQ6N5R'
+// Helper to call gtag safely
+function callGtag(...args: unknown[]): void {
+  if (isGtagAvailable()) {
+    ;(window as { gtag: (...args: unknown[]) => void }).gtag(...args)
+  }
+}
 
 function GoogleAnalyticsPageView() {
   const pathname = usePathname()
@@ -30,14 +38,10 @@ function GoogleAnalyticsPageView() {
       typeof window !== 'undefined' &&
       !window.location.host.includes('127.0.0.1') &&
       !window.location.host.includes('localhost') &&
-      typeof window.gtag === 'function'
+      isGtagAvailable()
     ) {
-      let url = window.origin + pathname
-      if (searchParams && searchParams.toString()) {
-        url = url + `?${searchParams.toString()}`
-      }
       // Update page path to trigger page view event
-      window.gtag('config', GA_MEASUREMENT_ID, {
+      callGtag('config', GA_MEASUREMENT_ID, {
         page_path: pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : ''),
       })
     }
