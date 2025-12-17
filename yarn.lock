@@ -2819,10 +2819,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:15.2.6":
-  version: 15.2.6
-  resolution: "@next/env@npm:15.2.6"
-  checksum: a8043d092fe3ab0ecf7da9a616d872c8a4c8d60966cc6863c5bd2970bbd8133d7ef4c46b38b153b33dc05960661b362699508ead3de00e9839c25d2e36324308
+"@next/env@npm:15.2.8":
+  version: 15.2.8
+  resolution: "@next/env@npm:15.2.8"
+  checksum: df7606a0cca0b47b1157ef2e791c892f1fd6b9f715624e5aef48a3ca1de57d09cb3c821cc13c888a9b20ba8b17c5fb5742bb5ac6e0e7cd95f1e162fe33d9e59c
   languageName: node
   linkType: hard
 
@@ -4919,7 +4919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0":
+"chalk@npm:^4.0.0, chalk@npm:^4.1.0":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -5262,6 +5262,21 @@ __metadata:
     typescript:
       optional: true
   checksum: dc339ebea427898c9e03bf01b56ba7afbac07fc7d2a2d5a15d6e9c14de98275a9565da949375aee1809591c152c0a3877bb86dbeaf74d5bd5aaa79955ad9e7a0
+  languageName: node
+  linkType: hard
+
+"critters@npm:^0.0.25":
+  version: 0.0.25
+  resolution: "critters@npm:0.0.25"
+  dependencies:
+    chalk: ^4.1.0
+    css-select: ^5.1.0
+    dom-serializer: ^2.0.0
+    domhandler: ^5.0.2
+    htmlparser2: ^8.0.2
+    postcss: ^8.4.23
+    postcss-media-query-parser: ^0.2.3
+  checksum: d3fc1c78402c3dfc10aa823ee3ceeab17c189aae10bee8df13337a095233f5fc8373e926a31e4454cd332312f39246689a9fc28f04ad2ffc45926b2375620013
   languageName: node
   linkType: hard
 
@@ -7331,6 +7346,18 @@ __metadata:
   version: 3.0.0
   resolution: "html-void-elements@npm:3.0.0"
   checksum: 59be397525465a7489028afa064c55763d9cccd1d7d9f630cca47137317f0e897a9ca26cef7e745e7cff1abc44260cfa407742b243a54261dfacd42230e94fce
+  languageName: node
+  linkType: hard
+
+"htmlparser2@npm:^8.0.2":
+  version: 8.0.2
+  resolution: "htmlparser2@npm:8.0.2"
+  dependencies:
+    domelementtype: ^2.3.0
+    domhandler: ^5.0.3
+    domutils: ^3.0.1
+    entities: ^4.4.0
+  checksum: 29167a0f9282f181da8a6d0311b76820c8a59bc9e3c87009e21968264c2987d2723d6fde5a964d4b7b6cba663fca96ffb373c06d8223a85f52a6089ced942700
   languageName: node
   linkType: hard
 
@@ -9517,11 +9544,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:15.2.6":
-  version: 15.2.6
-  resolution: "next@npm:15.2.6"
+"next@npm:15.2.8":
+  version: 15.2.8
+  resolution: "next@npm:15.2.8"
   dependencies:
-    "@next/env": 15.2.6
+    "@next/env": 15.2.8
     "@next/swc-darwin-arm64": 15.2.5
     "@next/swc-darwin-x64": 15.2.5
     "@next/swc-linux-arm64-gnu": 15.2.5
@@ -9574,7 +9601,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: d2b1bf30ea31e000094d7782c38d54f9b959e4329af70d2c74f792e3b63015a5a2e73c609a26eda189a7bc44b3b1533d053591b147dffe7d15f5623197bd2d4c
+  checksum: 8d60e137d7e425615fbf639a05f7268c99016b89237bebc20805fb63da18692fd2534ef5ccdda790ddf0c1fd12c5a32850eb87feb6f322b0f5432a83867972ca
   languageName: node
   linkType: hard
 
@@ -10047,6 +10074,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-media-query-parser@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "postcss-media-query-parser@npm:0.2.3"
+  checksum: 8000d4d95b912994928ff86137f5ab0ed4c4ee1498af2336e93d708ae8827a690cd7acbaed55d14684cf44d82c8d44b031c1c69ae6bcd2f9620ea67573888090
+  languageName: node
+  linkType: hard
+
 "postcss-selector-parser@npm:6.0.10":
   version: 6.0.10
   resolution: "postcss-selector-parser@npm:6.0.10"
@@ -10068,7 +10102,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.24, postcss@npm:^8.4.41":
+"postcss@npm:^8.4.23, postcss@npm:^8.4.24, postcss@npm:^8.4.41":
   version: 8.5.6
   resolution: "postcss@npm:8.5.6"
   dependencies:
@@ -12062,6 +12096,7 @@ __metadata:
     algoliasearch: ^5.43.0
     body-scroll-lock: ^4.0.0-beta.0
     contentlayer2: 0.5.5
+    critters: ^0.0.25
     cross-env: ^7.0.3
     esbuild: 0.25.2
     eslint: ^9.14.0
@@ -12075,7 +12110,7 @@ __metadata:
     husky: ^9.0.0
     image-size: 2.0.1
     lint-staged: ^13.0.0
-    next: 15.2.6
+    next: 15.2.8
     next-contentlayer2: 0.5.5
     next-themes: ^0.4.6
     pliny: 0.4.1

@@ -27,6 +27,7 @@
     "algoliasearch": "^5.43.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "contentlayer2": "0.5.5",
+    "critters": "^0.0.25",
     "esbuild": "0.25.2",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.2",

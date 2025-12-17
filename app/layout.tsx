@@ -132,22 +132,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       {/* Suppress zustand deprecation warning from Vercel Analytics */}
-      <Script id="suppress-zustand-warning" strategy="beforeInteractive">
-        {`
-          if (typeof window !== 'undefined') {
-            const originalWarn = console.warn;
-            console.warn = function(...args) {
-              const message = args.join(' ');
-              // Suppress zustand deprecation warning from Vercel Analytics
-              if (message.includes('[DEPRECATED] Default export is deprecated') && 
-                  message.includes('zustand')) {
-                return;
+      <Script
+        id="suppress-zustand-warning"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              if (typeof window !== 'undefined') {
+                const originalWarn = console.warn;
+                console.warn = function(...args) {
+                  const message = args.join(' ');
+                  // Suppress zustand deprecation warning from Vercel Analytics
+                  if (message.includes('[DEPRECATED] Default export is deprecated') && 
+                      message.includes('zustand')) {
+                    return;
+                  }
+                  originalWarn.apply(console, args);
+                };
               }
-              originalWarn.apply(console, args);
-            };
-          }
-        `}
-      </Script>
+            })();
+          `,
+        }}
+      />
       <body
         className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white"
         suppressHydrationWarning
