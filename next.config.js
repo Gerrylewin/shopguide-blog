@@ -99,6 +99,18 @@ module.exports = () => {
       ],
       unoptimized,
     },
+    async redirects() {
+      return [
+        {
+          // Redirect root-level blog post slugs to /blog/{slug}
+          // Excludes known routes: about, blog, tags, projects, integrations, admin, api, feed.xml, sitemap.xml, robots.txt
+          source:
+            '/:slug((?!about|blog|tags|projects|integrations|admin|api|feed\\.xml|sitemap\\.xml|robots\\.txt|icon\\.png)[a-z0-9]+(?:-[a-z0-9]+)*)',
+          destination: '/blog/:slug',
+          permanent: true, // 308 permanent redirect for SEO
+        },
+      ]
+    },
     async headers() {
       return [
         {
