@@ -35,7 +35,9 @@ interface LayoutProps {
 export default function PostBanner({ content, next, prev, children }: LayoutProps) {
   const { slug, title, images } = content
   const displayImage = images && images.length > 0 ? images[0] : null
-  const useObjectTop = slug === 'from-chatbots-to-digital-employees-how-noah-muller-is-building-the-future-of-agentic-commerce'
+  const useObjectTop =
+    slug ===
+    'from-chatbots-to-digital-employees-how-noah-muller-is-building-the-future-of-agentic-commerce'
 
   return (
     <>
@@ -55,7 +57,12 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
                 <div className="w-full pb-8">
                   <Bleed>
                     <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-                      <Image src={displayImage} alt={title} fill className={useObjectTop ? "object-cover object-top" : "object-cover"} />
+                      <Image
+                        src={displayImage}
+                        alt={title}
+                        fill
+                        className={useObjectTop ? 'object-cover object-top' : 'object-cover'}
+                      />
                     </div>
                   </Bleed>
                 </div>
