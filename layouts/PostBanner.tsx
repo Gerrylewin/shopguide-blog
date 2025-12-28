@@ -54,7 +54,7 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
                 <div className="w-full pb-8">
                   <Bleed>
                     <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-                      <Image src={displayImage} alt={title} fill className="object-cover" />
+                      <Image src={displayImage} alt={title} fill className="object-cover object-top" />
                     </div>
                   </Bleed>
                 </div>

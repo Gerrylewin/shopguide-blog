@@ -73,7 +73,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="w-full pt-6 pb-8 xl:ml-2.5">
                 <Bleed>
                   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-                    <Image src={displayImage} alt={title} fill className="object-cover" />
+                    <Image src={displayImage} alt={title} fill className="object-cover object-top" />
                   </div>
                 </Bleed>
               </div>
