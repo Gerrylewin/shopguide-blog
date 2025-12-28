@@ -44,6 +44,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const basePath = path.split('/')[0]
   const displayImage = images && images.length > 0 ? images[0] : null
   const hideInlineAd = slug === 'ai-agent-vs-chatbot-how-to-tell-youre-leaking-conversions'
+  const useObjectTop = slug === 'from-chatbots-to-digital-employees-how-noah-muller-is-building-the-future-of-agentic-commerce'
 
   return (
     <>
@@ -73,7 +74,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="w-full pt-6 pb-8 xl:ml-2.5">
                 <Bleed>
                   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
-                    <Image src={displayImage} alt={title} fill className="object-cover object-top" />
+                    <Image src={displayImage} alt={title} fill className={useObjectTop ? "object-cover object-top" : "object-cover"} />
                   </div>
                 </Bleed>
               </div>
