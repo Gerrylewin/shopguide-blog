@@ -24,6 +24,9 @@ export default function Home({ posts }) {
           {posts.slice(0, MAX_DISPLAY).map((post) => {
             const { slug, date, title, summary, tags, images } = post
             const displayImage = images && images.length > 0 ? images[0] : null
+            const useObjectTop =
+              slug ===
+              'from-chatbots-to-digital-employees-how-noah-muller-is-building-the-future-of-agentic-commerce'
             return (
               <li key={slug} className="py-12">
                 <article>
@@ -37,7 +40,12 @@ export default function Home({ posts }) {
                         <dd className="pt-2">
                           <Link href={`/blog/${slug}`} aria-label={title}>
                             <div className="relative aspect-video w-full overflow-hidden rounded-lg transition-opacity hover:opacity-80">
-                              <Image src={displayImage} alt={title} fill className="object-cover" />
+                              <Image
+                                src={displayImage}
+                                alt={title}
+                                fill
+                                className={useObjectTop ? 'object-cover object-top' : 'object-cover'}
+                              />
                             </div>
                           </Link>
                         </dd>
