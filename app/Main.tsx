@@ -44,7 +44,9 @@ export default function Home({ posts }) {
                                 src={displayImage}
                                 alt={title}
                                 fill
-                                className={useObjectTop ? 'object-cover object-top' : 'object-cover'}
+                                className={
+                                  useObjectTop ? 'object-cover object-top' : 'object-cover'
+                                }
                               />
                             </div>
                           </Link>
