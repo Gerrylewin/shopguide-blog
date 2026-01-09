@@ -6,6 +6,9 @@ export const dynamic = 'force-dynamic'
 const GHL_WEBHOOK_URL =
   'https://services.leadconnectorhq.com/hooks/YwFixzedrximlLRmcQo3/webhook-trigger/cd4a2975-f836-4de6-8c86-ad61618ff1e6'
 
+const GOOGLE_SHEETS_WEBAPP_URL =
+  'https://script.google.com/macros/s/AKfycbztbrV2JZ7iCa47w35OEgsjPUzj4zYnIIVRiyc5UBHh1G2JTqJohN95KJroau2bZuit/exec'
+
 // Helper function to send email to GHL webhook
 async function sendToGHLWebhook(email: string, success: boolean) {
   try {
@@ -50,6 +53,43 @@ async function sendToGHLWebhook(email: string, success: boolean) {
     }
   } catch (webhookError) {
     console.error('❌ [GHL WEBHOOK] Failed to send to GHL webhook:', webhookError)
+    // Don't throw - webhook failure shouldn't fail the subscription
+  }
+}
+
+// Helper function to send email to Google Sheets via Apps Script
+async function sendToGoogleSheets(email: string, success: boolean) {
+  try {
+    console.log('🟢 [GOOGLE SHEETS] Sending to Google Sheets web app:', GOOGLE_SHEETS_WEBAPP_URL)
+
+    const response = await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        timestamp: new Date().toISOString(),
+        source: 'newsletter_subscription',
+        success: success,
+      }),
+    })
+
+    const responseText = await response.text()
+    console.log('🟢 [GOOGLE SHEETS] Response status:', response.status)
+    console.log('🟢 [GOOGLE SHEETS] Response body:', responseText)
+
+    if (!response.ok) {
+      console.warn(
+        '⚠️ [GOOGLE SHEETS] Webhook returned non-OK status:',
+        response.status,
+        responseText
+      )
+    } else {
+      console.log('✅ [GOOGLE SHEETS] Google Sheets webhook sent successfully')
+    }
+  } catch (webhookError) {
+    console.error('❌ [GOOGLE SHEETS] Failed to send to Google Sheets webhook:', webhookError)
     // Don't throw - webhook failure shouldn't fail the subscription
   }
 }
@@ -133,8 +173,13 @@ async function handler(req: NextRequest) {
 
       if (!added) {
         console.log('⚠️ [NEWSLETTER API] Email already subscribed:', email)
-        // Still send to GHL to update CRM
-        await sendToGHLWebhook(email, false)
+        // Still send to GHL and Google Sheets to update CRM/Sheet
+        sendToGHLWebhook(email, false).catch((err) => {
+          console.error('❌ [NEWSLETTER API] GHL webhook failed (non-blocking):', err)
+        })
+        sendToGoogleSheets(email, false).catch((err) => {
+          console.error('❌ [NEWSLETTER API] Google Sheets webhook failed (non-blocking):', err)
+        })
         return NextResponse.json(
           {
             error: 'This email is already subscribed to the newsletter.',
@@ -148,6 +193,11 @@ async function handler(req: NextRequest) {
       // Send to GHL webhook (fire and forget - don't block response)
       sendToGHLWebhook(email, true).catch((err) => {
         console.error('❌ [NEWSLETTER API] GHL webhook failed (non-blocking):', err)
+      })
+
+      // Send to Google Sheets webhook (fire and forget - don't block response)
+      sendToGoogleSheets(email, true).catch((err) => {
+        console.error('❌ [NEWSLETTER API] Google Sheets webhook failed (non-blocking):', err)
       })
 
       // Return success response
