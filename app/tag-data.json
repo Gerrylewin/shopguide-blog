@@ -1,5 +1,5 @@
 {
-  "agentic-commerce": 8,
+  "agentic-commerce": 9,
   "ai-agents": 9,
   "e-commerce": 8,
   "shopify": 9,
@@ -12,6 +12,9 @@
   "average-order-value": 1,
   "guided-shopping": 1,
   "shopify-apps": 3,
+  "ai-visibility": 1,
+  "shopify-seo": 1,
+  "site-optimization": 1,
   "slack": 1,
   "updates": 1,
   "mckinsey": 1,
