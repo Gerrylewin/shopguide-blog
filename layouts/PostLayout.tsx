@@ -1,7 +1,7 @@
 import { ReactNode, ReactElement } from 'react'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
-import { formatDate } from 'pliny/utils/formatDate'
+import { formatDate } from '@/lib/formatDate'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'

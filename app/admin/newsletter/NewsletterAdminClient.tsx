@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from '@/components/Link'
-import { formatDate } from 'pliny/utils/formatDate'
+import { formatDate } from '@/lib/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 
 interface Post {
