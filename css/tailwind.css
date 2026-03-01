@@ -148,6 +148,101 @@
       color: var(--color-gray-100);
     }
   }
+
+  .prose .faq-accordion {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose .faq-item {
+    margin: 0;
+    border: 1px solid var(--color-gray-200);
+    border-radius: 0.75rem;
+    background: color-mix(in oklab, white 96%, var(--color-primary-50) 4%);
+    overflow: clip;
+  }
+
+  .prose .faq-item + .faq-item {
+    margin-top: 0.75rem;
+  }
+
+  .prose .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    list-style: none;
+    padding: 1rem 1.1rem;
+    font-family: var(--font-heading);
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-gray-900);
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .prose .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .prose .faq-question::marker {
+    content: '';
+  }
+
+  .prose .faq-question::after {
+    content: '▾';
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    color: var(--color-primary-600);
+    transform: rotate(0deg);
+    transition: transform 160ms ease;
+  }
+
+  .prose .faq-item[open] .faq-question::after {
+    transform: rotate(180deg);
+  }
+
+  .prose .faq-question:hover {
+    background-color: color-mix(in oklab, var(--color-primary-50) 28%, transparent);
+  }
+
+  .prose .faq-question:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: -2px;
+  }
+
+  .prose .faq-answer {
+    border-top: 1px solid var(--color-gray-200);
+    padding: 0.95rem 1.1rem 1rem;
+  }
+
+  .prose .faq-answer > :first-child {
+    margin-top: 0;
+  }
+
+  .prose .faq-answer > :last-child {
+    margin-bottom: 0;
+  }
+
+  .dark .prose .faq-item {
+    border-color: var(--color-gray-700);
+    background: color-mix(in oklab, var(--color-gray-900) 88%, var(--color-primary-900) 12%);
+  }
+
+  .dark .prose .faq-question {
+    color: var(--color-gray-100);
+  }
+
+  .dark .prose .faq-question:hover {
+    background-color: color-mix(in oklab, var(--color-primary-900) 24%, transparent);
+  }
+
+  .dark .prose .faq-answer {
+    border-top-color: var(--color-gray-700);
+  }
 }
 
 .task-list-item::before {

@@ -29,6 +29,237 @@ import prettier from 'prettier'
 const root = process.cwd()
 const isProduction = process.env.NODE_ENV === 'production'
 
+type HastNode = {
+  type?: string
+  tagName?: string
+  value?: string
+  children?: HastNode[]
+  properties?: Record<string, unknown>
+}
+
+type HastElement = HastNode & {
+  type: 'element'
+  tagName: string
+  children: HastNode[]
+}
+
+const FAQ_HEADING_TEXT = 'frequently asked questions'
+
+function isElement(node: HastNode | undefined, tagName?: string): node is HastElement {
+  if (!node || node.type !== 'element' || typeof node.tagName !== 'string') {
+    return false
+  }
+  if (!tagName) {
+    return true
+  }
+  return node.tagName === tagName
+}
+
+function getNodeText(node: HastNode | undefined): string {
+  if (!node) {
+    return ''
+  }
+  if (node.type === 'text') {
+    return node.value || ''
+  }
+  if (!Array.isArray(node.children)) {
+    return ''
+  }
+  return node.children.map((child) => getNodeText(child)).join('')
+}
+
+function normalizeText(value: string): string {
+  return value.replace(/\s+/g, ' ').trim().toLowerCase()
+}
+
+function getHeadingLevel(node: HastNode): number | null {
+  if (!isElement(node)) {
+    return null
+  }
+  const match = /^h([1-6])$/.exec(node.tagName)
+  if (!match) {
+    return null
+  }
+  return Number(match[1])
+}
+
+function trimLeadingWhitespace(nodes: HastNode[]): HastNode[] {
+  if (nodes.length === 0) {
+    return nodes
+  }
+  const cloned = [...nodes]
+  const first = cloned[0]
+  if (first?.type === 'text') {
+    cloned[0] = {
+      ...first,
+      value: (first.value || '').replace(/^\s+/, ''),
+    }
+  }
+  return cloned
+}
+
+function hasVisibleContent(nodes: HastNode[]): boolean {
+  return nodes.some((node) => normalizeText(getNodeText(node)).length > 0)
+}
+
+function getQuestionFromParagraph(
+  node: HastNode
+): { question: string; inlineAnswer: HastNode[] } | null {
+  if (!isElement(node, 'p')) {
+    return null
+  }
+
+  const paragraphChildren = node.children || []
+  const firstContentIndex = paragraphChildren.findIndex((child) => {
+    if (child.type !== 'text') {
+      return true
+    }
+    return normalizeText(child.value || '').length > 0
+  })
+
+  if (firstContentIndex < 0) {
+    return null
+  }
+
+  const firstContentNode = paragraphChildren[firstContentIndex]
+  if (!isElement(firstContentNode, 'strong')) {
+    return null
+  }
+
+  const question = getNodeText(firstContentNode).trim()
+  if (!question) {
+    return null
+  }
+
+  const inlineAnswer = trimLeadingWhitespace(paragraphChildren.slice(firstContentIndex + 1))
+  return { question, inlineAnswer }
+}
+
+function createFaqItem(question: string, answerNodes: HastNode[]): HastElement {
+  const normalizedAnswerNodes = hasVisibleContent(answerNodes)
+    ? answerNodes
+    : [{ type: 'element', tagName: 'p', properties: {}, children: [] }]
+
+  return {
+    type: 'element',
+    tagName: 'details',
+    properties: { className: ['faq-item'] },
+    children: [
+      {
+        type: 'element',
+        tagName: 'summary',
+        properties: { className: ['faq-question'] },
+        children: [{ type: 'text', value: question }],
+      },
+      {
+        type: 'element',
+        tagName: 'div',
+        properties: { className: ['faq-answer'] },
+        children: normalizedAnswerNodes,
+      },
+    ],
+  }
+}
+
+function transformFaqSection(sectionNodes: HastNode[]): { changed: boolean; nodes: HastNode[] } {
+  const transformed: HastNode[] = []
+  let changed = false
+  let index = 0
+
+  while (index < sectionNodes.length) {
+    const currentNode = sectionNodes[index]
+    const questionData = getQuestionFromParagraph(currentNode)
+
+    if (!questionData) {
+      transformed.push(currentNode)
+      index += 1
+      continue
+    }
+
+    changed = true
+    const answerNodes: HastNode[] = []
+
+    if (hasVisibleContent(questionData.inlineAnswer)) {
+      answerNodes.push({
+        type: 'element',
+        tagName: 'p',
+        properties: {},
+        children: questionData.inlineAnswer,
+      })
+    }
+
+    index += 1
+    while (index < sectionNodes.length) {
+      const candidate = sectionNodes[index]
+      if (getQuestionFromParagraph(candidate)) {
+        break
+      }
+      answerNodes.push(candidate)
+      index += 1
+    }
+
+    transformed.push(createFaqItem(questionData.question, answerNodes))
+  }
+
+  return { changed, nodes: transformed }
+}
+
+function transformFaqAccordions(node: HastNode): void {
+  if (!Array.isArray(node.children) || node.children.length === 0) {
+    return
+  }
+
+  const children = node.children
+  let index = 0
+
+  while (index < children.length) {
+    const currentNode = children[index]
+    const isFaqHeading =
+      isElement(currentNode, 'h2') && normalizeText(getNodeText(currentNode)) === FAQ_HEADING_TEXT
+
+    if (!isFaqHeading) {
+      index += 1
+      continue
+    }
+
+    let endIndex = index + 1
+    while (endIndex < children.length) {
+      const level = getHeadingLevel(children[endIndex])
+      if (level !== null && level <= 2) {
+        break
+      }
+      endIndex += 1
+    }
+
+    const sectionNodes = children.slice(index + 1, endIndex)
+    const transformedSection = transformFaqSection(sectionNodes)
+
+    if (transformedSection.changed) {
+      const faqWrapper: HastElement = {
+        type: 'element',
+        tagName: 'div',
+        properties: { className: ['faq-accordion'] },
+        children: transformedSection.nodes,
+      }
+      children.splice(index + 1, endIndex - (index + 1), faqWrapper)
+      index += 2
+      continue
+    }
+
+    index = endIndex
+  }
+
+  for (const child of children) {
+    transformFaqAccordions(child)
+  }
+}
+
+const rehypeFaqAccordion = () => {
+  return (tree: HastNode) => {
+    transformFaqAccordions(tree)
+  }
+}
+
 // heroicon mini link
 const icon = fromHtmlIsomorphic(
   `
@@ -177,6 +408,7 @@ export default makeSource({
       rehypeKatexNoTranslate,
       [rehypeCitation, { path: path.join(root, 'data') }],
       [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
+      rehypeFaqAccordion,
       rehypePresetMinify,
     ],
   },
