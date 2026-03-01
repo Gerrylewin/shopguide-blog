@@ -51,3 +51,31 @@ You aren't just selling products; you’re managing a relationship. And in the w
 
 **Ready to supercharge your Klaviyo flows?**
 [Book a Demo with the ShopGuide Team](https://www.yourshopguide.com/pages/book-a-call) 🚀
+
+---
+
+## Frequently Asked Questions
+
+**How does the ShopGuide + Klaviyo integration actually work technically?**
+When a customer interacts with the ShopGuide AI Agent on your Shopify store, the agent captures intent signals from the conversation in real-time—product categories mentioned, attributes requested (e.g., vegan, waterproof, petite), questions about pricing, and hesitation patterns. These signals are sent to Klaviyo as **Custom Events** via the Klaviyo Track API. These events are then available as triggers and conditions within Klaviyo's flow builder, enabling you to create highly targeted automations without any manual data manipulation or third-party middleware.
+
+**What is intent-based email segmentation and why is it better than purchase-history segmentation?**
+Purchase-history segmentation tells you what someone *bought*—which is backward-looking. Intent-based segmentation captures what someone *wants right now*—which is forward-looking. A customer who bought running shoes six months ago may now be shopping for yoga gear. If you email them about running shoes, you miss the mark. But if your AI agent detected they asked about yoga mats during their last visit and tagged that intent in Klaviyo, your next email arrives at exactly the right moment with exactly the right product. Intent data is the most timely, accurate signal available for email personalization.
+
+**Will this integration increase my Klaviyo list engagement or hurt my deliverability?**
+Done correctly, it significantly improves deliverability. Email deliverability is punished by low open rates, spam complaints, and unsubscribes—all of which are direct consequences of irrelevant emails. When you segment based on live intent rather than broad demographics, you send fewer emails to more targeted segments, which drives higher open rates, lower unsubscribes, and better sender reputation over time. The goal is to send the *right* email, not more emails.
+
+**What kinds of Klaviyo flows can I build with ShopGuide intent data?**
+The most effective flows include: (1) **Post-Chat Follow-Up Flows**—triggered when a user had a specific conversation but didn't purchase, referencing what the agent discussed; (2) **Interest-Based Welcome Series**—new subscribers get a welcome sequence tailored to the product category they were browsing; (3) **Re-Engagement Flows**—lapsed customers receive emails based on their last expressed interest, not their last purchase; (4) **VIP Unlock Flows**—when intent signals indicate a high-value buyer, trigger a concierge-style sequence before they even check out.
+
+**How does this differ from Klaviyo's built-in "Viewed Product" event?**
+Klaviyo's native "Viewed Product" event only captures page views—a passive signal that tells you what someone looked at, not what they're genuinely interested in. ShopGuide's Custom Events capture *conversational intent*—a far stronger signal. There is a meaningful difference between a customer who passively scrolled past a product and one who actively asked an AI agent, "Does this come in a vegan version and does it ship in time for Christmas?" The latter is expressing purchase intent with specificity. That's the data that closes deals.
+
+**Does this integration require a developer to set up?**
+No. ShopGuide connects to Klaviyo via a standard API key integration that can be completed in the ShopGuide dashboard in under five minutes. No custom code, no webhooks to configure manually, no developer resources required. Once connected, ShopGuide automatically begins pushing Custom Events to Klaviyo with every qualifying conversation.
+
+**How should I measure the ROI of intent-based Klaviyo flows?**
+Compare two cohorts: customers who entered a flow triggered by ShopGuide intent data vs. customers who entered a comparable flow triggered by standard behavior (e.g., viewed product). Track revenue per recipient, conversion rate, and average order value across both cohorts. Most stores see a 40–80% lift in conversion rate for intent-triggered flows because the timing and relevance are dramatically higher. Klaviyo's native A/B testing and flow analytics make this comparison straightforward.
+
+**What about GDPR and data privacy when passing conversation data to Klaviyo?**
+ShopGuide only passes anonymized intent signals and event metadata—not raw conversation transcripts—to Klaviyo unless the customer has explicitly consented to extended data sharing. For EU markets, the integration respects GDPR consent status by checking Klaviyo's consent field before enriching a profile. If a customer has not consented to marketing, their intent signals are stored locally for on-site personalization only and are not sent to Klaviyo for email targeting.

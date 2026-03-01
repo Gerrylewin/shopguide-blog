@@ -53,3 +53,31 @@ Using Slack to manage your support flow isn't just about "convenience"—it's ab
 
 **Kill the queue. Join the flow.**
 [Connect ShopGuide to your Slack Workspace](https://docs.yourshopguide.com/features/slack-integration) 🚀
+
+---
+
+## Frequently Asked Questions
+
+**What does "1-way Slack integration" mean, and why is it 1-way by design?**
+A 1-way integration means ShopGuide sends notifications *to* Slack, but does not receive commands *from* Slack. This is intentional. The purpose of the integration is to ensure that when a human needs to intervene in a customer interaction, they are immediately notified with full context. The actual customer response and resolution happens in Shopify admin or directly through the ShopGuide dashboard, not through Slack. This keeps the conversation history centralized in one place—Shopify—where you have access to the full order history, customer profile, and agent logs needed to resolve the issue properly.
+
+**What types of customer issues trigger a Slack alert vs. what the AI resolves automatically?**
+ShopGuide uses a confidence and complexity scoring system to determine escalation. The AI handles autonomously: standard product questions, sizing guidance, discount code application, order status lookups, shipping estimates, and loyalty point inquiries. It escalates to Slack when: a customer expresses frustration multiple times in a single session, an order has a high monetary value (configurable threshold), the issue involves a dispute or refund request above a certain amount, the customer explicitly requests a human, or the AI's confidence in a response falls below a set threshold. The result is that the vast majority of conversations (typically 85–95%) are fully resolved by the AI without any human involvement.
+
+**How is the context provided in a Slack alert—what information does the team actually see?**
+Each Slack alert from ShopGuide includes: the customer's name and email, their purchase history summary (last 3–5 orders), their current cart contents, a transcript of the AI conversation so far, the specific issue that triggered the escalation, and a direct deep-link to their customer profile in Shopify admin. The human responding has everything they need to provide an informed, immediate response without asking the customer to repeat themselves. This pre-populated context is often the difference between a 2-minute resolution and a 20-minute back-and-forth.
+
+**How does the AI-to-human handoff feel from the customer's perspective?**
+Done correctly, it should feel seamless. From the customer's side, they are simply continuing a conversation that began with the AI. The handoff message from ShopGuide is designed to be warm and confident: "I'm connecting you with our team now—they'll have everything they need to sort this out immediately." There is no awkward "Please hold while we transfer you" or ticket system waiting room. The human responding has the full context from the Slack alert and can respond directly within seconds of picking up the notification.
+
+**Can I route different types of alerts to different Slack channels or team members?**
+Yes. ShopGuide supports multiple Slack channel destinations based on issue type. For example: high-value order issues can route to a dedicated `#vip-support` channel monitored by senior team members; shipping complaint alerts can route to `#ops-team`; general escalations route to `#customer-support`. You can also configure @mentions to specific team members for certain alert types. This means the right person sees the right alert immediately, rather than everyone monitoring a single noisy channel.
+
+**What is the typical response time improvement when using Slack-based support vs. email-based support?**
+Stores that switch from email-based support to Slack-based alerting typically see response times drop from 2–4 hours to under 15 minutes. The reason is structural: email requires someone to actively open and check a separate application on a scheduled basis. Slack is ambient—alerts appear in the tool the team already lives in, triggering immediate attention. For e-commerce specifically, response time is directly correlated with recovery rate for at-risk sales: a sub-15-minute response resolves roughly 60–70% of frustrated customer situations; a 2-hour response resolves fewer than 20%.
+
+**Can the Slack integration be used to identify systemic operational issues, not just individual customer problems?**
+Absolutely—this is one of its most underutilized capabilities. When the same type of alert fires multiple times in a short window (e.g., five customers in one hour all asking about a delayed shipment from the same carrier), this pattern is immediately visible in Slack. A well-organized team uses this signal to proactively update their shipping banner, post a social media update, or contact the carrier before the situation escalates further. The Slack integration essentially turns individual customer complaints into real-time operational intelligence.
+
+**Does the Slack integration work with Slack Connect (external workspace sharing)?**
+Yes. If your e-commerce brand uses Slack Connect to collaborate with a third-party fulfillment partner, logistics provider, or customer service agency, you can route specific ShopGuide alerts to a shared Slack Connect channel. This means your fulfillment partner can receive real-time notifications about high-priority order issues and respond directly in the shared workspace, dramatically accelerating resolution times for supply chain-related customer complaints.

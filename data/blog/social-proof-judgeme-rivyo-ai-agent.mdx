@@ -56,3 +56,31 @@ Put them to work. Let ShopGuide use your social proof to build trust and drive c
 
 **Unlock the power of your reviews today.**
 [Install the ShopGuide Integration](https://apps.shopify.com/die-ai-agent-official-app) 🚀
+
+---
+
+## Frequently Asked Questions
+
+**What is social proof and why is it particularly powerful in e-commerce?**
+Social proof is the psychological phenomenon where people look to the behavior and opinions of others to guide their own decisions, especially in situations of uncertainty. In e-commerce, where customers cannot physically touch a product before purchasing, uncertainty is inherent. Reviews, ratings, and user-generated content serve as a substitute for that tactile experience—they tell potential buyers "real people like you bought this and here is what they honestly thought." Research consistently shows that 90%+ of consumers read reviews before making a purchase, and products with 5+ reviews convert at 270% higher rates than products with zero reviews.
+
+**What is the difference between Judge.me and Rivyo, and why does ShopGuide support both?**
+Judge.me and Rivyo are both leading Shopify review platforms but have different positioning. Judge.me is one of the most widely installed review apps in the Shopify ecosystem, known for its generous free tier and robust feature set including photo reviews, Q&A, and verified buyer badges. Rivyo is popular for its advanced review import functionality (importing reviews from Amazon, AliExpress, etc.) and its clean display widgets. ShopGuide supports both because merchants have strong preferences for their existing review infrastructure, and switching apps solely to use ShopGuide would create unnecessary friction. The integration works natively with whichever platform is already installed.
+
+**How does ShopGuide search through reviews to find contextually relevant ones?**
+ShopGuide uses semantic indexing to analyze all of your product reviews at integration time and continuously as new reviews come in. This creates a searchable index of review content by theme, sentiment, and topic (e.g., "warmth," "sizing," "durability," "color accuracy"). When a customer asks a question that maps to one of these themes, ShopGuide queries this index to find the most relevant reviews. It then synthesizes a response that cites the review data naturally—rather than dumping a block of review text into the chat—making the answer feel like informed advice from a knowledgeable salesperson.
+
+**Does the agent ever share negative reviews with customers?**
+ShopGuide is designed to use review data to inform and reassure—it does not proactively surface negative reviews. However, it will use mixed-sentiment review data to set accurate expectations where doing so builds trust and prevents post-purchase disappointment. For example, if sizing reviews suggest a product runs large, the agent will mention this upfront ("Most reviewers recommend sizing down") even if those same reviews are slightly critical of the sizing. Giving customers accurate fit guidance prevents returns and builds long-term trust—which is more valuable than a sale that leads to a refund. The agent will not, however, proactively cite reviews that describe product defects or quality issues without direct prompting.
+
+**How does using reviews in conversation impact return rates?**
+Expectation-setting at the point of sale is the single most effective tool for reducing returns. When a customer adds a product to their cart after the AI has helped them select the right size (citing review data), confirmed the color matches their expectations (citing photo review mentions), and addressed their primary concern (citing a specific relevant review), they are purchasing with full information. Stores using ShopGuide's review integration typically see a 15–25% reduction in return rates for AI-assisted orders compared to non-assisted orders, because those customers purchased with higher confidence and more accurate expectations.
+
+**What review metadata does ShopGuide use beyond the review text itself?**
+ShopGuide uses several pieces of review metadata to improve recommendation quality: (1) **Verified Buyer status**—the agent can indicate when a review comes from a confirmed purchaser, adding credibility; (2) **Review date**—the agent can reference recency ("This was reviewed just last week") to signal product reliability; (3) **Photo reviews**—when a customer asks about color or size accuracy, the agent can mention "There are 12 photo reviews for this product" and direct the customer to the product page to view them; (4) **Review rating**—aggregate star ratings are used to contextualize upsell suggestions ("4.9 stars from 200+ reviews").
+
+**Can ShopGuide use review data from multiple products to make cross-sell recommendations?**
+Yes. One of the most powerful use cases is "social-proof-driven cross-selling." When ShopGuide recommends a complementary product, it can back that recommendation with aggregate review data: "Customers who bought this jacket also loved the Merino base layer (4.8 stars, 340 reviews)." This transforms a generic "you might also like" suggestion into a trusted recommendation backed by the collective wisdom of hundreds of previous buyers. Cross-sell conversion rates increase significantly when the recommendation is accompanied by credible social proof.
+
+**How often does ShopGuide re-index the review data to capture new reviews?**
+ShopGuide re-indexes your review data on a rolling basis. New reviews from Judge.me and Rivyo are pulled via webhook (event-triggered) rather than on a fixed schedule, meaning the index is typically updated within minutes of a new review being published. This ensures that a glowing review posted this morning can already be used in a customer conversation this afternoon—your newest social proof is always available to help close deals.
