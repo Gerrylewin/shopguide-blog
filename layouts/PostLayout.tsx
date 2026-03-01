@@ -41,6 +41,7 @@ interface LayoutProps {
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags, images } = content
+  const callout = (content as CoreContent<Blog> & { callout?: string }).callout
   const basePath = path.split('/')[0]
   const displayImage = images && images.length > 0 ? images[0] : null
   const hideInlineAd = slug === 'ai-agent-vs-chatbot-how-to-tell-youre-leaking-conversions'
@@ -84,6 +85,33 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     />
                   </div>
                 </Bleed>
+              </div>
+            )}
+            {/* TLDR Callout */}
+            {callout && (
+              <div className="xl:ml-2.5 pb-6">
+                <div className="flex gap-4 rounded-xl border border-primary-200 bg-primary-50 px-6 py-5 dark:border-primary-800 dark:bg-primary-950/30">
+                  <div className="mt-0.5 flex-shrink-0">
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary-500 text-white">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="h-4 w-4"
+                      >
+                        <path d="M11.983 1.907a.75.75 0 0 0-1.292-.657l-8.5 9.5A.75.75 0 0 0 2.75 12h6.572l-1.305 6.093a.75.75 0 0 0 1.292.657l8.5-9.5A.75.75 0 0 0 17.25 8h-6.572l1.305-6.093Z" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div>
+                    <p className="mb-1 text-xs font-semibold tracking-widest text-primary-600 uppercase dark:text-primary-400">
+                      TL;DR
+                    </p>
+                    <p className="text-base leading-relaxed text-gray-700 dark:text-gray-200">
+                      {callout}
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
             <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:ml-2.5 xl:grid xl:grid-cols-5 xl:gap-x-8 xl:divide-y-0 dark:divide-gray-700">
