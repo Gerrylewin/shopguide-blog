@@ -96,6 +96,10 @@ module.exports = () => {
           protocol: 'https',
           hostname: 'shopgblog-wvpm3pdv.manus.space',
         },
+        {
+          protocol: 'https',
+          hostname: 'images.unsplash.com',
+        },
       ],
       unoptimized,
     },
