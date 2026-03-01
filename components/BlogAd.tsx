@@ -163,6 +163,21 @@ export function BlogAdInlineWithInsertion() {
         return
       }
 
+      // Place ad before FAQ so accordion expansion doesn't move the ad around
+      const faqHeading = Array.from(proseElement.querySelectorAll('h2')).find((heading) => {
+        const normalizedHeading = heading.textContent?.trim().toLowerCase()
+        return normalizedHeading === 'frequently asked questions' || normalizedHeading === 'faq'
+      })
+
+      if (faqHeading && faqHeading.parentNode) {
+        adElement.style.display = 'block'
+        if (adElement.parentNode) {
+          adElement.parentNode.removeChild(adElement)
+        }
+        faqHeading.parentNode.insertBefore(adElement, faqHeading)
+        return
+      }
+
       // Look for h2 with "References" text
       const headings = proseElement.querySelectorAll('h2')
       let referencesHeading: Element | null = null
