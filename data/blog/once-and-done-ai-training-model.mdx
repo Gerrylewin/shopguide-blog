@@ -4,7 +4,7 @@ date: '2026-03-06'
 lastmod: '2026-03-06'
 tags: ['ai-training', 'efficiency', 'merchants', 'tech-tips']
 draft: false
-callout: 'Traditional AI is forgetful—it can repeat the same mistake even after you correct it. ShopGuide''s Once-and-Done model hard-codes every fix permanently. Correct a mistake once in plain English, and your agent never makes it again. Period.'
+callout: "Traditional AI is forgetful—it can repeat the same mistake even after you correct it. ShopGuide's Once-and-Done model hard-codes every fix permanently. Correct a mistake once in plain English, and your agent never makes it again. Period."
 summary: >-
   Traditional AI requires "fine-tuning" and endless prompt engineering. ShopGuide’s "Once-and-Done" model means you correct a mistake once, and the agent never makes it again. Simple.
 images:
@@ -62,13 +62,13 @@ Your tech should work for you, not the other way around. If you’re spending mo
 Probabilistic AI (like standard large language models) generates responses by calculating the most statistically likely answer based on training data. This means even after you correct a mistake, the model might revert to the wrong answer if the probability distribution pulls it that way—especially for edge cases. Deterministic corrections, by contrast, are hard rules that override the probabilistic layer. Think of it as the difference between a suggestion and a law. ShopGuide's Correction Layer creates hard rules that say: "In this specific context, always say exactly this." The model no longer guesses; it knows.
 
 **How long does it take for a correction to take effect?**
-In ShopGuide's system, corrections are applied in real-time. The moment you save a correction in the dashboard, the agent's behavior is updated for all future conversations. There is no retraining period, no model redeployment, and no waiting. This is only possible because the Correction Layer sits *on top of* the underlying AI, acting as a fast, deterministic override layer rather than modifying the base model itself.
+In ShopGuide's system, corrections are applied in real-time. The moment you save a correction in the dashboard, the agent's behavior is updated for all future conversations. There is no retraining period, no model redeployment, and no waiting. This is only possible because the Correction Layer sits _on top of_ the underlying AI, acting as a fast, deterministic override layer rather than modifying the base model itself.
 
 **Do I need technical knowledge to train my ShopGuide agent?**
 No. The entire correction and training interface is built in plain English. You read the agent's response in the conversation logs, decide if it needs updating, click "Correct," and type what the agent should have said. There are no prompt engineering concepts to learn, no JSON configurations, no coding. If you can write a Slack message, you can train your ShopGuide agent.
 
 **How is this different from just updating a chatbot's FAQ document?**
-Traditional chatbots use a static FAQ document or a knowledge base that the bot searches through keyword matching. The limitation is that the bot can only answer questions whose exact wording matches something in the document. ShopGuide's approach is different: corrections are woven into the agent's contextual understanding. The agent can apply a correction even when the question is phrased completely differently, because it understands *intent*, not just keywords. You fix it once; it applies everywhere that context appears.
+Traditional chatbots use a static FAQ document or a knowledge base that the bot searches through keyword matching. The limitation is that the bot can only answer questions whose exact wording matches something in the document. ShopGuide's approach is different: corrections are woven into the agent's contextual understanding. The agent can apply a correction even when the question is phrased completely differently, because it understands _intent_, not just keywords. You fix it once; it applies everywhere that context appears.
 
 **What happens if I make an incorrect correction—can I undo it?**
 Yes. Every correction is logged with a timestamp in the ShopGuide dashboard. You can review the history of corrections, edit any existing correction, or delete one entirely. The change takes effect immediately upon saving. You always maintain full control over what the agent knows and how it responds, with a complete audit trail.

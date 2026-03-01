@@ -89,10 +89,10 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             )}
             {/* TLDR Callout */}
             {callout && (
-              <div className="xl:ml-2.5 pb-6">
-                <div className="flex gap-4 rounded-xl border border-primary-200 bg-primary-50 px-6 py-5 dark:border-primary-800 dark:bg-primary-950/30">
+              <div className="pb-6 xl:ml-2.5">
+                <div className="border-primary-200 bg-primary-50 dark:border-primary-800 dark:bg-primary-950/30 flex gap-4 rounded-xl border px-6 py-5">
                   <div className="mt-0.5 flex-shrink-0">
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary-500 text-white">
+                    <span className="bg-primary-500 inline-flex h-7 w-7 items-center justify-center rounded-full text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
@@ -104,7 +104,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     </span>
                   </div>
                   <div>
-                    <p className="mb-1 text-xs font-semibold tracking-widest text-primary-600 uppercase dark:text-primary-400">
+                    <p className="text-primary-600 dark:text-primary-400 mb-1 text-xs font-semibold tracking-widest uppercase">
                       TL;DR
                     </p>
                     <p className="text-base leading-relaxed text-gray-700 dark:text-gray-200">
