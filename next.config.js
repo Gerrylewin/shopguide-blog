@@ -106,6 +106,16 @@ module.exports = () => {
     async redirects() {
       return [
         {
+          source: '/blogs',
+          destination: '/blog',
+          permanent: true,
+        },
+        {
+          source: '/blogs/:path*',
+          destination: '/blog/:path*',
+          permanent: true,
+        },
+        {
           // Redirect root-level blog post slugs to /blog/{slug}
           // Excludes known routes: about, blog, tags, projects, integrations, admin, api, feed.xml, sitemap.xml, robots.txt
           source:
