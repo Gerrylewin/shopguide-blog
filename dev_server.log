@@ -1,0 +1,19 @@
+   ▲ Next.js 15.2.8
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+   - Experiments (use with caution):
+     ✓ optimizeCss
+
+ ✓ Starting...
+Contentlayer config change detected. Updating type definitions and data...
+(node:2922) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Ready in 4.9s
+successCallback /app/.contentlayer
+Local search index generated...
+Generated 25 documents in .contentlayer
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 9.4s (1408 modules)
+ GET /blog 200 in 12120ms
+ ○ Compiling /blog/[...slug] ...
+ ✓ Compiled /blog/[...slug] in 2.7s (1527 modules)
