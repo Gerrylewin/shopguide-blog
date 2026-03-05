@@ -6,10 +6,23 @@ import { formatDate } from '@/lib/formatDate'
 import NewsletterFormWithLogging from '@/components/NewsletterFormWithLogging'
 
 const MAX_DISPLAY = 5
+const TOP_BANNER_IMAGE =
+  'https://assets.cdn.filesafe.space/YwFixzedrximlLRmcQo3/media/69a90ef2b003fa317da4ad48.png'
 
 export default function Home({ posts }) {
   return (
     <>
+      <section className="pt-6 pb-4">
+        <div className="relative aspect-video w-full overflow-hidden rounded-xl">
+          <Image
+            src={TOP_BANNER_IMAGE}
+            alt="Featured visual"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      </section>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
           <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">

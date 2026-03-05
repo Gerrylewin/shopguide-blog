@@ -100,6 +100,10 @@ module.exports = () => {
           protocol: 'https',
           hostname: 'images.unsplash.com',
         },
+        {
+          protocol: 'https',
+          hostname: 'assets.cdn.filesafe.space',
+        },
       ],
       unoptimized,
     },
