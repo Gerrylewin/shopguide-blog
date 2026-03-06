@@ -243,6 +243,30 @@
   .dark .prose .faq-answer {
     border-top-color: var(--color-gray-700);
   }
+
+  /* Fallback: when FAQ is plain markdown (## FAQ + ### Q + p), style for clarity */
+  .prose #frequently-asked-questions {
+    margin-top: 2.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .prose #frequently-asked-questions ~ h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.35rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+  }
+  .dark .prose #frequently-asked-questions ~ h3 {
+    color: var(--color-gray-100);
+  }
+  .prose #frequently-asked-questions ~ h3 + p {
+    margin-top: 0;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--color-primary-200);
+  }
+  .dark .prose #frequently-asked-questions ~ h3 + p {
+    border-left-color: var(--color-primary-800);
+  }
 }
 
 .task-list-item::before {
