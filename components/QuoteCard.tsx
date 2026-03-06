@@ -17,7 +17,10 @@ export default function QuoteCard({
   caption,
 }: QuoteCardProps) {
   const attributionEl: ReactNode = source ? (
-    <Link href={source} className="font-medium text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400">
+    <Link
+      href={source}
+      className="hover:text-primary-600 dark:hover:text-primary-400 font-medium text-gray-700 dark:text-gray-300"
+    >
       {attribution}
     </Link>
   ) : (
@@ -27,23 +30,19 @@ export default function QuoteCard({
   return (
     <figure className="my-8">
       <blockquote
-        className="border-primary-200 dark:border-primary-800 border-l-4 py-4 pl-5 pr-0"
+        className="border-primary-200 dark:border-primary-800 border-l-4 py-4 pr-0 pl-5"
         cite={source}
       >
-        <p className="text-lg font-medium leading-relaxed text-gray-800 dark:text-gray-100 sm:text-xl">
+        <p className="text-lg leading-relaxed font-medium text-gray-800 sm:text-xl dark:text-gray-100">
           &ldquo;{quote}&rdquo;
         </p>
         <footer className="mt-4 text-sm text-gray-500 dark:text-gray-400">
           — {attributionEl}
-          {sourceLabel && source && (
-            <span className="ml-1.5">
-              ({sourceLabel})
-            </span>
-          )}
+          {sourceLabel && source && <span className="ml-1.5">({sourceLabel})</span>}
         </footer>
       </blockquote>
       {caption && (
-        <figcaption className="mt-2 text-center text-sm italic text-gray-500 dark:text-gray-400">
+        <figcaption className="mt-2 text-center text-sm text-gray-500 italic dark:text-gray-400">
           {caption}
         </figcaption>
       )}
