@@ -11,7 +11,10 @@ interface FAQSectionProps {
   title?: string
 }
 
-export default function FAQSection({ items, title = 'Frequently Asked Questions' }: FAQSectionProps) {
+export default function FAQSection({
+  items,
+  title = 'Frequently Asked Questions',
+}: FAQSectionProps) {
   if (!items?.length) return null
 
   return (

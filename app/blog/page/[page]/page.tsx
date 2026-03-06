@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation'
 
 const POSTS_PER_PAGE = 5
 
+export const dynamic = 'force-static'
+
 export const generateStaticParams = async () => {
   const isProduction = process.env.NODE_ENV === 'production'
   const publishedPosts = isProduction ? allBlogs.filter((post) => post.draft !== true) : allBlogs
