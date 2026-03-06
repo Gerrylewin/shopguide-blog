@@ -8,6 +8,7 @@ import TableWrapper from './TableWrapper'
 import AudioPlayer from './AudioPlayer'
 import AppLogo from './AppLogo'
 import ImageGallery from './ImageGallery'
+import QuoteCard from './QuoteCard'
 
 // Ensure all components are defined to prevent "undefined component" errors
 export const components: MDXComponents = {
@@ -20,4 +21,5 @@ export const components: MDXComponents = {
   AudioPlayer: AudioPlayer || (() => null),
   AppLogo: AppLogo || (() => null),
   ImageGallery: ImageGallery || (() => null),
+  QuoteCard: QuoteCard || (() => null),
 }
