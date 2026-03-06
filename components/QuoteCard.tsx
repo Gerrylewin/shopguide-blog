@@ -27,7 +27,7 @@ export default function QuoteCard({
   return (
     <figure className="my-8">
       <blockquote
-        className="border-primary-200 dark:border-primary-800 border-l-4 bg-gray-50 py-5 pl-6 pr-5 dark:bg-gray-800/50"
+        className="border-primary-200 dark:border-primary-800 border-l-4 py-4 pl-5 pr-0"
         cite={source}
       >
         <p className="text-lg font-medium leading-relaxed text-gray-800 dark:text-gray-100 sm:text-xl">
