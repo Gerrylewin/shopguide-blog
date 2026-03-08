@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from '@/components/Link'
+import Image from '@/components/Image'
 
 interface QuoteCardProps {
   quote: string
@@ -7,6 +8,7 @@ interface QuoteCardProps {
   source?: string
   sourceLabel?: string
   caption?: string
+  image?: string
 }
 
 export default function QuoteCard({
@@ -15,6 +17,7 @@ export default function QuoteCard({
   source,
   sourceLabel,
   caption,
+  image,
 }: QuoteCardProps) {
   const attributionEl: ReactNode = source ? (
     <Link
@@ -29,6 +32,17 @@ export default function QuoteCard({
 
   return (
     <figure className="my-8">
+      {image && (
+        <div className="mb-4 flex justify-center">
+          <Image
+            src={image}
+            alt={`Quote by ${attribution}`}
+            width={800}
+            height={400}
+            className="rounded-lg object-contain shadow-md"
+          />
+        </div>
+      )}
       <blockquote
         className="border-primary-200 dark:border-primary-800 border-l-4 py-4 pr-0 pl-5"
         cite={source}
