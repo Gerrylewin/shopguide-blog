@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import type { Authors } from 'contentlayer/generated'
 import SocialIcon from '@/components/social-icons'
 import Image from '@/components/Image'
+import BinaryFlowOverlay from '@/components/BinaryFlowOverlay'
 
 interface Props {
   children: ReactNode
@@ -20,15 +21,26 @@ export default function AuthorLayout({ children, content }: Props) {
           </h1>
         </div>
         <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
-          <div className="flex flex-col items-center space-x-2 pt-8">
-            {avatar &&
-              (linkedin ? (
-                <a
-                  href={linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cursor-pointer transition-opacity hover:opacity-80"
-                >
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 dark:border-gray-700/70 dark:bg-gray-900/60">
+            <BinaryFlowOverlay accentColor="#0891b2" />
+            <div className="relative z-10 flex flex-col items-center space-x-2">
+              {avatar &&
+                (linkedin ? (
+                  <a
+                    href={linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cursor-pointer transition-opacity hover:opacity-80"
+                  >
+                    <Image
+                      src={avatar}
+                      alt="avatar"
+                      width={192}
+                      height={192}
+                      className="h-48 w-48 rounded-full"
+                    />
+                  </a>
+                ) : (
                   <Image
                     src={avatar}
                     alt="avatar"
@@ -36,25 +48,17 @@ export default function AuthorLayout({ children, content }: Props) {
                     height={192}
                     className="h-48 w-48 rounded-full"
                   />
-                </a>
-              ) : (
-                <Image
-                  src={avatar}
-                  alt="avatar"
-                  width={192}
-                  height={192}
-                  className="h-48 w-48 rounded-full"
-                />
-              ))}
-            <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
-            <div className="text-gray-500 dark:text-gray-400">{occupation}</div>
-            <div className="text-gray-500 dark:text-gray-400">{company}</div>
-            <div className="flex space-x-3 pt-6">
-              <SocialIcon kind="mail" href={`mailto:${email}`} />
-              <SocialIcon kind="github" href={github} />
-              <SocialIcon kind="linkedin" href={linkedin} />
-              <SocialIcon kind="x" href={twitter} />
-              <SocialIcon kind="bluesky" href={bluesky} />
+                ))}
+              <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
+              <div className="text-gray-600 dark:text-gray-300">{occupation}</div>
+              <div className="text-gray-600 dark:text-gray-300">{company}</div>
+              <div className="flex space-x-3 pt-6">
+                <SocialIcon kind="mail" href={`mailto:${email}`} />
+                <SocialIcon kind="github" href={github} />
+                <SocialIcon kind="linkedin" href={linkedin} />
+                <SocialIcon kind="x" href={twitter} />
+                <SocialIcon kind="bluesky" href={bluesky} />
+              </div>
             </div>
           </div>
           <div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
