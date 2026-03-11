@@ -1,0 +1,28 @@
+   ▲ Next.js 15.2.8
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+   - Experiments (use with caution):
+     ✓ optimizeCss
+
+ ✓ Starting...
+Contentlayer config change detected. Updating type definitions and data...
+(node:3133) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Ready in 4.3s
+successCallback /app/.contentlayer
+Local search index generated...
+Generated 35 documents in .contentlayer
+ ○ Compiling /blog/[...slug] ...
+ ✓ Compiled /blog/[...slug] in 9s (1564 modules)
+ GET /blog/agentic-indexing-the-secret-behind-the-2026-organic-traffic-spike 200 in 12461ms
+ ⨯ upstream image response timed out for https://images.unsplash.com/photo-1551288049-bbda4865cda1?w=1200&q=80
+
+File updated: blog/agentic-indexing-the-secret-behind-the-2026-organic-traffic-spike.mdx
+ ✓ Compiled in 938ms (584 modules)
+successCallback /app/.contentlayer
+Local search index generated...
+Generated 35 documents in .contentlayer
+ ✓ Compiled in 1673ms (1433 modules)
+ GET /blog/agentic-indexing-the-secret-behind-the-2026-organic-traffic-spike 200 in 1166ms
+ ⨯ upstream image response timed out for https://images.unsplash.com/photo-1551288049-bbda4865cda1?w=1200&q=80
+ ⨯ upstream image response timed out for https://images.unsplash.com/photo-1551288049-bbda4865cda1?w=1200&q=80
