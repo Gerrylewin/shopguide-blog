@@ -48,4 +48,6 @@ Thumbs.db
 # Other
 coverage
 .cache
+test-results
+.cursor
 
