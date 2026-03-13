@@ -365,6 +365,8 @@ Your GHL automation can use this data to:
 
 Here's how to add custom MDX components to your blog posts.
 
+- **QuoteCard** — Thought-leader quote blocks (glowing border, italic quote, attribution). See [QUOTE-CARD.md](./QUOTE-CARD.md) for usage and props.
+
 ### Example: Adding a Donut Chart Component
 
 1. Create a new component in `components/DonutChart.tsx`:
