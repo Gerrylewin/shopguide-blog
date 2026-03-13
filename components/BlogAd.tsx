@@ -11,25 +11,41 @@ const AdContent = () => (
     rel="noopener noreferrer"
     className="group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
   >
+    {/* Tron Grid Background with Scanning Effect */}
+    <div className="tron-grid-bg pointer-events-none absolute inset-0 opacity-[0.15]">
+      <div className="animate-grid-scan absolute inset-0 h-20 w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent" />
+    </div>
+
+    {/* Border Beam Animation (Racing Light Trail) */}
+    <div className="pointer-events-none absolute inset-0 z-0">
+      <div
+        className="animate-border-beam absolute h-[2px] w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
+        style={{
+          offsetPath: 'inset(0% round 0.5rem)',
+          offsetAnchor: '50% 50%',
+        }}
+      />
+    </div>
+
     {/* Glitch effect overlay */}
     <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
       <div className="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent" />
     </div>
 
     {/* Terminal-style header */}
-    <div className="mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5">
+    <div className="relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5">
       <div className="flex gap-1.5">
-        <div className="h-2 w-2 rounded-full bg-red-500" />
-        <div className="h-2 w-2 rounded-full bg-yellow-500" />
-        <div className="h-2 w-2 rounded-full bg-emerald-500" />
+        <div className="h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+        <div className="h-2 w-2 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+        <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
       </div>
       <span className="font-mono text-[9px] text-emerald-400/60">agentic_commerce.exe</span>
     </div>
 
     {/* Main content */}
-    <div className="relative space-y-2">
+    <div className="relative z-10 space-y-2">
       <div className="text-center">
-        <p className="font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase">
+        <p className="text-glow-primary font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase">
           &gt; Deploy AI Agent
         </p>
         <p className="mt-0.5 font-mono text-[9px] text-gray-400">for Shopify stores</p>
@@ -43,7 +59,7 @@ const AdContent = () => (
             alt="Shopify"
             fill
             sizes="64px"
-            className="object-contain transition-all duration-300 group-hover:opacity-90"
+            className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
             priority
           />
         </div>
@@ -52,7 +68,8 @@ const AdContent = () => (
       {/* Terminal prompt */}
       <div className="mt-2 flex items-center justify-center gap-1 font-mono text-[8px] text-emerald-500/70">
         <span className="text-emerald-400">$</span>
-        <span className="animate-pulse">npm install agentic-commerce</span>
+        <span className="">npm install agentic-commerce</span>
+        <span className="h-2.5 w-1 animate-pulse bg-emerald-500" />
       </div>
     </div>
 
