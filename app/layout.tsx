@@ -202,7 +202,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               console.log('%cTransform your Shopify store with autonomous AI agents that drive real conversions.', styles.text);
               console.log('');
               console.log(
-                \`%c💰 Revenue Generated: %c$100,000+%c across our merchant network\`,
+                \`%c💰 Revenue Generated: %c$250,000+%c across our merchant network\`,
                 styles.text,
                 styles.stat,
                 styles.text
