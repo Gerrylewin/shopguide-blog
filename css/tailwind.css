@@ -373,3 +373,67 @@ input:-webkit-autofill:focus {
     margin-right: auto;
   }
 }
+
+/* Tron-style animations and utilities for QuoteCard */
+@keyframes border-beam {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes grid-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+@keyframes neon-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    filter: drop-shadow(0 0 5px var(--color-primary-500));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 15px var(--color-primary-400));
+  }
+}
+
+@layer utilities {
+  .tron-grid-bg {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--color-primary-500) 15%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--color-primary-500) 15%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 32px 32px;
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 12px color-mix(in oklab, var(--color-primary-400) 60%, transparent);
+  }
+
+  .animate-border-beam {
+    animation: border-beam 6s linear infinite;
+  }
+
+  .animate-grid-scan {
+    animation: grid-scan 10s linear infinite;
+  }
+
+  .animate-neon-pulse {
+    animation: neon-pulse 3s ease-in-out infinite;
+  }
+}
