@@ -214,6 +214,20 @@ Emails are stored in Cloudflare D1 with the following schema:
 - Scalable cloud-based storage
 - Fast queries with indexed email field
 
+#### Newsletter sent posts (D1)
+
+To avoid resending the same post to subscribers on every cron or serverless run, sent state is stored in D1:
+
+- **Table**: `newsletter_sent_posts` (slug, title, date, sent_at)
+- Created automatically on first use (`CREATE TABLE IF NOT EXISTS`).
+- Used by `check-new-posts` and `send-post` so each post is only ever sent once per subscriber.
+- If D1 is not configured, the app falls back to a local file (fine for local dev; in production you should use D1 so state persists across serverless invocations).
+
+**Send behavior:**
+
+- **Idempotent**: Calling `POST /api/newsletter/send-post` for a post that was already sent returns success and does not send again.
+- **Deduplication**: Each subscriber email receives at most one copy per send (duplicates by email are filtered out before sending).
+
 ### Managing Subscribers
 
 #### Get All Subscribers
@@ -270,6 +284,8 @@ Content-Type: application/json
   "summary": "This is a summary of the post"
 }
 ```
+
+If that post was already sent, the API returns `{ "message": "This post was already sent; no emails sent.", "sent": 0, "alreadySent": true }` and does not send again.
 
 #### Option 2: Automated via Build Script
 

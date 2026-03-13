@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendBlogPostEmails } from '@/lib/rss-email-sender'
+import { isPostAlreadySent, markPostAsSentBySlug } from '@/lib/blog-post-tracker'
 
 export const dynamic = 'force-dynamic'
 
 /**
  * POST /api/newsletter/send-post
- * Send a new blog post notification to all subscribers
- *
- * This endpoint can be called manually or via a webhook when a new post is published
+ * Send a new blog post notification to all subscribers.
+ * Idempotent: if this post was already sent, returns success without sending again.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -22,6 +22,16 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Skip if already sent (prevents duplicate emails from double-clicks or repeated webhooks)
+    const alreadySent = await isPostAlreadySent(slug)
+    if (alreadySent) {
+      return NextResponse.json({
+        message: 'This post was already sent; no emails sent.',
+        sent: 0,
+        alreadySent: true,
+      })
+    }
+
     // Send emails to all subscribers
     const result = await sendBlogPostEmails({
       title,
@@ -30,6 +40,11 @@ export async function POST(req: NextRequest) {
       summary,
       images,
     })
+
+    // Mark as sent so future calls are idempotent
+    if (result.sent > 0) {
+      await markPostAsSentBySlug(slug, title, date)
+    }
 
     return NextResponse.json({
       message: 'Blog post notification sent',

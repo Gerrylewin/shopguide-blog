@@ -3,10 +3,16 @@ import path from 'path'
 import type { Blog } from 'contentlayer/generated'
 import { sendBlogPostEmails } from './rss-email-sender'
 import { extractMainPoints } from './blog-post-utils'
+import {
+  isCloudflareD1Available,
+  getD1SentPosts,
+  checkD1PostSent,
+  markD1PostAsSent,
+} from './cloudflare-d1'
 
 const SENT_POSTS_FILE = path.resolve(process.cwd(), 'data', 'sent-blog-posts.json')
 
-interface SentPost {
+export interface SentPost {
   slug: string
   title: string
   date: string
@@ -14,56 +20,112 @@ interface SentPost {
 }
 
 /**
- * Get list of blog posts that have already been sent
+ * Get list of blog posts that have already been sent.
+ * Uses D1 in production (persistent across serverless) so we don't resend on every cron run.
  */
 export async function getSentPosts(): Promise<SentPost[]> {
+  if (isCloudflareD1Available()) {
+    try {
+      const rows = await getD1SentPosts()
+      return rows
+    } catch (error) {
+      console.error('Error reading sent posts from D1, falling back to file:', error)
+    }
+  }
   try {
     const fileContent = await fs.readFile(SENT_POSTS_FILE, 'utf-8')
     const parsed = JSON.parse(fileContent.trim() || '[]')
     return Array.isArray(parsed) ? parsed : []
   } catch (error) {
     const errorCode = (error as NodeJS.ErrnoException).code
-    if (errorCode === 'ENOENT') {
-      // File doesn't exist yet, return empty array
-      return []
-    }
+    if (errorCode === 'ENOENT') return []
     console.error('Error reading sent posts file:', error)
     return []
   }
 }
 
 /**
- * Mark a blog post as sent
+ * Mark a blog post as sent (D1 in production, file locally).
  */
 export async function markPostAsSent(post: Blog): Promise<void> {
+  if (isCloudflareD1Available()) {
+    try {
+      const already = await checkD1PostSent(post.slug)
+      if (already) {
+        console.log(`Post ${post.slug} already marked as sent`)
+        return
+      }
+      await markD1PostAsSent(post.slug, post.title, post.date)
+      console.log(`✅ Marked post ${post.slug} as sent (D1)`)
+      return
+    } catch (error) {
+      console.error('Error marking post as sent in D1:', error)
+    }
+  }
   try {
     const sentPosts = await getSentPosts()
-
-    // Check if already sent
-    const alreadySent = sentPosts.some((p) => p.slug === post.slug)
-    if (alreadySent) {
+    if (sentPosts.some((p) => p.slug === post.slug)) {
       console.log(`Post ${post.slug} already marked as sent`)
       return
     }
-
-    // Add new sent post
     sentPosts.push({
       slug: post.slug,
       title: post.title,
       date: post.date,
       sentAt: new Date().toISOString(),
     })
-
-    // Ensure data directory exists
     const dataDir = path.dirname(SENT_POSTS_FILE)
     await fs.mkdir(dataDir, { recursive: true })
-
-    // Write back to file
     await fs.writeFile(SENT_POSTS_FILE, JSON.stringify(sentPosts, null, 2), 'utf-8')
     console.log(`✅ Marked post ${post.slug} as sent`)
   } catch (error) {
     console.error('Error marking post as sent:', error)
-    // Don't throw - this is not critical
+  }
+}
+
+/**
+ * Check if a post has already been sent (for idempotent send-post API).
+ */
+export async function isPostAlreadySent(slug: string): Promise<boolean> {
+  if (isCloudflareD1Available()) {
+    try {
+      return await checkD1PostSent(slug)
+    } catch {
+      return false
+    }
+  }
+  const sent = await getSentPosts()
+  return sent.some((p) => p.slug === slug)
+}
+
+/**
+ * Mark a post as sent by slug/title/date (for send-post API which doesn't have a full Blog object).
+ */
+export async function markPostAsSentBySlug(
+  slug: string,
+  title: string,
+  date: string
+): Promise<void> {
+  if (isCloudflareD1Available()) {
+    try {
+      if (await checkD1PostSent(slug)) return
+      await markD1PostAsSent(slug, title, date)
+      console.log(`✅ Marked post ${slug} as sent (D1)`)
+      return
+    } catch (error) {
+      console.error('Error marking post as sent in D1:', error)
+    }
+  }
+  try {
+    const sentPosts = await getSentPosts()
+    if (sentPosts.some((p) => p.slug === slug)) return
+    sentPosts.push({ slug, title, date, sentAt: new Date().toISOString() })
+    const dataDir = path.dirname(SENT_POSTS_FILE)
+    await fs.mkdir(dataDir, { recursive: true })
+    await fs.writeFile(SENT_POSTS_FILE, JSON.stringify(sentPosts, null, 2), 'utf-8')
+    console.log(`✅ Marked post ${slug} as sent`)
+  } catch (error) {
+    console.error('Error marking post as sent:', error)
   }
 }
 

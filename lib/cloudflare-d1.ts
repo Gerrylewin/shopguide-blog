@@ -156,3 +156,75 @@ export async function removeD1Subscriber(email: string): Promise<boolean> {
     return false
   }
 }
+
+// --- Newsletter sent posts (persistent state so we don't resend on every serverless invocation) ---
+
+const SENT_POSTS_TABLE = 'newsletter_sent_posts'
+
+/**
+ * Ensure newsletter_sent_posts table exists (idempotent).
+ */
+export async function ensureSentPostsTable(): Promise<void> {
+  const sql = `CREATE TABLE IF NOT EXISTS ${SENT_POSTS_TABLE} (
+  slug TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  date TEXT NOT NULL,
+  sent_at TEXT NOT NULL
+)`
+  await executeD1Query(sql)
+}
+
+export interface SentPostRow {
+  slug: string
+  title: string
+  date: string
+  sentAt: string
+}
+
+/**
+ * Get all sent post slugs from D1 (used to avoid resending on cron/serverless).
+ */
+export async function getD1SentPosts(): Promise<SentPostRow[]> {
+  await ensureSentPostsTable()
+  const result = await executeD1Query(
+    `SELECT slug, title, date, sent_at FROM ${SENT_POSTS_TABLE} ORDER BY sent_at DESC`
+  )
+  const rows = result?.results || []
+  if (!Array.isArray(rows)) return []
+  return rows.map((row: any) => ({
+    slug: row.slug,
+    title: row.title,
+    date: row.date,
+    sentAt: row.sent_at,
+  }))
+}
+
+/**
+ * Check if a post (by slug) has already been sent.
+ */
+export async function checkD1PostSent(slug: string): Promise<boolean> {
+  await ensureSentPostsTable()
+  const result = await executeD1Query(
+    `SELECT 1 FROM ${SENT_POSTS_TABLE} WHERE slug = ? LIMIT 1`,
+    [slug]
+  )
+  const rows = result?.results || []
+  return Array.isArray(rows) && rows.length > 0
+}
+
+/**
+ * Mark a post as sent in D1 (persistent across serverless invocations).
+ * Uses INSERT OR IGNORE so concurrent marks for the same slug don't fail.
+ */
+export async function markD1PostAsSent(
+  slug: string,
+  title: string,
+  date: string
+): Promise<void> {
+  await ensureSentPostsTable()
+  const sentAt = new Date().toISOString()
+  await executeD1Query(
+    `INSERT OR IGNORE INTO ${SENT_POSTS_TABLE} (slug, title, date, sent_at) VALUES (?, ?, ?, ?)`,
+    [slug, title, date, sentAt]
+  )
+}

@@ -30,7 +30,15 @@ interface BlogPost {
  */
 export async function sendBlogPostEmails(post: BlogPost) {
   try {
-    const subscribers = await getSubscribers()
+    const rawSubscribers = await getSubscribers()
+    // Dedupe by lowercase email so each address gets at most one email per send
+    const seen = new Set<string>()
+    const subscribers = rawSubscribers.filter((s) => {
+      const key = s.email.toLowerCase()
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
 
     if (subscribers.length === 0) {
       console.log('No subscribers to notify')
