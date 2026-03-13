@@ -31,14 +31,14 @@ With optional image:
 
 ## Props
 
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `quote` | string | Yes | The quoted text (no surrounding quotes; component adds “ ”). |
-| `attribution` | string | Yes | e.g. `"John Collison, Co-founder of Stripe"`. |
-| `source` | string | No | URL for the quote/source. When set, attribution and sourceLabel render as underlined links. |
-| `sourceLabel` | string | No | Short label for the source, e.g. `"X"`, `"LinkedIn"`, `"The Block"`. Shown in parentheses; linked if `source` is set. |
-| `caption` | string | No | Context line below the block (e.g. “John Collison predicting the agentic commerce torrent.”). |
-| `image` | string | No | Optional image path; shown above the quote. |
+| Prop          | Type   | Required | Description                                                                                                           |
+| ------------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------- |
+| `quote`       | string | Yes      | The quoted text (no surrounding quotes; component adds “ ”).                                                          |
+| `attribution` | string | Yes      | e.g. `"John Collison, Co-founder of Stripe"`.                                                                         |
+| `source`      | string | No       | URL for the quote/source. When set, attribution and sourceLabel render as underlined links.                           |
+| `sourceLabel` | string | No       | Short label for the source, e.g. `"X"`, `"LinkedIn"`, `"The Block"`. Shown in parentheses; linked if `source` is set. |
+| `caption`     | string | No       | Context line below the block (e.g. “John Collison predicting the agentic commerce torrent.”).                         |
+| `image`       | string | No       | Optional image path; shown above the quote.                                                                           |
 
 ## Design
 

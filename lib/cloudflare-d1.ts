@@ -204,10 +204,9 @@ export async function getD1SentPosts(): Promise<SentPostRow[]> {
  */
 export async function checkD1PostSent(slug: string): Promise<boolean> {
   await ensureSentPostsTable()
-  const result = await executeD1Query(
-    `SELECT 1 FROM ${SENT_POSTS_TABLE} WHERE slug = ? LIMIT 1`,
-    [slug]
-  )
+  const result = await executeD1Query(`SELECT 1 FROM ${SENT_POSTS_TABLE} WHERE slug = ? LIMIT 1`, [
+    slug,
+  ])
   const rows = result?.results || []
   return Array.isArray(rows) && rows.length > 0
 }
@@ -216,11 +215,7 @@ export async function checkD1PostSent(slug: string): Promise<boolean> {
  * Mark a post as sent in D1 (persistent across serverless invocations).
  * Uses INSERT OR IGNORE so concurrent marks for the same slug don't fail.
  */
-export async function markD1PostAsSent(
-  slug: string,
-  title: string,
-  date: string
-): Promise<void> {
+export async function markD1PostAsSent(slug: string, title: string, date: string): Promise<void> {
   await ensureSentPostsTable()
   const sentAt = new Date().toISOString()
   await executeD1Query(
