@@ -28,75 +28,122 @@ export default function QuoteCard({
   const attributionEl: ReactNode = source ? (
     <Link
       href={source}
-      className="text-primary-300 hover:text-primary-200 decoration-primary-400/60 font-medium underline underline-offset-2 transition-colors"
+      className="text-primary-300 hover:text-primary-100 decoration-primary-500/50 hover:text-glow-primary font-bold underline underline-offset-4 transition-all"
     >
       {attribution}
     </Link>
   ) : (
-    <span className="text-primary-200 font-medium">{attribution}</span>
+    <span className="text-primary-200 font-bold tracking-tight">{attribution}</span>
   )
 
   const sourceLabelEl: ReactNode =
     sourceLabel && source ? (
       <Link
         href={source}
-        className="text-primary-300 hover:text-primary-200 decoration-primary-400/60 font-medium underline underline-offset-2 transition-colors"
+        className="text-primary-400 hover:text-primary-200 decoration-primary-500/30 font-medium underline underline-offset-4 transition-all"
       >
         {sourceLabel}
       </Link>
     ) : sourceLabel ? (
-      <span className="text-primary-400/70">{sourceLabel}</span>
+      <span className="text-primary-500/60 font-mono text-[10px] tracking-widest uppercase">
+        {sourceLabel}
+      </span>
     ) : null
 
   const showImage = image && !imageError
 
   return (
-    <figure className="my-10">
-      {/* Thought-leader quote: rounded panel, glowing light blue-teal border, italic quote */}
+    <figure className="group/card my-12">
+      {/* Main Container: Deep Navy with Neon Glow */}
       <blockquote
-        className="group border-primary-400/70 hover:border-primary-300/80 relative overflow-hidden rounded-xl border-2 bg-gray-950/95 px-6 py-6 shadow-[0_0_24px_rgba(46,154,179,0.2),0_0_48px_rgba(46,154,179,0.1),inset_0_1px_0_rgba(255,255,255,0.06)] transition-all duration-300 hover:shadow-[0_0_32px_rgba(46,154,179,0.3),0_0_64px_rgba(46,154,179,0.12)] dark:bg-gray-950/98"
+        className="border-primary-500/30 hover:border-primary-400/60 relative overflow-hidden rounded-xl border bg-gray-950 px-8 py-10 shadow-[0_0_40px_rgba(46,154,179,0.1),inset_0_0_20px_rgba(46,154,179,0.05)] transition-all duration-500 hover:shadow-[0_0_60px_rgba(46,154,179,0.2)] dark:bg-gray-950"
         cite={source}
       >
-        {/* Subtle geometric overlay (light blue-teal) */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.05] dark:opacity-[0.07]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(46,154,179,0.5) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(46,154,179,0.5) 1px, transparent 1px)`,
-            backgroundSize: '20px 20px',
-          }}
-        />
-        <div className="relative">
+        {/* Tron Grid Background with Scanning Effect */}
+        <div className="tron-grid-bg pointer-events-none absolute inset-0 opacity-[0.15]">
+          <div className="animate-grid-scan via-primary-500/10 absolute inset-0 h-20 w-full bg-gradient-to-b from-transparent to-transparent" />
+        </div>
+
+        {/* Border Beam Animation (Racing Light Trail) */}
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <div
+            className="animate-border-beam via-primary-400 absolute h-[2px] w-24 bg-gradient-to-r from-transparent to-transparent"
+            style={{
+              offsetPath: 'inset(0% round 0.75rem)',
+              offsetAnchor: '50% 50%',
+            }}
+          />
+          <div
+            className="animate-border-beam via-primary-300 absolute h-[2px] w-24 bg-gradient-to-r from-transparent to-transparent"
+            style={{
+              offsetPath: 'inset(0% round 0.75rem)',
+              offsetAnchor: '50% 50%',
+              animationDelay: '-3s',
+            }}
+          />
+        </div>
+
+        {/* Decorative Corner Brackets */}
+        <div className="pointer-events-none absolute top-0 left-0 p-2">
+          <div className="border-primary-400/80 h-4 w-4 border-t-2 border-l-2 shadow-[0_0_8px_rgba(46,154,179,0.8)]" />
+        </div>
+        <div className="pointer-events-none absolute right-0 bottom-0 p-2">
+          <div className="border-primary-400/80 h-4 w-4 border-r-2 border-b-2 shadow-[0_0_8px_rgba(46,154,179,0.8)]" />
+        </div>
+
+        <div className="relative z-10">
           {showImage && (
-            <div className="mb-5 flex justify-center">
+            <div className="mb-8 flex justify-center">
               <Image
                 src={image}
                 alt={`Quote by ${attribution}`}
                 width={800}
                 height={400}
-                className="border-primary-500/30 rounded border object-contain shadow-lg"
+                className="border-primary-500/40 rounded-lg border object-contain shadow-[0_0_30px_rgba(46,154,179,0.15)] transition-transform duration-500 group-hover/card:scale-[1.01]"
                 unoptimized={image.startsWith('/static/')}
                 onError={handleImageError}
               />
             </div>
           )}
 
-          <p className="text-primary-200/95 text-lg leading-relaxed italic sm:text-xl">
-            <span>&ldquo;{quote}&rdquo;</span>
-          </p>
+          {/* Quote Text: Large, Italic, Luminous */}
+          <div className="relative">
+            <span className="text-primary-500/20 pointer-events-none absolute -top-6 -left-4 font-serif text-7xl select-none">
+              &ldquo;
+            </span>
+            <p className="text-glow-primary text-primary-100 relative text-xl leading-relaxed font-medium tracking-tight italic sm:text-2xl">
+              {quote}
+            </p>
+            <span className="text-primary-500/20 pointer-events-none absolute -right-2 -bottom-10 translate-y-4 font-serif text-7xl select-none">
+              &rdquo;
+            </span>
+          </div>
 
-          <footer className="text-primary-300/90 mt-5 flex flex-wrap items-center gap-x-1.5 text-sm not-italic">
-            <span className="text-primary-400">—</span>
-            {attributionEl}
+          {/* Attribution: Modernized & Clean */}
+          <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-2 border-t pt-6 not-italic sm:flex-row sm:items-center">
+            <div className="flex items-center gap-x-2">
+              <span className="bg-primary-500/60 h-px w-6" />
+              {attributionEl}
+            </div>
             {sourceLabelEl != null && (
-              <span className="text-primary-400/80"> ({sourceLabelEl})</span>
+              <div className="flex items-center gap-x-2">
+                <span className="text-primary-500/40 hidden sm:inline">|</span>
+                {sourceLabelEl}
+              </div>
             )}
+
+            {/* Tech Meta Info */}
+            <div className="ml-auto hidden md:block">
+              <span className="text-primary-500/40 font-mono text-[10px] tracking-widest uppercase">
+                [Agent_Verified_Source]
+              </span>
+            </div>
           </footer>
         </div>
       </blockquote>
 
       {caption && (
-        <figcaption className="text-primary-400/80 mt-3 text-center text-sm not-italic">
+        <figcaption className="text-primary-500/60 group-hover/card:text-primary-400 mt-4 text-center text-xs font-medium tracking-[0.2em] uppercase transition-colors">
           {caption}
         </figcaption>
       )}
