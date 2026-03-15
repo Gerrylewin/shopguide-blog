@@ -1,9 +1,7 @@
 'use client'
 
-import { useState, useCallback } from 'react'
 import type { ReactNode } from 'react'
 import Link from '@/components/Link'
-import Image from '@/components/Image'
 
 interface QuoteCardProps {
   quote: string
@@ -11,7 +9,6 @@ interface QuoteCardProps {
   source?: string
   sourceLabel?: string
   caption?: string
-  image?: string
 }
 
 export default function QuoteCard({
@@ -20,11 +17,7 @@ export default function QuoteCard({
   source,
   sourceLabel,
   caption,
-  image,
 }: QuoteCardProps) {
-  const [imageError, setImageError] = useState(false)
-  const handleImageError = useCallback(() => setImageError(true), [])
-
   const attributionEl: ReactNode = source ? (
     <Link
       href={source}
@@ -49,8 +42,6 @@ export default function QuoteCard({
         {sourceLabel}
       </span>
     ) : null
-
-  const showImage = image && !imageError
 
   return (
     <figure className="group/card my-12">
@@ -92,20 +83,6 @@ export default function QuoteCard({
         </div>
 
         <div className="relative z-10">
-          {showImage && (
-            <div className="mb-8 flex justify-center">
-              <Image
-                src={image}
-                alt={`Quote by ${attribution}`}
-                width={800}
-                height={400}
-                className="border-primary-500/40 rounded-lg border object-contain shadow-[0_0_30px_rgba(46,154,179,0.15)] transition-transform duration-500 group-hover/card:scale-[1.01]"
-                unoptimized={image.startsWith('/static/')}
-                onError={handleImageError}
-              />
-            </div>
-          )}
-
           {/* Quote Text: Large, Italic, Luminous */}
           <div className="relative">
             <p className="text-glow-primary text-primary-100 relative text-xl leading-relaxed font-medium tracking-tight italic sm:text-2xl">

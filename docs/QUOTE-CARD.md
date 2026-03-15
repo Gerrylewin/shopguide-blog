@@ -16,19 +16,6 @@ Thought-leader quote block used on blog posts. Renders a high-end, "BADASS" Tron
 />
 ```
 
-With optional image:
-
-```mdx
-<QuoteCard
-  quote="..."
-  attribution="..."
-  source="..."
-  sourceLabel="X (Twitter)"
-  caption="..."
-  image="/static/images/blog/collison-quote-v2.png"
-/>
-```
-
 ## Props
 
 | Prop          | Type   | Required | Description                                                                                                           |
@@ -38,7 +25,6 @@ With optional image:
 | `source`      | string | No       | URL for the quote/source. When set, attribution and sourceLabel render as underlined links.                           |
 | `sourceLabel` | string | No       | Short label for the source, e.g. `"X"`, `"LinkedIn"`, `"The Block"`. Shown in parentheses; linked if `source` is set. |
 | `caption`     | string | No       | Context line below the block (e.g. “John Collison predicting the agentic commerce torrent.”).                         |
-| `image`       | string | No       | Optional image path; shown above the quote.                                                                           |
 
 ## Design
 
