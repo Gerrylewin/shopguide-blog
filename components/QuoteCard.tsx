@@ -108,15 +108,9 @@ export default function QuoteCard({
 
           {/* Quote Text: Large, Italic, Luminous */}
           <div className="relative">
-            <span className="text-primary-500/20 pointer-events-none absolute -top-6 -left-4 font-serif text-7xl select-none">
-              &ldquo;
-            </span>
             <p className="text-glow-primary text-primary-100 relative text-xl leading-relaxed font-medium tracking-tight italic sm:text-2xl">
               {quote}
             </p>
-            <span className="text-primary-500/20 pointer-events-none absolute -right-2 -bottom-10 translate-y-4 font-serif text-7xl select-none">
-              &rdquo;
-            </span>
           </div>
 
           {/* Attribution: Modernized & Clean */}
