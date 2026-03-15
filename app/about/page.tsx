@@ -53,24 +53,9 @@ export default function Page() {
           </h1>
         </div>
 
-        {/* Mirrored section: text right-aligned with card, image right */}
+        {/* Founder section: photo left, text right (same layout as Isaac) */}
         <div className="items-start space-y-2 pt-8 pb-8 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
-          <div className="prose dark:prose-invert max-w-none pb-8 text-right xl:order-1 xl:col-span-2 xl:pb-0">
-            <p>
-              <strong>Young and dynamic</strong> – I am 24 years old and have taught myself about
-              the world of AI during my studies here in Germany.
-            </p>
-            <p>
-              <strong>Specialized</strong> – With &quot;The Ai-Agents&quot; I focus exclusively on
-              Shopify stores.
-            </p>
-            <p>
-              <strong>Salesperson</strong> – It quickly became clear to me: &quot;Sales is
-              everything.&quot; I now have over three years of experience in various sales
-              scenarios, which benefit the AI agent.
-            </p>
-          </div>
-          <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 xl:order-2 dark:border-gray-700/70 dark:bg-gray-900/60">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 dark:border-gray-700/70 dark:bg-gray-900/60">
             <BinaryFlowOverlay accentColor="#0891b2" />
             <div className="relative z-10 flex flex-col items-center space-x-2">
               <a
@@ -88,12 +73,29 @@ export default function Page() {
               </div>
             </div>
           </div>
+          <div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
+            <p>
+              <strong>Young and dynamic</strong> – I am 24 years old and have taught myself about
+              the world of AI during my studies here in Germany.
+            </p>
+            <p>
+              <strong>Specialized</strong> – With &quot;The Ai-Agents&quot; I focus exclusively on
+              Shopify stores.
+            </p>
+            <p>
+              <strong>Salesperson</strong> – It quickly became clear to me: &quot;Sales is
+              everything.&quot; I now have over three years of experience in various sales
+              scenarios, which benefit the AI agent.
+            </p>
+          </div>
         </div>
 
         {/* Isaac Lewin section: image left, text right */}
-        <AuthorLayout content={mainContent} hideHeading>
+        <div className="pt-8">
+          <AuthorLayout content={mainContent} hideHeading>
           <MDXLayoutRenderer code={author.body.code} />
-        </AuthorLayout>
+          </AuthorLayout>
+        </div>
       </div>
     </>
   )
