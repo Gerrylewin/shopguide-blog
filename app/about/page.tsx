@@ -80,7 +80,7 @@ export default function Page() {
                 href={NOAH_BOOKING}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block text-sm font-medium text-primary-500 underline hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300"
+                className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 inline-block text-sm font-medium underline"
               >
                 Book a meeting
               </a>
@@ -100,12 +100,12 @@ export default function Page() {
                 href="https://goodbean.de"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-500 underline hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300"
+                className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 underline"
               >
                 Goodbean.de
               </a>{' '}
-              grew into a full Shopify app: weekly build cycles, context-aware agents on every page, and
-              chat-to-purchase tracking. That first partner now sees the agent regularly close
+              grew into a full Shopify app: weekly build cycles, context-aware agents on every page,
+              and chat-to-purchase tracking. That first partner now sees the agent regularly close
               sales.
             </p>
             <p>
