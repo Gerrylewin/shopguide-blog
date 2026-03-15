@@ -10,6 +10,8 @@ import SocialIcon from '@/components/social-icons'
 const MIRRORED_IMAGE =
   'https://assets.cdn.filesafe.space/YwFixzedrximlLRmcQo3/media/6935a537e0f092039328389d.png'
 const NOAH_LINKEDIN = 'https://www.linkedin.com/in/noah-m%C3%BCller-18684b311/'
+const NOAH_GITHUB = 'https://github.com/ChefNoah007'
+const NOAH_EMAIL = 'noah.mueller@yourshopguide.com'
 
 export const metadata = genPageMetadata({ title: 'Team' })
 
@@ -69,7 +71,9 @@ export default function Page() {
               <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Noah Müller</h3>
               <div className="text-gray-600 dark:text-gray-300">Founder</div>
               <div className="flex space-x-3 pt-6">
+                <SocialIcon kind="mail" href={`mailto:${NOAH_EMAIL}`} />
                 <SocialIcon kind="linkedin" href={NOAH_LINKEDIN} />
+                <SocialIcon kind="github" href={NOAH_GITHUB} />
               </div>
             </div>
           </div>
