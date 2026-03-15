@@ -53,10 +53,10 @@ export default function Page() {
 
         {/* Mirrored section: text left, image right */}
         <div className="items-start space-y-2 pt-8 pb-8 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
-          <div className="prose dark:prose-invert max-w-none pb-8 xl:col-span-2 xl:order-1 xl:pb-0">
+          <div className="prose dark:prose-invert max-w-none pb-8 xl:order-1 xl:col-span-2 xl:pb-0">
             <p>
-              <strong>Young and dynamic</strong> – I am 24 years old and have taught myself about the
-              world of AI during my studies here in Germany.
+              <strong>Young and dynamic</strong> – I am 24 years old and have taught myself about
+              the world of AI during my studies here in Germany.
             </p>
             <p>
               <strong>Specialized</strong> – With &quot;The Ai-Agents&quot; I focus exclusively on
@@ -64,17 +64,15 @@ export default function Page() {
             </p>
             <p>
               <strong>Salesperson</strong> – It quickly became clear to me: &quot;Sales is
-              everything.&quot; I now have over three years of experience in various sales scenarios,
-              which benefit the AI agent.
+              everything.&quot; I now have over three years of experience in various sales
+              scenarios, which benefit the AI agent.
             </p>
           </div>
-          <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 dark:border-gray-700/70 dark:bg-gray-900/60 xl:order-2">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 xl:order-2 dark:border-gray-700/70 dark:bg-gray-900/60">
             <BinaryFlowOverlay accentColor="#0891b2" />
             <div className="relative z-10 flex flex-col items-center space-x-2">
               {mirroredAvatarWithGlow}
-              <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">
-                Noah Müller
-              </h3>
+              <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Noah Müller</h3>
               <div className="text-gray-600 dark:text-gray-300">Founder</div>
             </div>
           </div>
