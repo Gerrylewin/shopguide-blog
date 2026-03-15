@@ -75,17 +75,28 @@ export default function Page() {
           </div>
           <div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
             <p>
-              <strong>Young and dynamic</strong> – I am 24 years old and have taught myself about
-              the world of AI during my studies here in Germany.
+              <strong>At the forefront of agentic commerce</strong> – Noah is 24, based in Freiburg,
+              Germany, and taught himself AI during his studies. He founded ShopGuide (Die
+              Ai-Agents) in 2024 to help big-catalog Shopify stores add agentic commerce in one
+              click—driving up to 30% higher AOV and 5× higher customer engagement.
             </p>
             <p>
-              <strong>Specialized</strong> – With &quot;The Ai-Agents&quot; I focus exclusively on
-              Shopify stores.
+              <strong>Proven impact</strong> – ShopGuide’s AI agents have generated over $250,000 in
+              revenue for merchants. What started as a prototype and a cold call to Goodbean.de grew
+              into a full Shopify app: weekly build cycles, context-aware agents on every page, and
+              chat-to-purchase tracking. That first partner now sees the agent regularly close
+              sales.
             </p>
             <p>
-              <strong>Salesperson</strong> – It quickly became clear to me: &quot;Sales is
-              everything.&quot; I now have over three years of experience in various sales
-              scenarios, which benefit the AI agent.
+              <strong>Sales and execution</strong> – Noah’s background is in sales and
+              entrepreneurship: pre-sales at Enpal (renewables), co-founder of Spotee-Golf, and
+              three-plus years across sales roles. He believes &quot;Sales is everything&quot;—and
+              built ShopGuide so the agent does the selling, not just the talking.
+            </p>
+            <p>
+              <strong>Focused on Shopify</strong> – Noah and the team specialize only on Shopify:
+              big catalogs, high AOV, and measurable outcomes. Young, technical, and
+              merchant-obsessed.
             </p>
           </div>
         </div>
