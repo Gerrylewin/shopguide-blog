@@ -5,9 +5,11 @@ import { coreContent } from 'pliny/utils/contentlayer'
 import { genPageMetadata } from 'app/seo'
 import Image from '@/components/Image'
 import BinaryFlowOverlay from '@/components/BinaryFlowOverlay'
+import SocialIcon from '@/components/social-icons'
 
 const MIRRORED_IMAGE =
-  'https://assets.cdn.filesafe.space/YwFixzedrximlLRmcQo3/media/6935a53781eaa123c30b2d29.png'
+  'https://assets.cdn.filesafe.space/YwFixzedrximlLRmcQo3/media/6935a537e0f092039328389d.png'
+const NOAH_LINKEDIN = 'https://www.linkedin.com/in/noah-m%C3%BCller-18684b311/'
 
 export const metadata = genPageMetadata({ title: 'Team' })
 
@@ -51,9 +53,9 @@ export default function Page() {
           </h1>
         </div>
 
-        {/* Mirrored section: text left, image right */}
+        {/* Mirrored section: text right-aligned with card, image right */}
         <div className="items-start space-y-2 pt-8 pb-8 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
-          <div className="prose dark:prose-invert max-w-none pb-8 xl:order-1 xl:col-span-2 xl:pb-0">
+          <div className="prose dark:prose-invert max-w-none pb-8 text-right xl:order-1 xl:col-span-2 xl:pb-0">
             <p>
               <strong>Young and dynamic</strong> – I am 24 years old and have taught myself about
               the world of AI during my studies here in Germany.
@@ -71,9 +73,19 @@ export default function Page() {
           <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 xl:order-2 dark:border-gray-700/70 dark:bg-gray-900/60">
             <BinaryFlowOverlay accentColor="#0891b2" />
             <div className="relative z-10 flex flex-col items-center space-x-2">
-              {mirroredAvatarWithGlow}
+              <a
+                href={NOAH_LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer transition-opacity hover:opacity-80"
+              >
+                {mirroredAvatarWithGlow}
+              </a>
               <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Noah Müller</h3>
               <div className="text-gray-600 dark:text-gray-300">Founder</div>
+              <div className="flex space-x-3 pt-6">
+                <SocialIcon kind="linkedin" href={NOAH_LINKEDIN} />
+              </div>
             </div>
           </div>
         </div>
