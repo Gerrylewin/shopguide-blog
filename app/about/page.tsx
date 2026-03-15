@@ -18,7 +18,7 @@ export default function Page() {
   const mirroredAvatar = (
     <Image
       src={MIRRORED_IMAGE}
-      alt="Team member"
+      alt="Noah Müller"
       width={192}
       height={192}
       className="h-48 w-48 rounded-full object-cover"
@@ -72,6 +72,10 @@ export default function Page() {
             <BinaryFlowOverlay accentColor="#0891b2" />
             <div className="relative z-10 flex flex-col items-center space-x-2">
               {mirroredAvatarWithGlow}
+              <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">
+                Noah Müller
+              </h3>
+              <div className="text-gray-600 dark:text-gray-300">Founder</div>
             </div>
           </div>
         </div>
