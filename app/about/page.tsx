@@ -12,8 +12,7 @@ const MIRRORED_IMAGE =
 const NOAH_LINKEDIN = 'https://www.linkedin.com/in/noah-m%C3%BCller-18684b311/'
 const NOAH_GITHUB = 'https://github.com/ChefNoah007'
 const NOAH_EMAIL = 'noah.mueller@yourshopguide.com'
-const NOAH_BOOKING =
-  'https://api.leadconnectorhq.com/widget/booking/HIMiIRSQCRrr1QBz2Ai7'
+const NOAH_BOOKING = 'https://api.leadconnectorhq.com/widget/booking/HIMiIRSQCRrr1QBz2Ai7'
 
 export const metadata = genPageMetadata({ title: 'Team' })
 
@@ -81,7 +80,7 @@ export default function Page() {
                 href={NOAH_BOOKING}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block text-sm font-medium text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300"
+                className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 inline-block text-sm font-medium"
               >
                 Book a meeting
               </a>
