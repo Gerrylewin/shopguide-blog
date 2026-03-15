@@ -130,6 +130,9 @@
     & :where(code):not(pre code) {
       color: var(--color-indigo-500);
     }
+    & .blog-quoted {
+      color: var(--color-primary-500);
+    }
   }
 
   .prose-invert {
@@ -146,6 +149,9 @@
     & :where(h1, h2, h3, h4, h5, h6) {
       font-family: var(--font-heading);
       color: var(--color-gray-100);
+    }
+    & .blog-quoted {
+      color: var(--color-primary-400);
     }
   }
 

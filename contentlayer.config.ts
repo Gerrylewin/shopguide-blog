@@ -254,6 +254,48 @@ function transformFaqAccordions(node: HastNode): void {
   }
 }
 
+/** Rehype plugin: wrap double-quoted text in spans with class blog-quoted (styled blue in blog body) */
+function splitTextIntoQuotedSpans(value: string): HastNode[] {
+  const regex = /"([^"]*)"/g
+  const nodes: HastNode[] = []
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  while ((match = regex.exec(value)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push({ type: 'text', value: value.slice(lastIndex, match.index) })
+    }
+    nodes.push({
+      type: 'element',
+      tagName: 'span',
+      properties: { className: ['blog-quoted'] },
+      children: [{ type: 'text', value: match[0] }],
+    })
+    lastIndex = regex.lastIndex
+  }
+  if (lastIndex < value.length) {
+    nodes.push({ type: 'text', value: value.slice(lastIndex) })
+  }
+  return nodes
+}
+
+function transformQuotedTextInNode(node: HastNode): void {
+  if (!Array.isArray(node.children)) return
+  const newChildren: HastNode[] = []
+  for (const child of node.children) {
+    if (child.type === 'text' && typeof child.value === 'string' && child.value.includes('"')) {
+      newChildren.push(...splitTextIntoQuotedSpans(child.value))
+    } else {
+      transformQuotedTextInNode(child)
+      newChildren.push(child)
+    }
+  }
+  node.children = newChildren
+}
+
+const rehypeQuotedTextBlue = () => (tree: HastNode) => {
+  transformQuotedTextInNode(tree)
+}
+
 const rehypeFaqAccordion = () => {
   return (tree: HastNode) => {
     transformFaqAccordions(tree)
@@ -408,6 +450,7 @@ export default makeSource({
       rehypeKatexNoTranslate,
       [rehypeCitation, { path: path.join(root, 'data') }],
       [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
+      rehypeQuotedTextBlue,
       rehypeFaqAccordion,
       rehypePresetMinify,
     ],
