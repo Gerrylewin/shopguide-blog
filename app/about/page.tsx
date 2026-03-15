@@ -93,7 +93,7 @@ export default function Page() {
         {/* Isaac Lewin section: image left, text right */}
         <div className="pt-8">
           <AuthorLayout content={mainContent} hideHeading>
-          <MDXLayoutRenderer code={author.body.code} />
+            <MDXLayoutRenderer code={author.body.code} />
           </AuthorLayout>
         </div>
       </div>
