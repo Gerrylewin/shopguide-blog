@@ -80,7 +80,7 @@ export default function Page() {
                 href={NOAH_BOOKING}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 inline-block text-sm font-medium"
+                className="mt-4 inline-block text-sm font-medium text-primary-500 underline hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 Book a meeting
               </a>
@@ -95,8 +95,16 @@ export default function Page() {
             </p>
             <p>
               <strong>Proven impact</strong> – ShopGuide’s AI agents have generated over $250,000 in
-              revenue for merchants. What started as a prototype and a cold call to Goodbean.de grew
-              into a full Shopify app: weekly build cycles, context-aware agents on every page, and
+              revenue for merchants. What started as a prototype and a cold call to{' '}
+              <a
+                href="https://goodbean.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-500 underline hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300"
+              >
+                Goodbean.de
+              </a>{' '}
+              grew into a full Shopify app: weekly build cycles, context-aware agents on every page, and
               chat-to-purchase tracking. That first partner now sees the agent regularly close
               sales.
             </p>
