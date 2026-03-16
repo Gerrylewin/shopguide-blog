@@ -130,11 +130,15 @@ export default function ListLayoutWithTags({
             </div>
           </div>
           <div>
-            <ul>
-              {displayPosts.map((post) => {
+            <ul key={pathname}>
+              {displayPosts.map((post, index) => {
                 const { path, date, title, summary, tags } = post
                 return (
-                  <li key={path} className="py-5">
+                  <li
+                    key={path}
+                    className="animate-blog-item-in py-5"
+                    style={{ animationDelay: `${index * 45}ms` }}
+                  >
                     <article className="flex flex-col space-y-2 xl:space-y-0">
                       <dl>
                         <dt className="sr-only">Published on</dt>

@@ -353,6 +353,28 @@ input:-webkit-autofill:focus {
   box-shadow: 0 0 0 1px var(--color-primary-500) !important;
 }
 
+/* Blog list items slide up into place when list loads or changes (tags) */
+@keyframes blog-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-blog-item-in {
+  animation: blog-item-in 0.35s ease-out backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blog-item-in {
+    animation: none;
+  }
+}
+
 /* Shimmer animation for ad effects */
 @keyframes shimmer {
   0% {
