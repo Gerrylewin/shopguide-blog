@@ -45,14 +45,14 @@ A traditional chatbot is a glorified FAQ machine. It can answer "What is your re
 
 If a customer asks, "Do you have the blue shirt in size large?" during BFCM, the chatbot can only answer based on its last data sync. It can't actually _check the inventory_ in real-time, hold the item, or add it to the cart. That's a fail in the modern era, especially when every second counts.
 
-| Feature             | Simple Chatbot                           | Multi-Tool AI Agent (ShopGuide)                              |
-| :------------------ | :--------------------------------------- | :----------------------------------------------------------- |
-| **Core Function**   | Information Retrieval (FAQ)              | Autonomous Task Execution & Sales                            |
-| **Capability**      | Single-step, pre-programmed responses    | Multi-step, complex decision-making                          |
-| **Tool Use**        | None (or limited to basic links)         | **Uses tools** (Shopify Catalog API, A/B Testing, Analytics) |
-| **Personalization** | Basic, based on current page             | Deep, real-time product recommendations                      |
-| **Goal**            | Answer questions, reduce support tickets | **Boost Conversion and AOV**                                 |
-| **Learning**        | Static, requires manual updates          | Dynamic, learns from every interaction                       |
+| Feature             | Simple Chatbot                           | Multi-Tool AI Agent (ShopGuide)                                                               |
+| :------------------ | :--------------------------------------- | :-------------------------------------------------------------------------------------------- |
+| **Core Function**   | Information Retrieval (FAQ)              | Autonomous Task Execution & Sales                                                             |
+| **Capability**      | Single-step, pre-programmed responses    | Multi-step, complex decision-making                                                           |
+| **Tool Use**        | None (or limited to basic links)         | **Uses tools** ([Shopify](https://shopify.pxf.io/eK6XxX) Catalog API, A/B Testing, Analytics) |
+| **Personalization** | Basic, based on current page             | Deep, real-time product recommendations                                                       |
+| **Goal**            | Answer questions, reduce support tickets | **Boost Conversion and AOV**                                                                  |
+| **Learning**        | Static, requires manual updates          | Dynamic, learns from every interaction                                                        |
 
 ### 1.2. The AI Agent: A Digital Employee Built for BFCM
 
@@ -77,7 +77,7 @@ The key to ShopGuide's success is its ability to use **tools**—the very thing 
 
 | Feature                  | Chatbot (Old School)                       | ShopGuide (Agentic Commerce)                                                                                            |
 | :----------------------- | :----------------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
-| **Product Knowledge**    | Relies on static, pre-trained data.        | Uses the **native [Shopify](https://shopify.pxf.io/eK6XxX) Catalog API** for real-time product data [10].                                                |
+| **Product Knowledge**    | Relies on static, pre-trained data.        | Uses the **native [Shopify](https://shopify.pxf.io/eK6XxX) Catalog API** for real-time product data [10].               |
 | **Transaction**          | Cannot interact with the cart or checkout. | **Cart Integration** and **Customer Integration** allow the agent to create, modify, and finalize carts [9].            |
 | **Business Integration** | Isolated from the rest of the business.    | **API & Webhooks** enable real-time sync with CRM, marketing automation, and support systems [9].                       |
 | **Proactivity**          | Waits for the customer to ask a question.  | Monitors events like `conversation.cart_abandonment` and proactively triggers email campaigns or follow-up actions [9]. |
@@ -87,7 +87,7 @@ The key to ShopGuide's success is its ability to use **tools**—the very thing 
 
 [Shopify](https://shopify.pxf.io/eK6XxX) itself is all-in on the Agentic future [1]. They know that the next wave of e-commerce isn't about better websites; it's about better **digital employees**. They provide the foundational tools that allow agents like ShopGuide to thrive [4]:
 
-1.  **[Shopify Catalog](https://shopify.dev/docs/api/catalog):** Gives agents real-time access to product data, inventory, and pricing.
+1.  **[Shopify Catalog](https://shopify.pxf.io/eK6XxX):** Gives agents real-time access to product data, inventory, and pricing.
 2.  **[Universal Cart](https://shopify.dev/docs/api/cart):** Allows agents to create a persistent shopping cart that works across different channels and conversations.
 3.  **[Checkout Kit](https://shopify.dev/docs/api/checkout):** Enables a fully embedded, one-click checkout experience directly from the agent's conversation.
 
@@ -101,7 +101,7 @@ The ultimate goal of e-commerce is conversion. This is where the "techbro punchy
 
 For BFCM 2026, this means:
 
-- **Real-Time Salesmanship:** The agent doesn't just answer a question; it _sells_. If a customer asks, "Do you have a jacket that goes with these pants?" the agent doesn't just search your product database. It uses the **[Shopify Catalog API](https://shopify.dev/docs/api/catalog)** tool to instantly find the best-matching jacket, checks inventory, applies the BFCM discount code, and drops a direct link to the cart—all in one seamless conversation [3].
+- **Real-Time Salesmanship:** The agent doesn't just answer a question; it _sells_. If a customer asks, "Do you have a jacket that goes with these pants?" the agent doesn't just search your product database. It uses the **[Shopify Catalog API](https://shopify.pxf.io/eK6XxX)** tool to instantly find the best-matching jacket, checks inventory, applies the BFCM discount code, and drops a direct link to the cart—all in one seamless conversation [3].
 
 - **Autonomous Optimization:** This is the killer feature. A chatbot is set and forget. An agent is constantly improving. With a platform like ShopGuide, the agent is running **A/B Tests** on its own performance [4]. Is a "techbro punchy" welcome message converting better than a "friendly and helpful" one? The agent tests it, measures the **Chat-to-Purchase Conversion Rate**, and automatically deploys the winner, ensuring your conversion funnel is optimized minute-by-minute during the peak traffic hours of BFCM.
 
