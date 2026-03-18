@@ -1,7 +1,4 @@
 {
-<<<<<<< HEAD
-  "agentic-commerce": 25,
-=======
   "shopify-ai-recommendations": 1,
   "shopify-large-catalog": 7,
   "agentic-commerce": 26,
@@ -16,7 +13,6 @@
   "shopify": 16,
   "ucp": 2,
   "shopify-architecture": 2,
->>>>>>> cc5d1ff33a6bd4b081b8148f799f1b544819c139
   "ai-agents": 19,
   "shopify": 16,
   "chatbots": 7,
