@@ -34,9 +34,39 @@ const discussUrl = (path) =>
 interface LayoutProps {
   content: CoreContent<Blog>
   authorDetails: CoreContent<Authors>[]
-  next?: { path: string; title: string }
-  prev?: { path: string; title: string }
+  next?: CoreContent<Blog>
+  prev?: CoreContent<Blog>
   children: ReactNode
+}
+
+function heroThumbnailSrc(post: CoreContent<Blog>): string | undefined {
+  const imgs = post.images
+  if (!imgs) return undefined
+  if (typeof imgs === 'string') {
+    const s = imgs.trim()
+    return s.length > 0 ? s : undefined
+  }
+  if (Array.isArray(imgs) && imgs.length > 0 && typeof imgs[0] === 'string') {
+    return imgs[0]
+  }
+  return undefined
+}
+
+function PostFooterNavLink({ post }: { post: CoreContent<Blog> }) {
+  const thumb = heroThumbnailSrc(post)
+  if (!post.path) return null
+  return (
+    <Link href={`/${post.path}`} className="group mt-2 block max-w-[220px]" aria-label={post.title}>
+      {thumb && (
+        <div className="group-hover:ring-primary-400/50 relative mb-2 aspect-[16/9] w-full overflow-hidden rounded-md ring-1 ring-gray-200/80 transition dark:ring-gray-600/80">
+          <Image src={thumb} alt="" fill className="object-cover" sizes="220px" />
+        </div>
+      )}
+      <span className="text-primary-500 group-hover:text-primary-600 dark:group-hover:text-primary-400">
+        {post.title}
+      </span>
+    </Link>
+  )
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
@@ -192,9 +222,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                           <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                             Previous Article
                           </h2>
-                          <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                            <Link href={`/${prev.path}`}>{prev.title}</Link>
-                          </div>
+                          <PostFooterNavLink post={prev} />
                         </div>
                       )}
                       {next && next.path && (
@@ -202,9 +230,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                           <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                             Next Article
                           </h2>
-                          <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                            <Link href={`/${next.path}`}>{next.title}</Link>
-                          </div>
+                          <PostFooterNavLink post={next} />
                         </div>
                       )}
                     </div>
