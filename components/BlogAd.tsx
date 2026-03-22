@@ -4,6 +4,64 @@ import Image from 'next/image'
 import Link from '@/components/Link'
 import { useEffect, useState } from 'react'
 
+const TERMINAL_MESSAGES = ['npm install agentic-commerce', 'click here for a free trial'] as const
+
+/** Per-character delays; full cycle is roughly 9–12s per message. */
+const TYPE_MS = 45
+const HOLD_MS = 5000
+const ERASE_MS = 38
+
+function delay(ms: number) {
+  return new Promise<void>((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
+
+function BlogAdTerminalPrompt() {
+  const [line, setLine] = useState('')
+  const [msgIdx, setMsgIdx] = useState(0)
+
+  useEffect(() => {
+    let cancelled = false
+    const full = TERMINAL_MESSAGES[msgIdx]
+
+    async function run() {
+      for (let i = 0; i <= full.length; i++) {
+        if (cancelled) return
+        setLine(full.slice(0, i))
+        await delay(TYPE_MS)
+      }
+      await delay(HOLD_MS)
+      if (cancelled) return
+      for (let i = full.length; i >= 0; i--) {
+        if (cancelled) return
+        setLine(full.slice(0, i))
+        await delay(ERASE_MS)
+      }
+      if (!cancelled) {
+        setMsgIdx((j) => (j + 1) % TERMINAL_MESSAGES.length)
+      }
+    }
+
+    void run()
+    return () => {
+      cancelled = true
+    }
+  }, [msgIdx])
+
+  return (
+    <div className="mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70">
+      <div className="flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1">
+        <span className="shrink-0 text-emerald-400">$</span>
+        <span className="min-w-0 text-center leading-tight break-words whitespace-normal">
+          {line}
+        </span>
+        <span className="h-2.5 w-1 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
+      </div>
+    </div>
+  )
+}
+
 const AdContent = () => (
   <Link
     href="https://apps.shopify.com/die-ai-agent-official-app"
@@ -65,12 +123,7 @@ const AdContent = () => (
         </div>
       </div>
 
-      {/* Terminal prompt */}
-      <div className="mt-2 flex items-center justify-center gap-1 font-mono text-[8px] text-emerald-500/70">
-        <span className="text-emerald-400">$</span>
-        <span className="">npm install agentic-commerce</span>
-        <span className="h-2.5 w-1 animate-pulse bg-emerald-500" />
-      </div>
+      <BlogAdTerminalPrompt />
     </div>
 
     {/* Scanline effect */}
