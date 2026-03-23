@@ -1,6 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import Link from '@/components/Link'
 
 interface QuoteCardProps {
@@ -9,6 +10,7 @@ interface QuoteCardProps {
   source?: string
   sourceLabel?: string
   caption?: string
+  image?: string
 }
 
 export default function QuoteCard({
@@ -17,6 +19,7 @@ export default function QuoteCard({
   source,
   sourceLabel,
   caption,
+  image,
 }: QuoteCardProps) {
   const attributionEl: ReactNode = source ? (
     <Link
@@ -91,10 +94,24 @@ export default function QuoteCard({
           </div>
 
           {/* Attribution: Modernized & Clean */}
-          <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-2 border-t pt-6 not-italic sm:flex-row sm:items-center">
-            <div className="flex items-center gap-x-2">
-              <span className="bg-primary-500/60 h-px w-6" />
-              {attributionEl}
+          <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-4 border-t pt-6 not-italic sm:flex-row sm:items-center">
+            <div className="flex items-center gap-x-3">
+              {image && (
+                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-primary-500/30 bg-gray-900 shadow-[0_0_15px_rgba(46,154,179,0.2)]">
+                  <Image
+                    src={image}
+                    alt={attribution}
+                    width={40}
+                    height={40}
+                    className="h-full w-full object-cover grayscale transition-all duration-500 group-hover/card:grayscale-0"
+                  />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-primary-500/20" />
+                </div>
+              )}
+              <div className="flex items-center gap-x-2">
+                <span className="bg-primary-500/60 h-px w-6" />
+                {attributionEl}
+              </div>
             </div>
             {sourceLabelEl != null && (
               <div className="flex items-center gap-x-2">
