@@ -97,7 +97,7 @@ export default function QuoteCard({
           <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-4 border-t pt-6 not-italic sm:flex-row sm:items-center">
             <div className="flex items-center gap-x-3">
               {image && (
-                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-primary-500/30 bg-gray-900 shadow-[0_0_15px_rgba(46,154,179,0.2)]">
+                <div className="border-primary-500/30 relative h-10 w-10 shrink-0 overflow-hidden rounded-full border bg-gray-900 shadow-[0_0_15px_rgba(46,154,179,0.2)]">
                   <Image
                     src={image}
                     alt={attribution}
@@ -105,7 +105,7 @@ export default function QuoteCard({
                     height={40}
                     className="h-full w-full object-cover grayscale transition-all duration-500 group-hover/card:grayscale-0"
                   />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-primary-500/20" />
+                  <div className="ring-primary-500/20 absolute inset-0 ring-1 ring-inset" />
                 </div>
               )}
               <div className="flex items-center gap-x-2">
