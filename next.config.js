@@ -104,6 +104,10 @@ module.exports = () => {
           protocol: 'https',
           hostname: 'assets.cdn.filesafe.space',
         },
+        {
+          protocol: 'https',
+          hostname: 'upload.wikimedia.org',
+        },
       ],
       unoptimized,
     },
