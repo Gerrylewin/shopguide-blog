@@ -103,7 +103,7 @@ export default function QuoteCard({
                     alt={attribution}
                     fill
                     sizes="40px"
-                    className="object-cover object-top grayscale transition-all duration-500 group-hover/card:grayscale-0"
+                    className="object-cover object-center grayscale transition-all duration-500 group-hover/card:grayscale-0"
                   />
                   <div className="ring-primary-500/20 absolute inset-0 ring-1 ring-inset" />
                 </div>
