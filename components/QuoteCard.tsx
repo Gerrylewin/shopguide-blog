@@ -32,8 +32,8 @@ export default function QuoteCard({
     <span className="text-primary-200 font-bold tracking-tight">{attribution}</span>
   )
 
-  const avatarObjectClass =
-    'object-cover object-center grayscale transition-all duration-500 group-hover/card:grayscale-0'
+  const avatarInnerClass =
+    'h-full w-full object-cover object-center grayscale transition-all duration-500 group-hover/card:grayscale-0'
 
   const sourceLabelEl: ReactNode =
     sourceLabel && source ? (
@@ -104,9 +104,10 @@ export default function QuoteCard({
                   <Image
                     src={image}
                     alt={attribution}
-                    fill
+                    width={40}
+                    height={40}
                     sizes="40px"
-                    className={avatarObjectClass}
+                    className={avatarInnerClass}
                   />
                   <div className="ring-primary-500/20 absolute inset-0 ring-1 ring-inset" />
                 </div>
