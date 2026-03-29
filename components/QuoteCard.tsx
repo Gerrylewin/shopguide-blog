@@ -4,10 +4,6 @@ import type { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from '@/components/Link'
 
-/** CDN headshot used for Harley Finkelstein quotes — loose framing; bias crop slightly downward. */
-const HARLEY_QUOTE_AVATAR_URL =
-  'https://assets.cdn.filesafe.space/YwFixzedrximlLRmcQo3/media/69c202083e56b97ca6a4c866.jpg'
-
 interface QuoteCardProps {
   quote: string
   attribution: string
@@ -37,9 +33,7 @@ export default function QuoteCard({
   )
 
   const avatarObjectClass =
-    image === HARLEY_QUOTE_AVATAR_URL
-      ? 'object-cover object-[50%_62%] grayscale transition-all duration-500 group-hover/card:grayscale-0'
-      : 'object-cover object-center grayscale transition-all duration-500 group-hover/card:grayscale-0'
+    'object-cover object-center grayscale transition-all duration-500 group-hover/card:grayscale-0'
 
   const sourceLabelEl: ReactNode =
     sourceLabel && source ? (
