@@ -1,7 +1,6 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import Image from 'next/image'
 import Link from '@/components/Link'
 
 interface QuoteCardProps {
@@ -32,9 +31,6 @@ export default function QuoteCard({
     <span className="text-primary-200 font-bold tracking-tight">{attribution}</span>
   )
 
-  const avatarInnerClass =
-    'h-full w-full object-cover object-center grayscale transition-all duration-500 group-hover/card:grayscale-0'
-
   const sourceLabelEl: ReactNode =
     sourceLabel && source ? (
       <Link
@@ -50,7 +46,7 @@ export default function QuoteCard({
     ) : null
 
   return (
-    <figure className="group/card my-12">
+    <figure className="group/card not-prose my-12">
       {/* Main Container: Deep Navy with Neon Glow */}
       <blockquote
         className="border-primary-500/30 hover:border-primary-400/60 relative overflow-hidden rounded-xl border bg-gray-950 px-8 py-10 shadow-[0_0_40px_rgba(46,154,179,0.1),inset_0_0_20px_rgba(46,154,179,0.05)] transition-all duration-500 hover:shadow-[0_0_60px_rgba(46,154,179,0.2)] dark:bg-gray-950"
@@ -100,17 +96,12 @@ export default function QuoteCard({
           <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-4 border-t pt-6 not-italic sm:flex-row sm:items-center">
             <div className="flex items-center gap-x-3">
               {image && (
-                <div className="border-primary-500/30 relative h-10 w-10 shrink-0 overflow-hidden rounded-full border bg-gray-900 shadow-[0_0_15px_rgba(46,154,179,0.2)]">
-                  <Image
-                    src={image}
-                    alt={attribution}
-                    width={40}
-                    height={40}
-                    sizes="40px"
-                    className={avatarInnerClass}
-                  />
-                  <div className="ring-primary-500/20 absolute inset-0 ring-1 ring-inset" />
-                </div>
+                <div
+                  role="img"
+                  aria-label={attribution}
+                  className="border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 bg-cover bg-center shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 grayscale transition-all duration-500 ring-inset group-hover/card:grayscale-0"
+                  style={{ backgroundImage: `url(${image})` }}
+                />
               )}
               <div className="flex items-center gap-x-2">
                 <span className="bg-primary-500/60 h-px w-6" />
