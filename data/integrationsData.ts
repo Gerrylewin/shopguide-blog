@@ -9,7 +9,8 @@ interface Integration {
 const integrationsData: Integration[] = [
   {
     title: 'Rivyo',
-    description: 'Learn how Rivyo integrates with ShopGuide.',
+    description:
+      'Surface Rivyo reviews and UGC inside the agent so recommendations feel backed by real shoppers—not generic copy.',
     category: 'Reviews',
     href: 'https://integrations.yourshopguide.com/post/rivyo',
     imgSrc:
@@ -17,7 +18,8 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Judge.me',
-    description: 'Learn how Judge.me integrates with ShopGuide.',
+    description:
+      'Bring verified Judge.me reviews and photo proof into chat so social proof stays in the flow instead of a separate tab.',
     category: 'Reviews',
     href: 'https://integrations.yourshopguide.com/post/judge-me',
     imgSrc:
@@ -25,7 +27,8 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Klaviyo',
-    description: 'Learn how Klaviyo integrates with ShopGuide.',
+    description:
+      'Turn on-site intent into Klaviyo audiences and follow-ups so strong conversations don’t die when the visitor bounces.',
     category: 'Acquisition',
     href: 'https://integrations.yourshopguide.com/post/klaviyo',
     imgSrc:
@@ -33,7 +36,8 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Smile.io',
-    description: 'Learn how Smile.io integrates with ShopGuide.',
+    description:
+      'Reference points, VIP tiers, and rewards while the agent sells—loyalty is part of the path to checkout, not an afterthought.',
     category: 'Upsells',
     href: 'https://integrations.yourshopguide.com/post/smile-io',
     imgSrc:
@@ -41,7 +45,8 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Alia',
-    description: 'Learn how Alia integrates with ShopGuide.',
+    description:
+      'Pair Alia’s personalized incentives with ShopGuide so openings and picks match what you already know about each visitor.',
     category: 'Personalization',
     href: 'https://integrations.yourshopguide.com/post/Alia',
     imgSrc:
@@ -49,7 +54,8 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Slack',
-    description: 'Learn how Slack integrates with ShopGuide.',
+    description:
+      'Escalate high-stakes or stuck conversations to Slack with full context—your team sees the thread and cart without digging through tickets.',
     category: 'Customer Support',
     href: 'https://integrations.yourshopguide.com/post/Slack',
     imgSrc:
