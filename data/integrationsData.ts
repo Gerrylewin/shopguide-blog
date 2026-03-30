@@ -9,7 +9,7 @@ interface Integration {
 const integrationsData: Integration[] = [
   {
     title: 'Rivyo',
-    description: `Rivyo x ShopGuide - Agentic Commerce for Shopify.`,
+    description: 'Learn how Rivyo integrates with ShopGuide.',
     category: 'Reviews',
     href: 'https://integrations.yourshopguide.com/post/rivyo',
     imgSrc:
@@ -17,7 +17,7 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Judge.me',
-    description: `Judge.me x ShopGuide - Agentic Commerce for Shopify.`,
+    description: 'Learn how Judge.me integrates with ShopGuide.',
     category: 'Reviews',
     href: 'https://integrations.yourshopguide.com/post/judge-me',
     imgSrc:
@@ -25,7 +25,7 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Klaviyo',
-    description: `Klaviyo x ShopGuide - Agentic Commerce for Shopify.`,
+    description: 'Learn how Klaviyo integrates with ShopGuide.',
     category: 'Acquisition',
     href: 'https://integrations.yourshopguide.com/post/klaviyo',
     imgSrc:
@@ -33,7 +33,7 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Smile.io',
-    description: `Smile.io x ShopGuide - Agentic Commerce for Shopify.`,
+    description: 'Learn how Smile.io integrates with ShopGuide.',
     category: 'Upsells',
     href: 'https://integrations.yourshopguide.com/post/smile-io',
     imgSrc:
@@ -41,11 +41,19 @@ const integrationsData: Integration[] = [
   },
   {
     title: 'Alia',
-    description: `Alia x ShopGuide - Agentic Commerce for Shopify.`,
+    description: 'Learn how Alia integrates with ShopGuide.',
     category: 'Personalization',
     href: 'https://integrations.yourshopguide.com/post/Alia',
     imgSrc:
       'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/690bfca2bbb4c86c4e37fe75.png',
+  },
+  {
+    title: 'Slack',
+    description: 'Learn how Slack integrates with ShopGuide.',
+    category: 'Customer Support',
+    href: 'https://integrations.yourshopguide.com/post/Slack',
+    imgSrc:
+      'https://assets.cdn.filesafe.space/YwFixzedrximlLRmcQo3/media/69b37c6d277ba0eb7cba1a17.png',
   },
 ]
 
