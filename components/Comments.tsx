@@ -1,6 +1,10 @@
 'use client'
 
-import { Comments as CommentsComponent, type CommentsConfig } from 'pliny/comments'
+import {
+  Comments as CommentsComponent,
+  type CommentsConfig,
+  type GiscusConfig,
+} from 'pliny/comments'
 import { useState, useEffect, Component, type ReactNode, useMemo } from 'react'
 import siteMetadata from '@/data/siteMetadata'
 
@@ -46,17 +50,23 @@ export default function Comments({ slug }: { slug: string }) {
 
   // Read environment variables directly in client component to ensure they're available
   // This ensures NEXT_PUBLIC_ env vars are properly accessed
-  const giscusConfig = useMemo(() => {
+  const giscusConfig = useMemo<GiscusConfig['giscusConfig'] | null>(() => {
     if (siteMetadata.comments?.provider === 'giscus') {
       const baseConfig = siteMetadata.comments.giscusConfig
       return {
-        ...baseConfig,
         // Read env vars directly to ensure they're available in client component
         repo: process.env.NEXT_PUBLIC_GISCUS_REPO || baseConfig?.repo || '',
         repositoryId:
           process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID || baseConfig?.repositoryId || '',
         category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY || baseConfig?.category || '',
         categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || baseConfig?.categoryId || '',
+        mapping: (baseConfig?.mapping || 'pathname') as GiscusConfig['giscusConfig']['mapping'],
+        reactions: (baseConfig?.reactions || '1') as GiscusConfig['giscusConfig']['reactions'],
+        metadata: (baseConfig?.metadata || '0') as GiscusConfig['giscusConfig']['metadata'],
+        theme: baseConfig?.theme || 'light',
+        darkTheme: baseConfig?.darkTheme || 'dark_dimmed',
+        themeURL: baseConfig?.themeURL || '',
+        lang: baseConfig?.lang || 'en',
       }
     }
     return null
