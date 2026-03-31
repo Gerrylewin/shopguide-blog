@@ -1,6 +1,6 @@
 'use client'
 
-import { Comments as CommentsComponent } from 'pliny/comments'
+import { Comments as CommentsComponent, type CommentsConfig } from 'pliny/comments'
 import { useState, useEffect, Component, type ReactNode, useMemo } from 'react'
 import siteMetadata from '@/data/siteMetadata'
 
@@ -63,10 +63,10 @@ export default function Comments({ slug }: { slug: string }) {
   }, [])
 
   // Create comments config with corrected giscusConfig (must be before early returns)
-  const commentsConfig = useMemo(() => {
+  const commentsConfig = useMemo<CommentsConfig | null>(() => {
     if (!siteMetadata.comments || !giscusConfig) return null
     return {
-      ...siteMetadata.comments,
+      provider: 'giscus',
       giscusConfig,
     }
   }, [giscusConfig])
