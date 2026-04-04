@@ -71,6 +71,7 @@ export default function Page() {
               </a>
               <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Noah Müller</h3>
               <div className="text-gray-600 dark:text-gray-300">Founder</div>
+              <div className="text-gray-600 dark:text-gray-300">ShopGuide</div>
               <div className="flex space-x-3 pt-6">
                 <SocialIcon kind="mail" href={`mailto:${NOAH_EMAIL}`} />
                 <SocialIcon kind="linkedin" href={NOAH_LINKEDIN} />
