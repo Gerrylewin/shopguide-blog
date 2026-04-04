@@ -17,9 +17,9 @@ function delay(ms: number) {
   })
 }
 
-type AdPlacement = 'floating' | 'inline'
+type BlogAdVariant = 'floating' | 'inline'
 
-function BlogAdTerminalPrompt({ placement }: { placement: AdPlacement }) {
+function BlogAdTerminalPrompt({ variant }: { variant: BlogAdVariant }) {
   const [line, setLine] = useState('')
   const [msgIdx, setMsgIdx] = useState(0)
 
@@ -51,7 +51,7 @@ function BlogAdTerminalPrompt({ placement }: { placement: AdPlacement }) {
     }
   }, [msgIdx])
 
-  if (placement === 'floating') {
+  if (variant === 'floating') {
     return (
       <div className="mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70">
         <div className="flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1">
@@ -66,20 +66,24 @@ function BlogAdTerminalPrompt({ placement }: { placement: AdPlacement }) {
   }
 
   return (
-    <div className="mt-2 flex justify-center border-t border-emerald-500/15 pt-2 font-mono text-xs text-emerald-500/70 sm:text-sm">
-      <div className="flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1.5">
+    <div className="mt-3 flex justify-center border-t border-emerald-500/15 pt-2 font-mono text-[10px] text-emerald-500/70 sm:text-xs">
+      <div className="flex min-h-[1.35rem] w-full max-w-full min-w-0 items-center justify-center gap-1.5">
         <span className="shrink-0 text-emerald-400">$</span>
         <span className="min-w-0 text-center leading-tight break-words whitespace-normal">
           {line}
         </span>
-        <span className="h-3 w-px shrink-0 animate-pulse bg-emerald-500" aria-hidden />
+        <span className="h-3 w-0.5 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
       </div>
     </div>
   )
 }
 
-function AdContent({ placement }: { placement: AdPlacement }) {
-  const isFloating = placement === 'floating'
+/**
+ * `floating` — fixed scroll-in card (desktop): original compact terminal, unchanged.
+ * `inline` — bottom-of-article ad only: wider, moderately larger type and logo.
+ */
+function AdContent({ variant }: { variant: BlogAdVariant }) {
+  const isFloating = variant === 'floating'
 
   return (
     <Link
@@ -89,7 +93,7 @@ function AdContent({ placement }: { placement: AdPlacement }) {
       className={
         isFloating
           ? 'group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300'
-          : 'group relative block w-full overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black px-4 py-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 sm:px-5 sm:py-3.5 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300'
+          : 'group relative block w-full overflow-hidden rounded-xl border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 sm:p-5 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300'
       }
     >
       {/* Tron Grid Background with Scanning Effect */}
@@ -102,7 +106,7 @@ function AdContent({ placement }: { placement: AdPlacement }) {
         <div
           className="animate-border-beam absolute h-[2px] w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
           style={{
-            offsetPath: 'inset(0% round 0.5rem)',
+            offsetPath: isFloating ? 'inset(0% round 0.5rem)' : 'inset(0% round 0.75rem)',
             offsetAnchor: '50% 50%',
           }}
         />
@@ -118,7 +122,7 @@ function AdContent({ placement }: { placement: AdPlacement }) {
         className={
           isFloating
             ? 'relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5'
-            : 'relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-2'
+            : 'relative z-10 mb-3 flex items-center gap-2 border-b border-emerald-500/20 pb-2'
         }
       >
         <div className="flex gap-1.5">
@@ -159,24 +163,24 @@ function AdContent({ placement }: { placement: AdPlacement }) {
             </div>
           </div>
 
-          <BlogAdTerminalPrompt placement="floating" />
+          <BlogAdTerminalPrompt variant="floating" />
         </div>
       ) : (
         <div className="relative z-10">
-          <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-5">
-            <div className="min-w-0 flex-1 space-y-0.5 text-center sm:text-left">
-              <p className="text-glow-primary font-mono text-sm font-semibold tracking-wide text-emerald-400 uppercase sm:text-base">
+          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-5">
+            <div className="min-w-0 flex-1 space-y-1 text-center sm:text-left">
+              <p className="text-glow-primary font-mono text-xs font-semibold tracking-wide text-emerald-400 uppercase sm:text-sm">
                 &gt; Deploy AI Agent
               </p>
-              <p className="font-mono text-xs text-gray-400 sm:text-sm">for Shopify stores</p>
+              <p className="font-mono text-[11px] text-gray-400 sm:text-xs">for Shopify stores</p>
             </div>
             <div className="flex shrink-0 justify-center sm:justify-end">
-              <div className="relative h-11 w-[4.5rem] sm:h-12 sm:w-20">
+              <div className="relative h-12 w-20 sm:h-14 sm:w-[5.5rem]">
                 <Image
                   src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
                   alt="Shopify"
                   fill
-                  sizes="(max-width: 640px) 72px, 80px"
+                  sizes="(max-width: 640px) 80px, 96px"
                   className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
                   priority
                 />
@@ -184,7 +188,7 @@ function AdContent({ placement }: { placement: AdPlacement }) {
             </div>
           </div>
 
-          <BlogAdTerminalPrompt placement="inline" />
+          <BlogAdTerminalPrompt variant="inline" />
         </div>
       )}
 
@@ -240,7 +244,7 @@ export default function BlogAd() {
             showAd ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-full opacity-0'
           }`}
         >
-          <AdContent placement="floating" />
+          <AdContent variant="floating" />
         </div>
       </div>
     </>
@@ -256,8 +260,8 @@ export function BlogAdInline() {
       id="blog-ad-inline-mobile"
     >
       <div className="not-prose flex justify-center">
-        <div className="w-full max-w-2xl">
-          <AdContent placement="inline" />
+        <div className="w-full max-w-xl">
+          <AdContent variant="inline" />
         </div>
       </div>
     </div>
