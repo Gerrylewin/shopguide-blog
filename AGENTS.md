@@ -8,6 +8,7 @@
 - Keep developer documentation links (e.g. shopify.dev) intact; do not replace technical doc URLs with affiliate links.
 - Blog post `date` and `lastmod` should match the actual merge/release date; always verify today's date via the terminal before setting.
 - On the integrations page, each card description should lead with a concrete value prop for the reader (what the pairing helps them achieve); the in-card “Learn more” link carries the full how-to—avoid empty placeholder copy.
+- When adjusting blog advertisement sizing or layout, change only the placement the user named (e.g. bottom-of-post); do not resize or restyle the floating ad unless they ask. Keep banner-style ads roughly rectangular—avoid disproportionate height.
 
 ## Learned Workspace Facts
 
@@ -20,3 +21,5 @@
 - `QuoteCard` renders `attribution` as plain text; do not put markdown links in `attribution` (they show verbatim). Use `source` / `sourceLabel` for clickable links.
 - For circular quote avatars (`QuoteCard` `image` prop), use a sized div with CSS `background-image`, `background-size: cover`, and `background-position: center` rather than `next/image` with `fill` inside prose; Preflight `img` rules and layout can otherwise hide most of the photo in the circle.
 - For integration tiles and similar thumbnails, prefer direct asset URLs on hosts already in `next.config.js` `remotePatterns` over proxied or wrapper image URLs when both work, to avoid extra hops and patterns.
+- In the App Router root layout, `<html>` should only wrap `<head>` and `<body>`; keep `<script>`, `<link>`, and `<meta>` inside `<head>` so the document stays valid and you avoid hydration warnings.
+- When `BASE_PATH` is set, do not prepend it to absolute `http://`, `https://`, or `data:` image `src` values (e.g. in `components/Image.tsx`); prepending breaks external URLs on subpath deployments.

@@ -89,10 +89,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${archivo.variable} ${questrial.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      {/* Console filter - runs immediately to intercept unwanted messages */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
+      <head>
+        {/* Console filter - runs immediately to intercept unwanted messages */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             (function() {
               if (typeof window === 'undefined') return;
               
@@ -142,23 +143,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               };
             })();
           `,
-        }}
-      />
-      {/* Google tag (gtag.js) */}
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
+          }}
+        />
+        {/* Google tag (gtag.js) */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}');
         `}
-      </Script>
-      <Script id="branded-console" strategy="afterInteractive">
-        {`
+        </Script>
+        <Script id="branded-console" strategy="afterInteractive">
+          {`
           (function() {
             // Clear console and show branded message after page loads
             function showBrandedMessage() {
@@ -250,36 +251,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }
           })();
         `}
-      </Script>
-      <link rel="shortcut icon" href={`${basePath}/static/favicons/favicon.ico`} />
-      <link rel="icon" type="image/png" href={`${basePath}/static/favicons/favicon-32x32.png`} />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href={`${basePath}/static/favicons/favicon-32x32.png`}
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href={`${basePath}/static/favicons/favicon-16x16.png`}
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href={`${basePath}/static/favicons/apple-touch-icon.png`}
-      />
-      <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest`} />
-      <link
-        rel="mask-icon"
-        href={`${basePath}/static/favicons/safari-pinned-tab.svg`}
-        color="#5bbad5"
-      />
-      <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
-      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
-      <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
+        </Script>
+        <link rel="shortcut icon" href={`${basePath}/static/favicons/favicon.ico`} />
+        <link rel="icon" type="image/png" href={`${basePath}/static/favicons/favicon-32x32.png`} />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href={`${basePath}/static/favicons/favicon-32x32.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href={`${basePath}/static/favicons/favicon-16x16.png`}
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href={`${basePath}/static/favicons/apple-touch-icon.png`}
+        />
+        <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest`} />
+        <link
+          rel="mask-icon"
+          href={`${basePath}/static/favicons/safari-pinned-tab.svg`}
+          color="#5bbad5"
+        />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
+        <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
+      </head>
       <body
         className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white"
         suppressHydrationWarning
