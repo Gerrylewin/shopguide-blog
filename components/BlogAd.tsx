@@ -6,6 +6,88 @@ import { useEffect, useState } from 'react'
 
 const TERMINAL_MESSAGES = ['npm install agentic-commerce', 'click here for a free trial'] as const
 
+const SHOPIFY_APP_URL = 'https://apps.shopify.com/die-ai-agent-official-app'
+const SHOPIFY_LOGO_SRC =
+  'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png'
+
+/** Edit `floating` vs `inline` below independently — they do not share Tailwind strings. */
+type BlogAdPlacement = 'floating' | 'inline'
+
+type BlogAdLayout = {
+  /** Root Link + optional hook class for global CSS (e.g. `.blog-ad-inline .tron-grid-bg`) */
+  link: string
+  gridScan: string
+  borderBeam: string
+  borderBeamOffsetRound: string
+  header: string
+  trafficFlex: string
+  trafficRed: string
+  trafficYellow: string
+  trafficGreen: string
+  titleBar: string
+  mainStack: string
+  headline: string
+  subhead: string
+  logoSection: string
+  logoBox: string
+  imageSizes: string
+  promptOuter: string
+  promptInner: string
+  promptCursor: string
+}
+
+const BLOG_AD_LAYOUT: Record<BlogAdPlacement, BlogAdLayout> = {
+  floating: {
+    link: 'blog-ad-floating group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300',
+    gridScan:
+      'animate-grid-scan absolute inset-0 h-20 w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent',
+    borderBeam:
+      'animate-border-beam absolute h-[2px] w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent',
+    borderBeamOffsetRound: '0.5rem',
+    header: 'relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5',
+    trafficFlex: 'flex gap-1.5',
+    trafficRed: 'h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]',
+    trafficYellow: 'h-2 w-2 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]',
+    trafficGreen: 'h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]',
+    titleBar: 'font-mono text-[9px] text-emerald-400/60',
+    mainStack: 'relative z-10 space-y-2',
+    headline:
+      'text-glow-primary font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase',
+    subhead: 'mt-0.5 font-mono text-[9px] text-gray-400',
+    logoSection: 'mt-2 flex justify-center',
+    logoBox: 'relative h-10 w-16',
+    imageSizes: '64px',
+    promptOuter: 'mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70',
+    promptInner: 'flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1',
+    promptCursor: 'h-2.5 w-1 shrink-0 animate-pulse bg-emerald-500',
+  },
+  inline: {
+    link: 'blog-ad-inline group relative block overflow-hidden rounded-xl border-4 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-8 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300',
+    gridScan:
+      'animate-grid-scan absolute inset-0 h-32 w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent',
+    borderBeam:
+      'animate-border-beam absolute h-[4px] w-48 bg-gradient-to-r from-transparent via-emerald-400 to-transparent',
+    borderBeamOffsetRound: '0.75rem',
+    header: 'relative z-10 mb-4 flex items-center gap-4 border-b border-emerald-500/20 pb-3',
+    trafficFlex: 'flex gap-3',
+    trafficRed: 'h-4 w-4 rounded-full bg-red-500 shadow-[0_0_16px_rgba(239,68,68,0.5)]',
+    trafficYellow: 'h-4 w-4 rounded-full bg-yellow-500 shadow-[0_0_16px_rgba(234,179,8,0.5)]',
+    trafficGreen: 'h-4 w-4 rounded-full bg-emerald-500 shadow-[0_0_16px_rgba(16,185,129,0.5)]',
+    titleBar: 'font-mono text-sm text-emerald-400/60',
+    mainStack: 'relative z-10 space-y-5',
+    headline:
+      'text-glow-primary font-mono text-lg font-semibold tracking-wider text-emerald-400 uppercase sm:text-xl',
+    subhead: 'mt-1 font-mono text-base text-gray-400 sm:text-lg',
+    logoSection: 'mt-4 flex justify-center',
+    logoBox: 'relative h-28 w-44 sm:h-32 sm:w-52',
+    imageSizes: '(max-width:640px) 176px, 208px',
+    promptOuter: 'mt-4 flex justify-center font-mono text-sm text-emerald-500/70 sm:text-base',
+    promptInner:
+      'flex min-h-[2.75rem] w-full max-w-full min-w-0 items-center justify-center gap-2 sm:min-h-[3rem]',
+    promptCursor: 'h-5 w-1.5 shrink-0 animate-pulse bg-emerald-500 sm:h-6 sm:w-2',
+  },
+}
+
 /** Per-character delays; full cycle is roughly 9–12s per message. */
 const TYPE_MS = 45
 const HOLD_MS = 5000
@@ -17,9 +99,10 @@ function delay(ms: number) {
   })
 }
 
-function BlogAdTerminalPrompt() {
+function BlogAdTerminalPrompt({ placement }: { placement: BlogAdPlacement }) {
   const [line, setLine] = useState('')
   const [msgIdx, setMsgIdx] = useState(0)
+  const p = BLOG_AD_LAYOUT[placement]
 
   useEffect(() => {
     let cancelled = false
@@ -50,86 +133,76 @@ function BlogAdTerminalPrompt() {
   }, [msgIdx])
 
   return (
-    <div className="mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70">
-      <div className="flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1">
+    <div className={p.promptOuter}>
+      <div className={p.promptInner}>
         <span className="shrink-0 text-emerald-400">$</span>
         <span className="min-w-0 text-center leading-tight break-words whitespace-normal">
           {line}
         </span>
-        <span className="h-2.5 w-1 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
+        <span className={p.promptCursor} aria-hidden />
       </div>
     </div>
   )
 }
 
-const AdContent = () => (
-  <Link
-    href="https://apps.shopify.com/die-ai-agent-official-app"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
-  >
-    {/* Tron Grid Background with Scanning Effect */}
-    <div className="tron-grid-bg pointer-events-none absolute inset-0 opacity-[0.15]">
-      <div className="animate-grid-scan absolute inset-0 h-20 w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent" />
-    </div>
+function BlogAdCard({ placement }: { placement: BlogAdPlacement }) {
+  const v = BLOG_AD_LAYOUT[placement]
 
-    {/* Border Beam Animation (Racing Light Trail) */}
-    <div className="pointer-events-none absolute inset-0 z-0">
-      <div
-        className="animate-border-beam absolute h-[2px] w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
-        style={{
-          offsetPath: 'inset(0% round 0.5rem)',
-          offsetAnchor: '50% 50%',
-        }}
-      />
-    </div>
-
-    {/* Glitch effect overlay */}
-    <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-      <div className="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent" />
-    </div>
-
-    {/* Terminal-style header */}
-    <div className="relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5">
-      <div className="flex gap-1.5">
-        <div className="h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
-        <div className="h-2 w-2 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
-        <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-      </div>
-      <span className="font-mono text-[9px] text-emerald-400/60">agentic_commerce.exe</span>
-    </div>
-
-    {/* Main content */}
-    <div className="relative z-10 space-y-2">
-      <div className="text-center">
-        <p className="text-glow-primary font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase">
-          &gt; Deploy AI Agent
-        </p>
-        <p className="mt-0.5 font-mono text-[9px] text-gray-400">for Shopify stores</p>
+  return (
+    <Link href={SHOPIFY_APP_URL} target="_blank" rel="noopener noreferrer" className={v.link}>
+      <div className="tron-grid-bg pointer-events-none absolute inset-0 opacity-[0.15]">
+        <div className={v.gridScan} />
       </div>
 
-      {/* Shopify Logo */}
-      <div className="mt-2 flex justify-center">
-        <div className="relative h-10 w-16">
-          <Image
-            src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
-            alt="Shopify"
-            fill
-            sizes="64px"
-            className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
-            priority
-          />
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div
+          className={v.borderBeam}
+          style={{
+            offsetPath: `inset(0% round ${v.borderBeamOffsetRound})`,
+            offsetAnchor: '50% 50%',
+          }}
+        />
+      </div>
+
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <div className="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent" />
+      </div>
+
+      <div className={v.header}>
+        <div className={v.trafficFlex}>
+          <div className={v.trafficRed} />
+          <div className={v.trafficYellow} />
+          <div className={v.trafficGreen} />
         </div>
+        <span className={v.titleBar}>agentic_commerce.exe</span>
       </div>
 
-      <BlogAdTerminalPrompt />
-    </div>
+      <div className={v.mainStack}>
+        <div className="text-center">
+          <p className={v.headline}>&gt; Deploy AI Agent</p>
+          <p className={v.subhead}>for Shopify stores</p>
+        </div>
 
-    {/* Scanline effect */}
-    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-  </Link>
-)
+        <div className={v.logoSection}>
+          <div className={v.logoBox}>
+            <Image
+              src={SHOPIFY_LOGO_SRC}
+              alt="Shopify"
+              fill
+              sizes={v.imageSizes}
+              className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
+              priority
+            />
+          </div>
+        </div>
+
+        <BlogAdTerminalPrompt placement={placement} />
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+    </Link>
+  )
+}
 
 export default function BlogAd() {
   const [showAd, setShowAd] = useState(false)
@@ -140,14 +213,11 @@ export default function BlogAd() {
       const documentHeight = document.documentElement.scrollHeight
       const scrollTop = window.scrollY || document.documentElement.scrollTop
 
-      // Calculate the total scrollable height
       const totalScrollableHeight = documentHeight - windowHeight
 
-      // Calculate scroll percentage
       const scrollPercentage =
         totalScrollableHeight > 0 ? (scrollTop / totalScrollableHeight) * 100 : 0
 
-      // Show ad when user scrolls 25% down the page
       if (scrollPercentage >= 25) {
         setShowAd(true)
       } else {
@@ -155,10 +225,8 @@ export default function BlogAd() {
       }
     }
 
-    // Initial calculation
     handleScroll()
 
-    // Add scroll event listener
     window.addEventListener('scroll', handleScroll, { passive: true })
     window.addEventListener('resize', handleScroll, { passive: true })
 
@@ -170,21 +238,19 @@ export default function BlogAd() {
 
   return (
     <>
-      {/* Desktop: Fixed on the side, slides in from right at 25% scroll */}
       <div className="hidden lg:block">
         <div
           className={`fixed top-24 right-4 z-40 w-52 transition-all duration-500 ease-out ${
             showAd ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-full opacity-0'
           }`}
         >
-          <AdContent />
+          <BlogAdCard placement="floating" />
         </div>
       </div>
     </>
   )
 }
 
-// Mobile/Tablet inline version
 export function BlogAdInline() {
   return (
     <div
@@ -193,22 +259,18 @@ export function BlogAdInline() {
       id="blog-ad-inline-mobile"
     >
       <div className="not-prose flex justify-center">
-        <div className="w-full max-w-md">
-          <AdContent />
+        <div className="w-full max-w-2xl">
+          <BlogAdCard placement="inline" />
         </div>
       </div>
     </div>
   )
 }
 
-// Client component to handle insertion before references
 export function BlogAdInlineWithInsertion() {
   useEffect(() => {
-    // Wait for content to be ready
     const insertAd = () => {
-      // Find the prose element (the one containing the blog content)
       const proseElements = document.querySelectorAll('.prose')
-      // Get the main prose element (usually the first one with content)
       const proseElement =
         Array.from(proseElements).find((el) => el.querySelector('h2') !== null) || proseElements[0]
 
@@ -217,7 +279,6 @@ export function BlogAdInlineWithInsertion() {
       const adElement = document.getElementById('blog-ad-inline-mobile')
       if (!adElement) return
 
-      // If there's an About Author section, anchor the ad before it
       const aboutAuthorAnchor =
         proseElement.querySelector('#about-author') ||
         Array.from(proseElement.querySelectorAll('h2')).find(
@@ -233,7 +294,6 @@ export function BlogAdInlineWithInsertion() {
         return
       }
 
-      // Place ad before FAQ so accordion expansion doesn't move the ad around
       const faqHeading = Array.from(proseElement.querySelectorAll('h2')).find((heading) => {
         const normalizedHeading = heading.textContent?.trim().toLowerCase()
         return normalizedHeading === 'frequently asked questions' || normalizedHeading === 'faq'
@@ -248,7 +308,6 @@ export function BlogAdInlineWithInsertion() {
         return
       }
 
-      // Look for h2 with "References" text
       const headings = proseElement.querySelectorAll('h2')
       let referencesHeading: Element | null = null
 
@@ -260,18 +319,14 @@ export function BlogAdInlineWithInsertion() {
         }
       }
 
-      // If found, insert the ad before it
       if (referencesHeading && referencesHeading.parentNode) {
         adElement.style.display = 'block'
-        // Remove from current position if already in DOM
         if (adElement.parentNode) {
           adElement.parentNode.removeChild(adElement)
         }
         referencesHeading.parentNode.insertBefore(adElement, referencesHeading)
       } else {
-        // If no references found, show at the end of prose content
         adElement.style.display = 'block'
-        // Remove from current position if already in DOM
         if (adElement.parentNode) {
           adElement.parentNode.removeChild(adElement)
         }
@@ -279,7 +334,6 @@ export function BlogAdInlineWithInsertion() {
       }
     }
 
-    // Try immediately, then with a small delay to ensure DOM is ready
     insertAd()
     const timeoutId = setTimeout(insertAd, 100)
 
