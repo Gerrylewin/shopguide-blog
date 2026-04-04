@@ -8,6 +8,7 @@
 - Keep developer documentation links (e.g. shopify.dev) intact; do not replace technical doc URLs with affiliate links.
 - Blog post `date` and `lastmod` should match the actual merge/release date; always verify today's date via the terminal before setting.
 - On the integrations page, each card description should lead with a concrete value prop for the reader (what the pairing helps them achieve); the in-card “Learn more” link carries the full how-to—avoid empty placeholder copy.
+- When changing blog advertisements, only adjust the placement the user named (e.g. bottom-of-post vs scroll-in floating); keep the floating widget at the compact default unless they explicitly ask to resize it. Prefer wider/flatter inline layouts over uniform vertical scale-ups that read as a tall tower.
 
 ## Learned Workspace Facts
 
@@ -20,3 +21,6 @@
 - `QuoteCard` renders `attribution` as plain text; do not put markdown links in `attribution` (they show verbatim). Use `source` / `sourceLabel` for clickable links.
 - For circular quote avatars (`QuoteCard` `image` prop), use a sized div with CSS `background-image`, `background-size: cover`, and `background-position: center` rather than `next/image` with `fill` inside prose; Preflight `img` rules and layout can otherwise hide most of the photo in the circle.
 - For integration tiles and similar thumbnails, prefer direct asset URLs on hosts already in `next.config.js` `remotePatterns` over proxied or wrapper image URLs when both work, to avoid extra hops and patterns.
+- Blog terminal ads in `components/BlogAd.tsx` use separate layout tokens for floating (scroll-in) vs inline (in-post); root classes `blog-ad-floating` and `blog-ad-inline` allow scoped CSS so one placement can be scaled without affecting the other.
+- In the App Router root layout, keep `<html>` wrapping only `<head>` and `<body>`; put `<meta>`, `<link>`, and `<script>` inside `<head>` to avoid invalid document structure and hydration warnings.
+- When `BASE_PATH` is set, do not prepend it to absolute `http://`, `https://`, or `data:` values in image `src` handling (e.g. `components/Image.tsx`); doing so breaks external URLs on subpath deployments.

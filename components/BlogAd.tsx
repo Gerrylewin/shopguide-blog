@@ -37,29 +37,31 @@ type BlogAdLayout = {
 }
 
 const BLOG_AD_LAYOUT: Record<BlogAdPlacement, BlogAdLayout> = {
+  /** ~1.5× scale vs original floating ad (fixed column + typography + logo). */
   floating: {
-    link: 'blog-ad-floating group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300',
+    link: 'blog-ad-floating group relative block overflow-hidden rounded-xl border-[3px] border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-[18px] shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300',
     gridScan:
-      'animate-grid-scan absolute inset-0 h-20 w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent',
+      'animate-grid-scan absolute inset-0 h-[7.5rem] w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent',
     borderBeam:
-      'animate-border-beam absolute h-[2px] w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent',
-    borderBeamOffsetRound: '0.5rem',
-    header: 'relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5',
-    trafficFlex: 'flex gap-1.5',
-    trafficRed: 'h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]',
-    trafficYellow: 'h-2 w-2 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]',
-    trafficGreen: 'h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]',
-    titleBar: 'font-mono text-[9px] text-emerald-400/60',
-    mainStack: 'relative z-10 space-y-2',
+      'animate-border-beam absolute h-[3px] w-36 bg-gradient-to-r from-transparent via-emerald-400 to-transparent',
+    borderBeamOffsetRound: '0.75rem',
+    header: 'relative z-10 mb-3 flex items-center gap-3 border-b border-emerald-500/20 pb-2',
+    trafficFlex: 'flex gap-2.5',
+    trafficRed: 'h-3 w-3 rounded-full bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.5)]',
+    trafficYellow: 'h-3 w-3 rounded-full bg-yellow-500 shadow-[0_0_12px_rgba(234,179,8,0.5)]',
+    trafficGreen: 'h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.5)]',
+    titleBar: 'font-mono text-[13.5px] text-emerald-400/60',
+    mainStack: 'relative z-10 space-y-3',
     headline:
-      'text-glow-primary font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase',
-    subhead: 'mt-0.5 font-mono text-[9px] text-gray-400',
-    logoSection: 'mt-2 flex justify-center',
-    logoBox: 'relative h-10 w-16',
-    imageSizes: '64px',
-    promptOuter: 'mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70',
-    promptInner: 'flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1',
-    promptCursor: 'h-2.5 w-1 shrink-0 animate-pulse bg-emerald-500',
+      'text-glow-primary font-mono text-[15px] font-semibold tracking-wider text-emerald-400 uppercase',
+    subhead: 'mt-[3px] font-mono text-[13.5px] text-gray-400',
+    logoSection: 'mt-3 flex justify-center',
+    logoBox: 'relative h-[3.75rem] w-24',
+    imageSizes: '96px',
+    promptOuter: 'mt-3 flex justify-center font-mono text-xs text-emerald-500/70',
+    promptInner:
+      'flex min-h-[1.875rem] w-full max-w-full min-w-0 items-center justify-center gap-1.5',
+    promptCursor: 'h-3.5 w-1.5 shrink-0 animate-pulse bg-emerald-500',
   },
   inline: {
     link: 'blog-ad-inline group relative block overflow-hidden rounded-xl border-4 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-8 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300',
@@ -240,7 +242,7 @@ export default function BlogAd() {
     <>
       <div className="hidden lg:block">
         <div
-          className={`fixed top-24 right-4 z-40 w-52 transition-all duration-500 ease-out ${
+          className={`fixed top-24 right-4 z-40 w-[19.5rem] transition-all duration-500 ease-out ${
             showAd ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-full opacity-0'
           }`}
         >
@@ -259,7 +261,7 @@ export function BlogAdInline() {
       id="blog-ad-inline-mobile"
     >
       <div className="not-prose flex justify-center">
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-6xl">
           <BlogAdCard placement="inline" />
         </div>
       </div>
