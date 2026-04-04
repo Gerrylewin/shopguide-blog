@@ -50,13 +50,13 @@ function BlogAdTerminalPrompt() {
   }, [msgIdx])
 
   return (
-    <div className="mt-8 flex justify-center font-mono text-[32px] text-emerald-500/70">
-      <div className="flex min-h-[5rem] w-full max-w-full min-w-0 items-center justify-center gap-4">
+    <div className="mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70">
+      <div className="flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1">
         <span className="shrink-0 text-emerald-400">$</span>
         <span className="min-w-0 text-center leading-tight break-words whitespace-normal">
           {line}
         </span>
-        <span className="h-10 w-4 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
+        <span className="h-2.5 w-1 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
       </div>
     </div>
   )
@@ -67,19 +67,19 @@ const AdContent = () => (
     href="https://apps.shopify.com/die-ai-agent-official-app"
     target="_blank"
     rel="noopener noreferrer"
-    className="blog-ad-terminal group relative block overflow-hidden rounded-[2rem] border-8 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-12 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
+    className="group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
   >
     {/* Tron Grid Background with Scanning Effect */}
     <div className="tron-grid-bg pointer-events-none absolute inset-0 opacity-[0.15]">
-      <div className="animate-grid-scan absolute inset-0 h-80 w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent" />
+      <div className="animate-grid-scan absolute inset-0 h-20 w-full bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent" />
     </div>
 
     {/* Border Beam Animation (Racing Light Trail) */}
     <div className="pointer-events-none absolute inset-0 z-0">
       <div
-        className="animate-border-beam absolute h-[8px] w-96 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
+        className="animate-border-beam absolute h-[2px] w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
         style={{
-          offsetPath: 'inset(0% round 2rem)',
+          offsetPath: 'inset(0% round 0.5rem)',
           offsetAnchor: '50% 50%',
         }}
       />
@@ -91,32 +91,32 @@ const AdContent = () => (
     </div>
 
     {/* Terminal-style header */}
-    <div className="relative z-10 mb-8 flex items-center gap-8 border-b border-emerald-500/20 pb-6">
-      <div className="flex gap-6">
-        <div className="h-8 w-8 rounded-full bg-red-500 shadow-[0_0_32px_rgba(239,68,68,0.5)]" />
-        <div className="h-8 w-8 rounded-full bg-yellow-500 shadow-[0_0_32px_rgba(234,179,8,0.5)]" />
-        <div className="h-8 w-8 rounded-full bg-emerald-500 shadow-[0_0_32px_rgba(16,185,129,0.5)]" />
+    <div className="relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5">
+      <div className="flex gap-1.5">
+        <div className="h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+        <div className="h-2 w-2 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+        <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
       </div>
-      <span className="font-mono text-[36px] text-emerald-400/60">agentic_commerce.exe</span>
+      <span className="font-mono text-[9px] text-emerald-400/60">agentic_commerce.exe</span>
     </div>
 
     {/* Main content */}
-    <div className="relative z-10 space-y-8">
+    <div className="relative z-10 space-y-2">
       <div className="text-center">
-        <p className="text-glow-primary font-mono text-[40px] font-semibold tracking-wider text-emerald-400 uppercase">
+        <p className="text-glow-primary font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase">
           &gt; Deploy AI Agent
         </p>
-        <p className="mt-2 font-mono text-[36px] text-gray-400">for Shopify stores</p>
+        <p className="mt-0.5 font-mono text-[9px] text-gray-400">for Shopify stores</p>
       </div>
 
       {/* Shopify Logo */}
-      <div className="mt-8 flex justify-center">
-        <div className="relative h-40 w-64">
+      <div className="mt-2 flex justify-center">
+        <div className="relative h-10 w-16">
           <Image
             src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
             alt="Shopify"
             fill
-            sizes="256px"
+            sizes="64px"
             className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
             priority
           />
@@ -173,7 +173,7 @@ export default function BlogAd() {
       {/* Desktop: Fixed on the side, slides in from right at 25% scroll */}
       <div className="hidden lg:block">
         <div
-          className={`fixed top-24 right-4 z-40 w-[52rem] max-w-[min(52rem,calc(100vw-2rem))] transition-all duration-500 ease-out ${
+          className={`fixed top-24 right-4 z-40 w-52 transition-all duration-500 ease-out ${
             showAd ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-full opacity-0'
           }`}
         >
@@ -193,7 +193,7 @@ export function BlogAdInline() {
       id="blog-ad-inline-mobile"
     >
       <div className="not-prose flex justify-center">
-        <div className="w-full max-w-[min(112rem,calc(100vw-2rem))]">
+        <div className="w-full max-w-md">
           <AdContent />
         </div>
       </div>

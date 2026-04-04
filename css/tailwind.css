@@ -453,15 +453,6 @@ input:-webkit-autofill:focus {
     text-shadow: 0 0 12px color-mix(in oklab, var(--color-primary-400) 60%, transparent);
   }
 
-  /* Blog terminal ad (BlogAd): 4× scale — larger grid cells + glow match visual size */
-  .blog-ad-terminal .tron-grid-bg {
-    background-size: 128px 128px;
-  }
-
-  .blog-ad-terminal .text-glow-primary {
-    text-shadow: 0 0 48px color-mix(in oklab, var(--color-primary-400) 60%, transparent);
-  }
-
   .animate-border-beam {
     animation: border-beam 6s linear infinite;
   }
