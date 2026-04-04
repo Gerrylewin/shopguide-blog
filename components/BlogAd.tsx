@@ -17,9 +17,7 @@ function delay(ms: number) {
   })
 }
 
-type BlogAdVariant = 'floating' | 'inline'
-
-function BlogAdTerminalPrompt({ variant }: { variant: BlogAdVariant }) {
+function BlogAdTerminalPrompt() {
   const [line, setLine] = useState('')
   const [msgIdx, setMsgIdx] = useState(0)
 
@@ -51,50 +49,27 @@ function BlogAdTerminalPrompt({ variant }: { variant: BlogAdVariant }) {
     }
   }, [msgIdx])
 
-  if (variant === 'floating') {
-    return (
-      <div className="mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70">
-        <div className="flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1">
-          <span className="shrink-0 text-emerald-400">$</span>
-          <span className="min-w-0 text-center leading-tight break-words whitespace-normal">
-            {line}
-          </span>
-          <span className="h-2.5 w-1 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <div className="mt-3 flex justify-center border-t border-emerald-500/15 pt-2 font-mono text-[10px] text-emerald-500/70 sm:text-xs">
-      <div className="flex min-h-[1.35rem] w-full max-w-full min-w-0 items-center justify-center gap-1.5">
+    <div className="mt-2 flex justify-center font-mono text-[8px] text-emerald-500/70">
+      <div className="flex min-h-[1.25rem] w-full max-w-full min-w-0 items-center justify-center gap-1">
         <span className="shrink-0 text-emerald-400">$</span>
         <span className="min-w-0 text-center leading-tight break-words whitespace-normal">
           {line}
         </span>
-        <span className="h-3 w-0.5 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
+        <span className="h-2.5 w-1 shrink-0 animate-pulse bg-emerald-500" aria-hidden />
       </div>
     </div>
   )
 }
 
-/**
- * `floating` — fixed scroll-in card (desktop): original compact terminal, unchanged.
- * `inline` — bottom-of-article ad only: wider, moderately larger type and logo.
- */
-function AdContent({ variant }: { variant: BlogAdVariant }) {
-  const isFloating = variant === 'floating'
-
+/** Compact terminal — identical for floating (scroll-in) and inline (article) so neither stretches wide. */
+function AdContent() {
   return (
     <Link
       href="https://apps.shopify.com/die-ai-agent-official-app"
       target="_blank"
       rel="noopener noreferrer"
-      className={
-        isFloating
-          ? 'group relative block overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300'
-          : 'group relative block w-full overflow-hidden rounded-xl border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 sm:p-5 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300'
-      }
+      className="group relative block w-full overflow-hidden rounded-lg border-2 border-emerald-500/30 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-3 shadow-2xl transition-all duration-300 hover:border-emerald-400 hover:shadow-emerald-500/20 dark:border-emerald-400/40 dark:from-black dark:via-gray-900 dark:to-gray-800 dark:hover:border-emerald-300"
     >
       {/* Tron Grid Background with Scanning Effect */}
       <div className="tron-grid-bg pointer-events-none absolute inset-0 opacity-[0.15]">
@@ -106,7 +81,7 @@ function AdContent({ variant }: { variant: BlogAdVariant }) {
         <div
           className="animate-border-beam absolute h-[2px] w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
           style={{
-            offsetPath: isFloating ? 'inset(0% round 0.5rem)' : 'inset(0% round 0.75rem)',
+            offsetPath: 'inset(0% round 0.5rem)',
             offsetAnchor: '50% 50%',
           }}
         />
@@ -118,79 +93,38 @@ function AdContent({ variant }: { variant: BlogAdVariant }) {
       </div>
 
       {/* Terminal-style header */}
-      <div
-        className={
-          isFloating
-            ? 'relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5'
-            : 'relative z-10 mb-3 flex items-center gap-2 border-b border-emerald-500/20 pb-2'
-        }
-      >
+      <div className="relative z-10 mb-2 flex items-center gap-2 border-b border-emerald-500/20 pb-1.5">
         <div className="flex gap-1.5">
           <div className="h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
           <div className="h-2 w-2 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
           <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
         </div>
-        <span
-          className={
-            isFloating
-              ? 'font-mono text-[9px] text-emerald-400/60'
-              : 'font-mono text-[10px] text-emerald-400/60 sm:text-xs'
-          }
-        >
-          agentic_commerce.exe
-        </span>
+        <span className="font-mono text-[9px] text-emerald-400/60">agentic_commerce.exe</span>
       </div>
 
-      {isFloating ? (
-        <div className="relative z-10 space-y-2">
-          <div className="text-center">
-            <p className="text-glow-primary font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase">
-              &gt; Deploy AI Agent
-            </p>
-            <p className="mt-0.5 font-mono text-[9px] text-gray-400">for Shopify stores</p>
-          </div>
-
-          <div className="mt-2 flex justify-center">
-            <div className="relative h-10 w-16">
-              <Image
-                src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
-                alt="Shopify"
-                fill
-                sizes="64px"
-                className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
-                priority
-              />
-            </div>
-          </div>
-
-          <BlogAdTerminalPrompt variant="floating" />
+      <div className="relative z-10 space-y-2">
+        <div className="text-center">
+          <p className="text-glow-primary font-mono text-[10px] font-semibold tracking-wider text-emerald-400 uppercase">
+            &gt; Deploy AI Agent
+          </p>
+          <p className="mt-0.5 font-mono text-[9px] text-gray-400">for Shopify stores</p>
         </div>
-      ) : (
-        <div className="relative z-10">
-          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-5">
-            <div className="min-w-0 flex-1 space-y-1 text-center sm:text-left">
-              <p className="text-glow-primary font-mono text-xs font-semibold tracking-wide text-emerald-400 uppercase sm:text-sm">
-                &gt; Deploy AI Agent
-              </p>
-              <p className="font-mono text-[11px] text-gray-400 sm:text-xs">for Shopify stores</p>
-            </div>
-            <div className="flex shrink-0 justify-center sm:justify-end">
-              <div className="relative h-12 w-20 sm:h-14 sm:w-[5.5rem]">
-                <Image
-                  src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
-                  alt="Shopify"
-                  fill
-                  sizes="(max-width: 640px) 80px, 96px"
-                  className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
 
-          <BlogAdTerminalPrompt variant="inline" />
+        <div className="mt-2 flex justify-center">
+          <div className="relative h-10 w-16">
+            <Image
+              src="https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png"
+              alt="Shopify"
+              fill
+              sizes="64px"
+              className="object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-90"
+              priority
+            />
+          </div>
         </div>
-      )}
+
+        <BlogAdTerminalPrompt />
+      </div>
 
       {/* Scanline effect */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -244,24 +178,24 @@ export default function BlogAd() {
             showAd ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-full opacity-0'
           }`}
         >
-          <AdContent variant="floating" />
+          <AdContent />
         </div>
       </div>
     </>
   )
 }
 
-// Mobile/Tablet inline version
+// Mobile/Tablet inline version — same pixel-sized card as floating; width capped so it never spans the column
 export function BlogAdInline() {
   return (
     <div
-      className="prose prose-lg dark:prose-invert my-8 block max-w-none lg:hidden"
+      className="my-6 block max-w-none lg:hidden"
       style={{ display: 'none' }}
       id="blog-ad-inline-mobile"
     >
-      <div className="not-prose flex justify-center">
-        <div className="w-full max-w-xl">
-          <AdContent variant="inline" />
+      <div className="flex justify-center">
+        <div className="w-52 max-w-full shrink-0">
+          <AdContent />
         </div>
       </div>
     </div>
