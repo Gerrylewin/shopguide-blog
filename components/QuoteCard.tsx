@@ -3,6 +3,14 @@
 import type { ReactNode } from 'react'
 import Link from '@/components/Link'
 
+/** Stylized quote graphic for John Collison (agentic commerce); used when attribution names him. */
+const JOHN_COLLISON_QUOTE_IMAGE =
+  'https://assets.cdn.filesafe.space/YwFixzedrximlLRmcQo3/media/69d171daa7dcb4cff08f69db.jpeg'
+
+function isJohnCollisonAttribution(attribution: string): boolean {
+  return attribution.toLowerCase().includes('john collison')
+}
+
 interface QuoteCardProps {
   quote: string
   attribution: string
@@ -20,6 +28,9 @@ export default function QuoteCard({
   caption,
   image,
 }: QuoteCardProps) {
+  const resolvedImage =
+    image ?? (isJohnCollisonAttribution(attribution) ? JOHN_COLLISON_QUOTE_IMAGE : undefined)
+
   const attributionEl: ReactNode = source ? (
     <Link
       href={source}
@@ -95,12 +106,12 @@ export default function QuoteCard({
           {/* Attribution: Modernized & Clean */}
           <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-4 border-t pt-6 not-italic sm:flex-row sm:items-center">
             <div className="flex items-center gap-x-3">
-              {image && (
+              {resolvedImage && (
                 <div
                   role="img"
                   aria-label={attribution}
                   className="border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 bg-cover bg-center shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 grayscale transition-all duration-500 ring-inset group-hover/card:grayscale-0"
-                  style={{ backgroundImage: `url(${image})` }}
+                  style={{ backgroundImage: `url(${resolvedImage})` }}
                 />
               )}
               <div className="flex items-center gap-x-2">
