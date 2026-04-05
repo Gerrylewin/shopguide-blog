@@ -18,6 +18,8 @@ interface QuoteCardProps {
   sourceLabel?: string
   caption?: string
   image?: string
+  /** Skip grayscale on the avatar (e.g. brand logos that should stay full color). */
+  imageVivid?: boolean
 }
 
 export default function QuoteCard({
@@ -27,6 +29,7 @@ export default function QuoteCard({
   sourceLabel,
   caption,
   image,
+  imageVivid,
 }: QuoteCardProps) {
   const resolvedImage =
     image ?? (isJohnCollisonAttribution(attribution) ? JOHN_COLLISON_QUOTE_IMAGE : undefined)
@@ -110,7 +113,10 @@ export default function QuoteCard({
                 <div
                   role="img"
                   aria-label={attribution}
-                  className="border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 bg-cover bg-center shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 grayscale transition-all duration-500 ring-inset group-hover/card:grayscale-0"
+                  className={
+                    'border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 bg-cover bg-center shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 transition-all duration-500 ring-inset' +
+                    (imageVivid ? '' : ' grayscale group-hover/card:grayscale-0')
+                  }
                   style={{ backgroundImage: `url(${resolvedImage})` }}
                 />
               )}
