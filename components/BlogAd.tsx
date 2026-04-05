@@ -2,13 +2,12 @@
 
 import Image from 'next/image'
 import Link from '@/components/Link'
+import { SHOPIFY_GREEN_WORDMARK_URL } from '@/lib/shopify-brand'
 import { useEffect, useState } from 'react'
 
 const TERMINAL_MESSAGES = ['npm install agentic-commerce', 'click here for a free trial'] as const
 
 const SHOPIFY_APP_URL = 'https://apps.shopify.com/die-ai-agent-official-app'
-const SHOPIFY_LOGO_SRC =
-  'https://storage.googleapis.com/msgsndr/YwFixzedrximlLRmcQo3/media/691725b623d72d77dc280d33.png'
 
 /** Edit `floating` vs `inline` below independently — they do not share Tailwind strings. */
 type BlogAdPlacement = 'floating' | 'inline'
@@ -188,7 +187,7 @@ function BlogAdCard({ placement }: { placement: BlogAdPlacement }) {
         <div className={v.logoSection}>
           <div className={v.logoBox}>
             <Image
-              src={SHOPIFY_LOGO_SRC}
+              src={SHOPIFY_GREEN_WORDMARK_URL}
               alt="Shopify"
               fill
               sizes={v.imageSizes}

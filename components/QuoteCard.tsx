@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import Link from '@/components/Link'
+import { SHOPIFY_BAG_MARK_PATH } from '@/lib/shopify-brand'
 
 /** Stylized quote graphic for John Collison (agentic commerce); used when attribution names him. */
 const JOHN_COLLISON_QUOTE_IMAGE =
@@ -9,6 +10,10 @@ const JOHN_COLLISON_QUOTE_IMAGE =
 
 function isJohnCollisonAttribution(attribution: string): boolean {
   return attribution.toLowerCase().includes('john collison')
+}
+
+function isShopifyOfficialAttribution(attribution: string): boolean {
+  return attribution.toLowerCase().includes('shopify official')
 }
 
 /** Root-relative public URLs need BASE_PATH in client components (matches components/Image.tsx). */
@@ -41,8 +46,15 @@ export default function QuoteCard({
   imageVivid,
 }: QuoteCardProps) {
   const resolvedImage =
-    image ?? (isJohnCollisonAttribution(attribution) ? JOHN_COLLISON_QUOTE_IMAGE : undefined)
+    image ??
+    (isJohnCollisonAttribution(attribution)
+      ? JOHN_COLLISON_QUOTE_IMAGE
+      : isShopifyOfficialAttribution(attribution)
+        ? SHOPIFY_BAG_MARK_PATH
+        : undefined)
   const resolvedImageUrl = resolvedImage ? publicAssetUrl(resolvedImage) : undefined
+  const useImageVivid =
+    imageVivid || (!image && isShopifyOfficialAttribution(attribution) && !!resolvedImage)
 
   const attributionEl: ReactNode = source ? (
     <Link
@@ -129,7 +141,7 @@ export default function QuoteCard({
                   decoding="async"
                   className={
                     'border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 object-cover shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 transition-all duration-500 ring-inset' +
-                    (imageVivid ? '' : ' grayscale group-hover/card:grayscale-0')
+                    (useImageVivid ? '' : ' grayscale group-hover/card:grayscale-0')
                   }
                 />
               )}
