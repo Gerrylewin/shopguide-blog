@@ -220,7 +220,7 @@ export default function BlogAd() {
       const scrollPercentage =
         totalScrollableHeight > 0 ? (scrollTop / totalScrollableHeight) * 100 : 0
 
-      if (scrollPercentage >= 25) {
+      if (scrollPercentage >= 35) {
         setShowAd(true)
       } else {
         setShowAd(false)
