@@ -11,6 +11,15 @@ function isJohnCollisonAttribution(attribution: string): boolean {
   return attribution.toLowerCase().includes('john collison')
 }
 
+/** Root-relative public URLs need BASE_PATH in client components (matches components/Image.tsx). */
+function publicAssetUrl(src: string): string {
+  if (src.startsWith('https://') || src.startsWith('http://') || src.startsWith('data:')) {
+    return src
+  }
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+  return src.startsWith('/') ? `${base}${src}` : src
+}
+
 interface QuoteCardProps {
   quote: string
   attribution: string
@@ -33,6 +42,7 @@ export default function QuoteCard({
 }: QuoteCardProps) {
   const resolvedImage =
     image ?? (isJohnCollisonAttribution(attribution) ? JOHN_COLLISON_QUOTE_IMAGE : undefined)
+  const resolvedImageUrl = resolvedImage ? publicAssetUrl(resolvedImage) : undefined
 
   const attributionEl: ReactNode = source ? (
     <Link
@@ -109,15 +119,18 @@ export default function QuoteCard({
           {/* Attribution: Modernized & Clean */}
           <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-4 border-t pt-6 not-italic sm:flex-row sm:items-center">
             <div className="flex items-center gap-x-3">
-              {resolvedImage && (
-                <div
-                  role="img"
+              {resolvedImageUrl && (
+                <img
+                  src={resolvedImageUrl}
+                  alt=""
                   aria-label={attribution}
+                  width={40}
+                  height={40}
+                  decoding="async"
                   className={
-                    'border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 bg-cover bg-center shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 transition-all duration-500 ring-inset' +
+                    'border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 object-cover shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 transition-all duration-500 ring-inset' +
                     (imageVivid ? '' : ' grayscale group-hover/card:grayscale-0')
                   }
-                  style={{ backgroundImage: `url(${resolvedImage})` }}
                 />
               )}
               <div className="flex items-center gap-x-2">
