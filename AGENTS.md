@@ -2,7 +2,7 @@
 
 ## Learned User Preferences
 
-- When deploying via Vercel CLI, check for errors during the build.
+- When deploying via Vercel CLI, check for errors during the build. On Windows PowerShell, chain commands with `;` instead of `&&` (bash-style chaining is unreliable in older PowerShell).
 - When the user asks to remove the "inside quote" or redundant quote, remove only the duplicate block or image; keep the main quote and do not change the quote wording.
 - Do not add affiliate/referral link markup to blog post frontmatter `title` fields; titles must remain plain text for SEO and meta tags.
 - Keep developer documentation links (e.g. shopify.dev) intact; do not replace technical doc URLs with affiliate links.
@@ -19,7 +19,7 @@
 - Merge conflicts in `app/tag-data.json` are common when branches both update tag counts; take one side (e.g. main), then run `npx contentlayer2 build` to regenerate the file from all posts instead of hand-merging counts.
 - External/automated PRs (e.g. from Jules) may not pass Prettier; run `yarn format` on files from automated PRs before deploying.
 - `QuoteCard` renders `attribution` as plain text; do not put markdown links in `attribution` (they show verbatim). Use `source` / `sourceLabel` for clickable links.
-- For circular quote avatars (`QuoteCard` `image` prop), use a sized div with CSS `background-image`, `background-size: cover`, and `background-position: center` rather than `next/image` with `fill` inside prose; Preflight `img` rules and layout can otherwise hide most of the photo in the circle.
+- For circular quote avatars (`QuoteCard` `image` prop), use `next/image` with explicit `width`/`height` (e.g. 40) and `object-cover`, and resolve local asset paths with `publicAssetUrl` when `NEXT_PUBLIC_BASE_PATH` is set; avoid `fill` inside prose layouts where Preflight and layout can clip the photo.
 - For integration tiles and similar thumbnails, prefer direct asset URLs on hosts already in `next.config.js` `remotePatterns` over proxied or wrapper image URLs when both work, to avoid extra hops and patterns.
 - Blog terminal ads in `components/BlogAd.tsx` use separate layout tokens for floating (scroll-in) vs inline (in-post); root classes `blog-ad-floating` and `blog-ad-inline` allow scoped CSS so one placement can be scaled without affecting the other.
 - In the App Router root layout, keep `<html>` wrapping only `<head>` and `<body>`; put `<meta>`, `<link>`, and `<script>` inside `<head>` to avoid invalid document structure and hydration warnings.
