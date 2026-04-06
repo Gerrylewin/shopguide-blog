@@ -1,6 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import Link from '@/components/Link'
 import { SHOPIFY_BAG_MARK_PATH } from '@/lib/shopify-brand'
 
@@ -132,13 +133,12 @@ export default function QuoteCard({
           <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-4 border-t pt-6 not-italic sm:flex-row sm:items-center">
             <div className="flex items-center gap-x-3">
               {resolvedImageUrl && (
-                <img
+                <Image
                   src={resolvedImageUrl}
                   alt=""
                   aria-label={attribution}
                   width={40}
                   height={40}
-                  decoding="async"
                   className={
                     'border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 object-cover shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 transition-all duration-500 ring-inset' +
                     (useImageVivid ? '' : ' grayscale group-hover/card:grayscale-0')
