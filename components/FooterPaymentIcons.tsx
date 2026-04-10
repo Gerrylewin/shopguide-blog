@@ -8,7 +8,5 @@ const paymentHtml = readFileSync(
 
 /** Shopify payment icon markup copied from the live storefront (see scripts/extract-footer-payment.mjs). */
 export default function FooterPaymentIcons() {
-  return (
-    <div className="footer__payment" dangerouslySetInnerHTML={{ __html: paymentHtml }} />
-  )
+  return <div className="footer__payment" dangerouslySetInnerHTML={{ __html: paymentHtml }} />
 }
