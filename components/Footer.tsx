@@ -12,7 +12,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="sg-footer mt-16 w-full bg-[#2c9ab4] text-[rgba(255,255,255,0.92)]">
+    <footer className="sg-footer mt-16 w-full rounded-t-[2.5rem] bg-[#2c9ab4] text-[rgba(255,255,255,0.92)]">
       <div className="mx-auto max-w-[120rem] px-4 pt-10 pb-[60px] sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 pb-16 md:grid-cols-3 md:gap-x-[clamp(2rem,4vw,3.5rem)] md:gap-y-12">
           {footerColumns.map((col) => (

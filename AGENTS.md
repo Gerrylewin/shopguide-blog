@@ -9,6 +9,7 @@
 - Blog post `date` and `lastmod` should match the actual merge/release date; always verify today's date via the terminal before setting.
 - On the integrations page, each card description should lead with a concrete value prop for the reader (what the pairing helps them achieve); the in-card “Learn more” link carries the full how-to—avoid empty placeholder copy.
 - When changing blog advertisements, only adjust the placement the user named (e.g. bottom-of-post vs scroll-in floating); keep the floating widget at the compact default unless they explicitly ask to resize it. Prefer wider/flatter inline layouts over uniform vertical scale-ups that read as a tall tower.
+- Keep the blog footer visually aligned with the main ShopGuide marketing site footer (`yourshopguide.com`); the blog is not on Shopify, so matching may require manual updates when the theme footer changes.
 
 ## Learned Workspace Facts
 
