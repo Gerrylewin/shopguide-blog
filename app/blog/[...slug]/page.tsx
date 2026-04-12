@@ -139,7 +139,21 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     return coreContent(authorResults as Authors)
   })
   const mainContent = coreContent(post)
+  const canonicalPath = `/${post.path}`
+  const canonicalUrl = `${siteMetadata.siteUrl}${canonicalPath}`
   const jsonLd = post.structuredData
+  jsonLd['publisher'] = {
+    '@type': 'Organization',
+    name: siteMetadata.title,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
+    },
+  }
+  jsonLd['mainEntityOfPage'] = {
+    '@type': 'WebPage',
+    '@id': canonicalUrl,
+  }
   jsonLd['author'] = authorDetails.map((author) => {
     return {
       '@type': 'Person',

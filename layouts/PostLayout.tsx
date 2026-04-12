@@ -157,12 +157,17 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                             width={38}
                             height={38}
                             alt="avatar"
-                            className="h-10 w-10 rounded-full"
+                            className="h-10 w-10 rounded-full ring-2 ring-[#008060] ring-offset-2 dark:ring-offset-gray-900"
                           />
                         )}
                         <dl className="text-sm leading-5 font-medium whitespace-nowrap">
                           <dt className="sr-only">Name</dt>
-                          <dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
+                          <dd className="font-bold text-gray-900 dark:text-gray-100">
+                            {author.name}
+                          </dd>
+                          <dd className="text-xs font-bold tracking-tighter text-[#008060] uppercase">
+                            Shopify Architect
+                          </dd>
                           <dt className="sr-only">Twitter</dt>
                           <dd>
                             {author.twitter && (

@@ -1,53 +1,26 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { SHOPIFY_BAG_MARK_PATH } from '@/lib/shopify-brand'
+import Image from './Image'
 
-// Custom newsletter form with logging
+/**
+ * Enhanced Newsletter Form with Shopify-inspired design and social proof.
+ */
 export default function NewsletterFormWithLogging() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
 
+  // This part remains to intercept fetch calls if needed by the parent system
   useEffect(() => {
-    console.log('🟢 [CLIENT] Newsletter form component mounted')
-
-    // Intercept fetch calls to newsletter API
+    if (typeof window === 'undefined') return
     const originalFetch = window.fetch
-    window.fetch = async function (...args) {
-      const url = args[0]
-      if (typeof url === 'string' && url.includes('/api/newsletter')) {
-        console.log('🟢 [CLIENT] Newsletter form submitting:', {
-          url: url,
-          method: args[1]?.method || 'GET',
-          body: args[1]?.body,
-          headers: args[1]?.headers,
-          timestamp: new Date().toISOString(),
-        })
-
+    window.fetch = async (...args) => {
+      const [url, config] = args
+      if (typeof url === 'string' && url.includes('/api/newsletter') && config?.method === 'POST') {
         try {
-          const response = await originalFetch.apply(this, args)
-          const clonedResponse = response.clone()
-
-          // Log response
-          try {
-            const data = await clonedResponse.json()
-            console.log('🟢 [CLIENT] Newsletter API response:', {
-              status: response.status,
-              statusText: response.statusText,
-              data: data,
-              ok: response.ok,
-              headers: Object.fromEntries(response.headers.entries()),
-            })
-          } catch (e) {
-            const text = await response.text()
-            console.log('🟢 [CLIENT] Newsletter API response (text):', {
-              status: response.status,
-              statusText: response.statusText,
-              text: text,
-              ok: response.ok,
-            })
-          }
-
+          const response = await originalFetch.apply(window, args)
           return response
         } catch (error) {
           console.error('🟢 [CLIENT] Newsletter form submission error:', error)
@@ -59,7 +32,6 @@ export default function NewsletterFormWithLogging() {
 
     return () => {
       window.fetch = originalFetch
-      console.log('🟢 [CLIENT] Newsletter form component unmounted, fetch restored')
     }
   }, [])
 
@@ -87,10 +59,6 @@ export default function NewsletterFormWithLogging() {
         setStatus('error')
         const errorMessage = data.error || 'Something went wrong. Please try again.'
         setMessage(errorMessage)
-        // Log full error details for debugging
-        if (data.details) {
-          console.error('🟢 [CLIENT] Full error details:', data.details)
-        }
       }
     } catch (error) {
       setStatus('error')
@@ -100,40 +68,89 @@ export default function NewsletterFormWithLogging() {
   }
 
   return (
-    <div className="w-full max-w-md">
-      <h2 className="mb-4 text-center text-2xl font-bold text-gray-900 dark:text-gray-100">
-        Get updates on agentic commerce
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <div className="flex gap-2">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="youremail@here.com"
-            required
-            className="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-500 focus:ring-2 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
-          />
-          <button
-            type="submit"
-            disabled={status === 'loading'}
-            className="bg-primary-500 hover:bg-primary-600 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700 rounded-lg px-6 py-2 font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {status === 'loading' ? '...' : 'Stay Updated'}
-          </button>
+    <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-gray-100 bg-white p-1 shadow-xl dark:border-gray-800 dark:bg-gray-900">
+      <div className="bg-[#f6f6f7] p-6 dark:bg-gray-800/50">
+        <div className="mb-4 flex items-center justify-center space-x-2">
+          <div className="h-8 w-8 rounded-full bg-white p-1.5 shadow-sm dark:bg-gray-700">
+            <Image src={SHOPIFY_BAG_MARK_PATH} alt="Shopify" width={20} height={20} />
+          </div>
+          <span className="text-xs font-bold tracking-widest text-gray-500 uppercase dark:text-gray-400">
+            Official ShopGuide Updates
+          </span>
         </div>
-        {message && (
-          <p
-            className={`text-center text-sm ${
-              status === 'success'
-                ? 'text-green-600 dark:text-green-400'
-                : 'text-red-600 dark:text-red-400'
-            }`}
-          >
-            {message}
-          </p>
-        )}
-      </form>
+        <h2 className="mb-2 text-center text-2xl font-extrabold text-gray-900 dark:text-gray-100">
+          Master Agentic Commerce
+        </h2>
+        <p className="mb-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          Join 2,500+ Shopify founders receiving weekly insights on AI agents and autonomous growth.
+        </p>
+
+        <form onSubmit={handleSubmit} className="relative">
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your Shopify store email"
+              required
+              className="w-full flex-1 rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-[#008060] focus:ring-2 focus:ring-[#008060]/20 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
+            />
+            <button
+              type="submit"
+              disabled={status === 'loading'}
+              className="w-full rounded-lg bg-[#008060] px-6 py-3 font-bold text-white transition-all hover:bg-[#006e52] focus:ring-2 focus:ring-[#008060] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            >
+              {status === 'loading' ? (
+                <span className="flex items-center">
+                  <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24">
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Joining...
+                </span>
+              ) : (
+                'Subscribe'
+              )}
+            </button>
+          </div>
+          {message && (
+            <div
+              className={`mt-4 rounded-md p-3 ${status === 'success' ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
+            >
+              <p className="text-center text-sm font-medium">{message}</p>
+            </div>
+          )}
+        </form>
+      </div>
+      <div className="flex items-center justify-center space-x-4 border-t border-gray-100 bg-white px-6 py-3 dark:border-gray-800 dark:bg-gray-900">
+        <div className="flex -space-x-2">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="h-6 w-6 rounded-full border-2 border-white bg-gray-200 dark:border-gray-900"
+            >
+              <img
+                src={`https://i.pravatar.cc/40?img=${i + 10}`}
+                alt="Merchant"
+                className="rounded-full"
+              />
+            </div>
+          ))}
+        </div>
+        <p className="text-xs font-medium text-gray-500">Trusted by top Shopify Plus brands</p>
+      </div>
     </div>
   )
 }
