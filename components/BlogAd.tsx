@@ -11,7 +11,7 @@ const SHOPIFY_APP_URL = 'https://apps.shopify.com/die-ai-agent-official-app'
  * Redesigned BlogAd - More Professional, Shopify-focused.
  * Transitioning away from terminal-only to a mix of professional SaaS and Shopify App Store aesthetic.
  */
-function BlogAdCard() {
+function BlogAdCard({ centeredText = false }: { centeredText?: boolean }) {
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-xl transition-all duration-300 hover:shadow-2xl dark:border-gray-800 dark:bg-gray-950">
       {/* Background Accent */}
@@ -34,12 +34,14 @@ function BlogAdCard() {
           </div>
         </div>
 
-        <h3 className="mb-2 text-xl font-extrabold text-gray-900 dark:text-gray-100">
-          Deploy Your AI Agent
-        </h3>
-        <p className="mb-6 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          Scale your Shopify catalog with autonomous agents that guide customers to checkout 24/7.
-        </p>
+        <div className={centeredText ? 'text-center' : undefined}>
+          <h3 className="mb-2 text-xl font-extrabold text-gray-900 dark:text-gray-100">
+            Deploy Your AI Agent
+          </h3>
+          <p className="mb-6 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+            Scale your Shopify catalog with autonomous agents that guide customers to checkout 24/7.
+          </p>
+        </div>
 
         <div className="mb-6 rounded-xl bg-gray-50 p-4 dark:bg-gray-900/50">
           <div className="relative h-12 w-full">
@@ -113,12 +115,12 @@ export default function BlogAd() {
 export function BlogAdInline() {
   return (
     <div
-      className="not-prose my-12 flex justify-center lg:hidden"
+      className="not-prose my-12 lg:hidden"
       id="blog-ad-inline-mobile"
       style={{ display: 'none' }}
     >
-      <div className="w-full max-w-lg">
-        <BlogAdCard />
+      <div className="mx-auto w-full max-w-lg">
+        <BlogAdCard centeredText />
       </div>
     </div>
   )
