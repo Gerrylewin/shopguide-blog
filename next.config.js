@@ -160,6 +160,11 @@ module.exports = () => {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       })
+      // Footer payment markup: bundle as string so Vercel serverless has it (no runtime fs readFileSync).
+      config.module.rules.push({
+        test: /footer-payment-inner\.html$/,
+        type: 'asset/source',
+      })
 
       return config
     },
