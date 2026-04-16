@@ -27,7 +27,7 @@ export default function Integrations() {
                 }}
               />
             </div>
-            <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,24rem)] lg:items-center lg:gap-12 xl:gap-14">
+            <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,36rem)] lg:items-center lg:gap-12 xl:gap-14">
               <div className="min-w-0 space-y-3 md:space-y-4">
                 <h1 className="font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-[1.12] md:text-5xl md:leading-[1.1] dark:text-gray-100">
                   Integrations

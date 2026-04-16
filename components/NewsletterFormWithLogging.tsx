@@ -79,7 +79,7 @@ export default function NewsletterFormWithLogging({
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-2xl border border-gray-100 bg-white p-1 shadow-lg ring-1 ring-black/5 dark:border-gray-700 dark:bg-gray-900/90 dark:ring-white/10 ${narrow ? 'max-w-md shadow-md' : 'max-w-lg shadow-xl'}`}
+      className={`w-full overflow-hidden rounded-2xl border border-gray-100 bg-white p-1 shadow-lg ring-1 ring-black/5 dark:border-gray-700 dark:bg-gray-900/90 dark:ring-white/10 ${narrow ? 'max-w-xl shadow-md' : 'max-w-lg shadow-xl'}`}
     >
       <div className={`bg-[#f6f6f7] dark:bg-gray-800/50 ${narrow ? 'px-5 py-4' : 'p-6'}`}>
         <div
@@ -109,7 +109,7 @@ export default function NewsletterFormWithLogging({
         <p
           className={`text-gray-600 dark:text-gray-400 ${narrow ? 'mb-3 text-left text-xs leading-snug sm:text-sm' : 'mb-6 text-center text-sm'}`}
         >
-          Join 2,500+ Shopify founders receiving weekly insights on AI agents and autonomous growth.
+          Join Shopify founders receiving weekly insights on AI agents and autonomous growth.
         </p>
 
         <form onSubmit={handleSubmit} className="relative">
