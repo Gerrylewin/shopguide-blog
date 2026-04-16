@@ -7,7 +7,7 @@ import Image from './Image'
 export type NewsletterFormVariant = 'default' | 'narrow'
 
 type NewsletterFormWithLoggingProps = {
-  /** Compact layout for sidebars and hero columns (stacked field + button, tighter type scale). */
+  /** Wider, low-profile layout for hero columns (horizontal field + button, tight vertical rhythm). */
   variant?: NewsletterFormVariant
 }
 
@@ -79,10 +79,12 @@ export default function NewsletterFormWithLogging({
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-2xl border border-gray-100 bg-white p-1 shadow-xl dark:border-gray-800 dark:bg-gray-900 ${narrow ? 'max-w-[min(100%,20rem)]' : 'max-w-lg'}`}
+      className={`w-full overflow-hidden rounded-2xl border border-gray-100 bg-white p-1 shadow-xl dark:border-gray-800 dark:bg-gray-900 ${narrow ? 'max-w-[min(100%,30rem)]' : 'max-w-lg'}`}
     >
-      <div className={`bg-[#f6f6f7] dark:bg-gray-800/50 ${narrow ? 'p-4' : 'p-6'}`}>
-        <div className={`flex items-center justify-center space-x-2 ${narrow ? 'mb-3' : 'mb-4'}`}>
+      <div className={`bg-[#f6f6f7] dark:bg-gray-800/50 ${narrow ? 'px-4 py-3' : 'p-6'}`}>
+        <div
+          className={`flex items-center space-x-2 ${narrow ? 'mb-2 justify-start' : 'mb-4 justify-center'}`}
+        >
           <div
             className={`rounded-full bg-white p-1.5 shadow-sm dark:bg-gray-700 ${narrow ? 'h-7 w-7' : 'h-8 w-8'}`}
           >
@@ -94,36 +96,42 @@ export default function NewsletterFormWithLogging({
             />
           </div>
           <span
-            className={`font-bold tracking-widest text-gray-500 uppercase dark:text-gray-400 ${narrow ? 'max-w-[11rem] text-[10px] leading-tight sm:max-w-none' : 'text-xs'}`}
+            className={`font-bold tracking-widest text-gray-500 uppercase dark:text-gray-400 ${narrow ? 'text-[10px] sm:text-xs' : 'text-xs'}`}
           >
             Official ShopGuide Updates
           </span>
         </div>
         <h2
-          className={`text-center font-extrabold text-gray-900 dark:text-gray-100 ${narrow ? 'mb-1.5 text-lg leading-snug' : 'mb-2 text-2xl'}`}
+          className={`font-extrabold text-gray-900 dark:text-gray-100 ${narrow ? 'mb-1 text-left text-lg leading-tight' : 'mb-2 text-center text-2xl'}`}
         >
           Master Agentic Commerce
         </h2>
         <p
-          className={`text-center text-gray-600 dark:text-gray-400 ${narrow ? 'mb-4 text-xs leading-relaxed' : 'mb-6 text-sm'}`}
+          className={`text-gray-600 dark:text-gray-400 ${narrow ? 'mb-3 text-left text-xs leading-snug sm:text-sm' : 'mb-6 text-center text-sm'}`}
         >
           Join 2,500+ Shopify founders receiving weekly insights on AI agents and autonomous growth.
         </p>
 
         <form onSubmit={handleSubmit} className="relative">
-          <div className={narrow ? 'flex flex-col gap-2' : 'flex flex-col gap-3 sm:flex-row'}>
+          <div
+            className={
+              narrow
+                ? 'flex flex-col gap-2 sm:flex-row sm:items-stretch sm:gap-2'
+                : 'flex flex-col gap-3 sm:flex-row'
+            }
+          >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your Shopify store email"
               required
-              className={`w-full flex-1 rounded-lg border border-gray-300 bg-white px-3 text-gray-900 placeholder-gray-400 focus:border-[#008060] focus:ring-2 focus:ring-[#008060]/20 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 ${narrow ? 'py-2.5 text-sm' : 'px-4 py-3'}`}
+              className={`min-w-0 flex-1 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-[#008060] focus:ring-2 focus:ring-[#008060]/20 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 ${narrow ? 'px-3 py-2 text-sm' : 'px-4 py-3'}`}
             />
             <button
               type="submit"
               disabled={status === 'loading'}
-              className={`rounded-lg bg-[#008060] font-bold text-white transition-all hover:bg-[#006e52] focus:ring-2 focus:ring-[#008060] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${narrow ? 'w-full px-4 py-2.5 text-sm' : 'w-full px-6 py-3 sm:w-auto'}`}
+              className={`shrink-0 rounded-lg bg-[#008060] font-bold text-white transition-all hover:bg-[#006e52] focus:ring-2 focus:ring-[#008060] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${narrow ? 'px-4 py-2 text-sm sm:w-auto sm:min-w-[7.5rem]' : 'w-full px-6 py-3 sm:w-auto'}`}
             >
               {status === 'loading' ? (
                 <span className="flex items-center">
@@ -152,15 +160,17 @@ export default function NewsletterFormWithLogging({
           </div>
           {message && (
             <div
-              className={`mt-4 rounded-md p-3 ${status === 'success' ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
+              className={`rounded-md ${narrow ? 'mt-2 p-2' : 'mt-4 p-3'} ${status === 'success' ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
             >
-              <p className="text-center text-sm font-medium">{message}</p>
+              <p className={`text-center font-medium ${narrow ? 'text-xs' : 'text-sm'}`}>
+                {message}
+              </p>
             </div>
           )}
         </form>
       </div>
       <div
-        className={`flex items-center justify-center border-t border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-900 ${narrow ? 'flex-col gap-2 px-3 py-2.5 sm:flex-row sm:gap-3' : 'space-x-4 px-6 py-3'}`}
+        className={`flex items-center border-t border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-900 ${narrow ? 'justify-start gap-2.5 px-4 py-2' : 'justify-center space-x-4 px-6 py-3'}`}
       >
         <div className={`flex ${narrow ? '-space-x-1.5' : '-space-x-2'}`}>
           {[1, 2, 3, 4].map((i) => (
@@ -177,7 +187,7 @@ export default function NewsletterFormWithLogging({
           ))}
         </div>
         <p
-          className={`text-center font-medium text-gray-500 ${narrow ? 'max-w-[14rem] text-[10px] leading-tight sm:max-w-none sm:text-left' : 'text-xs'}`}
+          className={`font-medium text-gray-500 ${narrow ? 'text-[10px] leading-tight sm:text-xs' : 'text-xs'}`}
         >
           Trusted by top Shopify Plus brands
         </p>
