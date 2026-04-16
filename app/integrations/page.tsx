@@ -11,20 +11,37 @@ export default function Integrations() {
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-            <div className="min-w-0 space-y-2 md:space-y-5 lg:max-w-xl">
-              <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
-                Integrations
-              </h1>
-              <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-                Discover powerful integrations for your Shopify store
-              </p>
+          <div className="to-primary-50/30 relative overflow-hidden rounded-3xl border border-gray-200/90 bg-gradient-to-br from-gray-50 via-white px-5 py-9 shadow-sm ring-1 ring-gray-900/5 sm:px-8 sm:py-11 dark:border-gray-800 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900/80 dark:ring-white/10">
+            {/* Even, full-width texture so the section feels balanced (not “heavy” on one side) */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.55] dark:opacity-[0.35]"
+              aria-hidden
+            >
+              <div
+                className="absolute inset-0 bg-[linear-gradient(to_right,#64748b14_1px,transparent_1px),linear-gradient(to_bottom,#64748b14_1px,transparent_1px)] bg-[length:28px_28px] dark:bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)]"
+                style={{
+                  maskImage:
+                    'radial-gradient(ellipse 85% 75% at 50% 45%, black 20%, transparent 72%)',
+                  WebkitMaskImage:
+                    'radial-gradient(ellipse 85% 75% at 50% 45%, black 20%, transparent 72%)',
+                }}
+              />
             </div>
-            {siteMetadata.newsletter?.provider ? (
-              <div className="shrink-0 lg:ml-auto lg:pt-1">
-                <NewsletterFormWithLogging variant="narrow" />
+            <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,24rem)] lg:items-center lg:gap-12 xl:gap-14">
+              <div className="min-w-0 space-y-3 md:space-y-4">
+                <h1 className="font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-[1.12] md:text-5xl md:leading-[1.1] dark:text-gray-100">
+                  Integrations
+                </h1>
+                <p className="max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg dark:text-gray-400">
+                  Discover powerful integrations for your Shopify store
+                </p>
               </div>
-            ) : null}
+              {siteMetadata.newsletter?.provider ? (
+                <div className="w-full lg:flex lg:justify-end">
+                  <NewsletterFormWithLogging variant="narrow" />
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
         <div className="container py-12">

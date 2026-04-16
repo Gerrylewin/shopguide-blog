@@ -79,9 +79,9 @@ export default function NewsletterFormWithLogging({
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-2xl border border-gray-100 bg-white p-1 shadow-xl dark:border-gray-800 dark:bg-gray-900 ${narrow ? 'max-w-[min(100%,30rem)]' : 'max-w-lg'}`}
+      className={`w-full overflow-hidden rounded-2xl border border-gray-100 bg-white p-1 shadow-lg ring-1 ring-black/5 dark:border-gray-700 dark:bg-gray-900/90 dark:ring-white/10 ${narrow ? 'max-w-md shadow-md' : 'max-w-lg shadow-xl'}`}
     >
-      <div className={`bg-[#f6f6f7] dark:bg-gray-800/50 ${narrow ? 'px-4 py-3' : 'p-6'}`}>
+      <div className={`bg-[#f6f6f7] dark:bg-gray-800/50 ${narrow ? 'px-5 py-4' : 'p-6'}`}>
         <div
           className={`flex items-center space-x-2 ${narrow ? 'mb-2 justify-start' : 'mb-4 justify-center'}`}
         >
@@ -162,7 +162,7 @@ export default function NewsletterFormWithLogging({
             <div
               className={`rounded-md ${narrow ? 'mt-2 p-2' : 'mt-4 p-3'} ${status === 'success' ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
             >
-              <p className={`text-center font-medium ${narrow ? 'text-xs' : 'text-sm'}`}>
+              <p className={`font-medium ${narrow ? 'text-left text-xs' : 'text-center text-sm'}`}>
                 {message}
               </p>
             </div>
