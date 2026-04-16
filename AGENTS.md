@@ -13,12 +13,12 @@
 
 ## Learned Workspace Facts
 
-- The build runs format:check first; unformatted files (e.g. new or edited MDX) can fail the deploy. Run yarn format (or format:check) before pushing or deploying.
+- The build runs format:check first; unformatted files (e.g. new or edited MDX) can fail the deploy. Run yarn format (or format:check) before pushing or deploying. Automated PRs (e.g. from Jules) may still need `yarn format` on touched files.
 - .cursor/ is in .gitignore; Cursor state files (e.g. continual-learning) should not be committed.
 - Blog post body: double-quoted text is styled in primary blue via rehype plugin; do not add manual span wrappers for quotes.
 - Each blog post should have a unique hero image; check for duplicate Unsplash photo IDs across posts when adding new posts, and replace hero image URLs that return 404.
 - Merge conflicts in `app/tag-data.json` are common when branches both update tag counts; take one side (e.g. main), then run `npx contentlayer2 build` to regenerate the file from all posts instead of hand-merging counts.
-- External/automated PRs (e.g. from Jules) may not pass Prettier; run `yarn format` on files from automated PRs before deploying.
+- On Vercel, the serverless bundle under `/var/task` does not include arbitrary repo files outside the webpack graph; avoid runtime `fs.readFileSync` with `process.cwd()` for HTML snippets or other loose assets. Import those files (e.g. a webpack rule such as `asset/source` for `.html`) so the content is bundled at build time.
 - `QuoteCard` renders `attribution` as plain text; do not put markdown links in `attribution` (they show verbatim). Use `source` / `sourceLabel` for clickable links.
 - For circular quote avatars (`QuoteCard` `image` prop), use `next/image` with explicit `width`/`height` (e.g. 40) and `object-cover`, and resolve local asset paths with `publicAssetUrl` when `NEXT_PUBLIC_BASE_PATH` is set; avoid `fill` inside prose layouts where Preflight and layout can clip the photo.
 - For integration tiles and similar thumbnails, prefer direct asset URLs on hosts already in `next.config.js` `remotePatterns` over proxied or wrapper image URLs when both work, to avoid extra hops and patterns.
