@@ -1,5 +1,5 @@
 {
-  "agentic-commerce": 51,
+  "agentic-commerce": 52,
   "ai-agents": 19,
   "shopify": 16,
   "chatbots": 7,
@@ -10,7 +10,7 @@
   "ucp": 2,
   "shopify-large-catalog": 29,
   "industrial-ecommerce": 2,
-  "increase-aov-shopify": 8,
+  "increase-aov-shopify": 9,
   "future-of-retail": 6,
   "stripe": 3,
   "shopify-growth": 3,
@@ -21,7 +21,7 @@
   "customer-experience": 5,
   "b2b-ecommerce": 1,
   "shopify-wholesale": 1,
-  "guided-shopping": 11,
+  "guided-shopping": 12,
   "agentic-shopping": 2,
   "shoppable-insights-platform": 3,
   "shopping-agents": 9,
@@ -73,6 +73,8 @@
   "bfcm": 1,
   "merit-based-shopping": 1,
   "boost-aov-shopify": 3,
+  "agentic-reasoning": 1,
+  "large-catalog-shopify": 1,
   "cart-abandonment": 1,
   "universal-cart": 1,
   "shopify-checkout": 1
