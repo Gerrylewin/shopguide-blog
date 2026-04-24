@@ -68,7 +68,7 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
                 </div>
               )}
             </div>
-            <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
+            <div className="prose dark:prose-invert max-w-none py-4 lg:pr-[17rem]">{children}</div>
             <BlogAdInlineWithInsertion />
             {siteMetadata.comments && (
               <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
