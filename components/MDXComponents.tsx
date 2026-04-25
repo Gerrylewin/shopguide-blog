@@ -11,6 +11,7 @@ import ImageGallery from './ImageGallery'
 import QuoteCard from './QuoteCard'
 import FAQSection from './FAQSection'
 import ShopifyCTA from './ShopifyCTA'
+import BlogAd from './BlogAd'
 
 // Ensure all components are defined to prevent "undefined component" errors
 export const components: MDXComponents = {
@@ -26,4 +27,5 @@ export const components: MDXComponents = {
   QuoteCard: QuoteCard || (() => null),
   FAQSection: FAQSection || (() => null),
   ShopifyCTA: ShopifyCTA || (() => null),
+  BlogAd: BlogAd || (() => null),
 }
