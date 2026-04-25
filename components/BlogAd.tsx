@@ -28,7 +28,9 @@ function BlogAdCard({
   const bodyCls = compact
     ? 'mb-4 text-xs leading-relaxed text-gray-600 dark:text-gray-400'
     : 'mb-6 text-sm leading-relaxed text-gray-600 dark:text-gray-400'
-  const logoWrap = compact ? 'mb-4 rounded-lg bg-gray-50 p-3 dark:bg-gray-900/50' : 'mb-6 rounded-xl bg-gray-50 p-4 dark:bg-gray-900/50'
+  const logoWrap = compact
+    ? 'mb-4 rounded-lg bg-gray-50 p-3 dark:bg-gray-900/50'
+    : 'mb-6 rounded-xl bg-gray-50 p-4 dark:bg-gray-900/50'
   const logoH = compact ? 'h-9' : 'h-12'
   const btnCls = compact
     ? 'flex w-full items-center justify-center rounded-lg bg-[#008060] py-2 text-xs font-bold text-white transition-all hover:bg-[#006e52] hover:shadow-lg active:scale-[0.98]'
@@ -77,12 +79,7 @@ function BlogAdCard({
           </div>
         </div>
 
-        <Link
-          href={SHOPIFY_APP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={btnCls}
-        >
+        <Link href={SHOPIFY_APP_URL} target="_blank" rel="noopener noreferrer" className={btnCls}>
           Install ShopGuide
           <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
