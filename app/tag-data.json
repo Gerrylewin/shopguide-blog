@@ -1,7 +1,7 @@
 {
   "agentic-commerce": 56,
   "ai-agents": 19,
-  "shopify": 17,
+  "shopify": 18,
   "chatbots": 7,
   "pricing": 1,
   "conversion": 8,
@@ -64,6 +64,8 @@
   "social-proof": 1,
   "high-sku-discovery": 1,
   "ecommerce-growth": 1,
+  "apparel-ecommerce": 1,
+  "sports-retail": 1,
   "reduce-support-tickets": 1,
   "automate-customer-support": 1,
   "technical-shopify-catalog-discovery": 1,
@@ -75,7 +77,6 @@
   "merit-based-shopping": 1,
   "food-and-beverage": 1,
   "boost-aov-shopify": 3,
-  "apparel-ecommerce": 1,
   "cart-abandonment": 1,
   "universal-cart": 1,
   "shopify-checkout": 1
