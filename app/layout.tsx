@@ -213,7 +213,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               console.log('%c🚀 Ready to transform your store?', styles.accent);
               console.log('');
               console.log(
-                \`%c👉 Shopify App: %chttps://apps.shopify.com/die-ai-agent-official-app\`,
+                \`%c👉 Shopify App: %chttps://apps.shopify.com/shopguide\`,
                 styles.text,
                 styles.link
               );

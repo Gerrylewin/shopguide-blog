@@ -3,7 +3,7 @@ const headerNavLinks = [
   { href: '/blog', title: 'Blog' },
   { href: '/tags', title: 'Tags' },
   { href: '/integrations', title: 'Integrations' },
-  { href: 'https://apps.shopify.com/die-ai-agent-official-app', title: 'Install' },
+  { href: 'https://apps.shopify.com/shopguide', title: 'Install' },
   { href: '/about', title: 'Team' },
 ]
 

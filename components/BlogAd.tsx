@@ -5,7 +5,7 @@ import Link from './Link'
 import Image from './Image'
 import { SHOPIFY_GREEN_WORDMARK_URL } from '@/lib/shopify-brand'
 
-const SHOPIFY_APP_URL = 'https://apps.shopify.com/die-ai-agent-official-app'
+const SHOPIFY_APP_URL = 'https://apps.shopify.com/shopguide'
 
 /**
  * Redesigned BlogAd - More Professional, Shopify-focused.
