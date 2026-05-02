@@ -4,7 +4,7 @@
 
 - When deploying via Vercel CLI, check for errors during the build. On Windows PowerShell, chain commands with `;` instead of `&&` (bash-style chaining is unreliable in older PowerShell).
 - When the user asks to remove the "inside quote" or redundant quote, remove only the duplicate block or image; keep the main quote and do not change the quote wording.
-- Do not add affiliate/referral link markup to blog post frontmatter `title` fields; titles must remain plain text for SEO and meta tags.
+- Do not add affiliate/referral link markup to blog post frontmatter `title` fields or TL;DR/summary callouts; keep titles and those summaries plain text for SEO and readability (e.g. write `Shopify`, not affiliate-linked brand names).
 - Keep developer documentation links (e.g. shopify.dev) intact; do not replace technical doc URLs with affiliate links.
 - Blog post `date` and `lastmod` should match the actual merge/release date; always verify today's date via the terminal before setting.
 - On the integrations page, each card description should lead with a concrete value prop for the reader (what the pairing helps them achieve); the in-card “Learn more” link carries the full how-to—avoid empty placeholder copy.
@@ -19,8 +19,8 @@
 - Each blog post should have a unique hero image; check for duplicate Unsplash photo IDs across posts when adding new posts, and replace hero image URLs that return 404.
 - Merge conflicts in `app/tag-data.json` are common when branches both update tag counts; take one side (e.g. main), then run `npx contentlayer2 build` to regenerate the file from all posts instead of hand-merging counts.
 - On Vercel, the serverless bundle under `/var/task` does not include arbitrary repo files outside the webpack graph; avoid runtime `fs.readFileSync` with `process.cwd()` for HTML snippets or other loose assets. Import those files (e.g. a webpack rule such as `asset/source` for `.html`) so the content is bundled at build time.
-- `QuoteCard` renders `attribution` as plain text; do not put markdown links in `attribution` (they show verbatim). Use `source` / `sourceLabel` for clickable links.
-- For circular quote avatars (`QuoteCard` `image` prop), use `next/image` with explicit `width`/`height` (e.g. 40) and `object-cover`, and resolve local asset paths with `publicAssetUrl` when `NEXT_PUBLIC_BASE_PATH` is set; avoid `fill` inside prose layouts where Preflight and layout can clip the photo.
+- `QuoteCard`: render `attribution` as plain text (no markdown links; use `source` / `sourceLabel` for links). For circular avatars (`image`), use `next/image` with explicit `width`/`height` (e.g. 40), `object-cover`, and `publicAssetUrl` when `NEXT_PUBLIC_BASE_PATH` is set; avoid `fill` in prose layouts where Preflight can clip the photo.
+- Reader thumbs up/down lives at the end of posts (`BlogPostVote`, `/api/blog-vote`, Cloudflare D1). The vote summary page is `/admin/blog-votes`; access is gated by matching `BLOG_VOTES_ADMIN_SECRET` as a URL query token—share that URL with teammates who need the dashboard.
 - For integration tiles and similar thumbnails, prefer direct asset URLs on hosts already in `next.config.js` `remotePatterns` over proxied or wrapper image URLs when both work, to avoid extra hops and patterns.
 - Blog terminal ads in `components/BlogAd.tsx` use separate layout tokens for floating (scroll-in) vs inline (in-post); root classes `blog-ad-floating` and `blog-ad-inline` allow scoped CSS, and post layouts may reserve right padding (e.g. `lg:pr-[17rem]`) to keep floating ads from overlapping article text.
 - In the App Router root layout, keep `<html>` wrapping only `<head>` and `<body>`; put `<meta>`, `<link>`, and `<script>` inside `<head>` to avoid invalid document structure and hydration warnings.

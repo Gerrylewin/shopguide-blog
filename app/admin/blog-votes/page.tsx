@@ -24,7 +24,31 @@ export default async function BlogVotesAdminPage({
   const token = (await searchParams).token
   const secret = process.env.BLOG_VOTES_ADMIN_SECRET
 
-  if (!secret || token !== secret) {
+  if (!secret) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-900">
+        <div className="max-w-lg rounded-lg border border-gray-200 bg-white p-6 text-gray-800 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+          <h1 className="text-lg font-semibold">Blog vote dashboard</h1>
+          <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+            This page is protected. Add environment variable{' '}
+            <code className="rounded bg-gray-100 px-1 font-mono text-xs dark:bg-gray-900">
+              BLOG_VOTES_ADMIN_SECRET
+            </code>{' '}
+            (e.g. in Vercel → Project → Settings → Environment Variables), redeploy, then open:
+          </p>
+          <p className="text-primary-600 dark:text-primary-400 mt-3 font-mono text-sm break-all">
+            /admin/blog-votes?token=YOUR_SECRET_VALUE
+          </p>
+          <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            Use the same string for <code className="font-mono text-xs">token</code> as you set in
+            the env var. Share that URL only with trusted teammates.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (token !== secret) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
         <p className="text-gray-600 dark:text-gray-400">Not found</p>

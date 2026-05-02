@@ -62,7 +62,11 @@ export default function BlogPostVote({ slug }: Props) {
         const res = await fetch(`${base}/api/blog-vote?slug=${encodeURIComponent(slug)}`, {
           cache: 'no-store',
         })
-        if (!res.ok) return
+        if (cancelled) return
+        if (!res.ok) {
+          setEnabled(false)
+          return
+        }
         const data = await res.json()
         if (cancelled) return
         setThumbsUp(Number(data.thumbsUp) || 0)

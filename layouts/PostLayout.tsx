@@ -251,8 +251,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     &larr; Back to the blog
                   </Link>
                 </div>
-                <BlogPostVote slug={slug} />
               </footer>
+            </div>
+            {/* Full width below the xl sidebar + article grid so voting is not trapped in column 1 */}
+            <div className="pb-8 xl:ml-2.5">
+              <BlogPostVote slug={slug} />
             </div>
           </div>
         </article>
