@@ -223,3 +223,123 @@ export async function markD1PostAsSent(slug: string, title: string, date: string
     [slug, title, date, sentAt]
   )
 }
+
+// --- Blog post thumbs up / thumbs down (one vote per browser via anonymous voter id) ---
+
+const BLOG_VOTE_COUNTS_TABLE = 'blog_vote_counts'
+const BLOG_VOTERS_TABLE = 'blog_voters'
+
+export interface BlogVoteCounts {
+  thumbsUp: number
+  thumbsDown: number
+}
+
+export async function ensureBlogVoteTables(): Promise<void> {
+  await executeD1Query(`CREATE TABLE IF NOT EXISTS ${BLOG_VOTE_COUNTS_TABLE} (
+  slug TEXT PRIMARY KEY,
+  thumbs_up INTEGER NOT NULL DEFAULT 0,
+  thumbs_down INTEGER NOT NULL DEFAULT 0
+)`)
+  await executeD1Query(`CREATE TABLE IF NOT EXISTS ${BLOG_VOTERS_TABLE} (
+  slug TEXT NOT NULL,
+  voter_id TEXT NOT NULL,
+  vote TEXT NOT NULL CHECK (vote IN ('up', 'down')),
+  PRIMARY KEY (slug, voter_id)
+)`)
+}
+
+export async function getBlogVoteCountsForSlug(slug: string): Promise<BlogVoteCounts> {
+  await ensureBlogVoteTables()
+  const result = await executeD1Query(
+    `SELECT thumbs_up, thumbs_down FROM ${BLOG_VOTE_COUNTS_TABLE} WHERE slug = ? LIMIT 1`,
+    [slug]
+  )
+  const row = result?.results?.[0]
+  if (!row) {
+    return { thumbsUp: 0, thumbsDown: 0 }
+  }
+  return {
+    thumbsUp: Number(row.thumbs_up) || 0,
+    thumbsDown: Number(row.thumbs_down) || 0,
+  }
+}
+
+export async function getAllBlogVoteCountRows(): Promise<
+  Array<{ slug: string; thumbsUp: number; thumbsDown: number }>
+> {
+  await ensureBlogVoteTables()
+  const result = await executeD1Query(
+    `SELECT slug, thumbs_up, thumbs_down FROM ${BLOG_VOTE_COUNTS_TABLE} ORDER BY slug ASC`
+  )
+  const rows = result?.results || []
+  if (!Array.isArray(rows)) return []
+  return rows.map((row: any) => ({
+    slug: row.slug,
+    thumbsUp: Number(row.thumbs_up) || 0,
+    thumbsDown: Number(row.thumbs_down) || 0,
+  }))
+}
+
+/**
+ * Record or update a vote. Same voter can change from up to down (counts adjusted).
+ */
+export async function recordBlogVote(
+  slug: string,
+  voterId: string,
+  vote: 'up' | 'down'
+): Promise<BlogVoteCounts> {
+  await ensureBlogVoteTables()
+  await executeD1Query(
+    `INSERT OR IGNORE INTO ${BLOG_VOTE_COUNTS_TABLE} (slug, thumbs_up, thumbs_down) VALUES (?, 0, 0)`,
+    [slug]
+  )
+
+  const existingResult = await executeD1Query(
+    `SELECT vote FROM ${BLOG_VOTERS_TABLE} WHERE slug = ? AND voter_id = ? LIMIT 1`,
+    [slug, voterId]
+  )
+  const existingRow = existingResult?.results?.[0]
+  const previousVote = existingRow?.vote as 'up' | 'down' | undefined
+
+  if (previousVote === vote) {
+    return getBlogVoteCountsForSlug(slug)
+  }
+
+  if (!previousVote) {
+    await executeD1Query(
+      `INSERT INTO ${BLOG_VOTERS_TABLE} (slug, voter_id, vote) VALUES (?, ?, ?)`,
+      [slug, voterId, vote]
+    )
+    if (vote === 'up') {
+      await executeD1Query(
+        `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_up = thumbs_up + 1 WHERE slug = ?`,
+        [slug]
+      )
+    } else {
+      await executeD1Query(
+        `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_down = thumbs_down + 1 WHERE slug = ?`,
+        [slug]
+      )
+    }
+    return getBlogVoteCountsForSlug(slug)
+  }
+
+  await executeD1Query(`UPDATE ${BLOG_VOTERS_TABLE} SET vote = ? WHERE slug = ? AND voter_id = ?`, [
+    vote,
+    slug,
+    voterId,
+  ])
+  if (previousVote === 'up' && vote === 'down') {
+    await executeD1Query(
+      `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_up = thumbs_up - 1, thumbs_down = thumbs_down + 1 WHERE slug = ?`,
+      [slug]
+    )
+  } else if (previousVote === 'down' && vote === 'up') {
+    await executeD1Query(
+      `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_down = thumbs_down - 1, thumbs_up = thumbs_up + 1 WHERE slug = ?`,
+      [slug]
+    )
+  }
+
+  return getBlogVoteCountsForSlug(slug)
+}

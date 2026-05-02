@@ -10,6 +10,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
 import BlogAd, { BlogAdInlineWithInsertion } from '@/components/BlogAd'
+import BlogPostVote from '@/components/BlogPostVote'
 
 // Fallback for Bleed component if not available
 type BleedComponent = ({ children }: { children: ReactNode }) => ReactElement
@@ -100,6 +101,7 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
                   </div>
                 )}
               </div>
+              <BlogPostVote slug={slug} />
             </footer>
           </div>
         </article>
