@@ -5,9 +5,13 @@ import { useCallback, useEffect, useState } from 'react'
 const VOTER_STORAGE_KEY = 'shopguide-blog-voter-id'
 const voteStorageKey = (slug: string) => `shopguide-blog-vote:${slug}`
 
-/** Fixed bottom-left; keep below floating BlogAd (z-40) unless stacking issues arise */
+/** Fixed bottom-left at lg+; keep below floating BlogAd (z-40) unless stacking issues arise */
 const FLOAT_SHELL =
-  'blog-post-vote-floating pointer-events-auto fixed bottom-[max(1rem,env(safe-area-inset-bottom,0px))] left-[max(1rem,env(safe-area-inset-left,0px))] z-[35] w-[min(calc(100vw-2rem),17.5rem)] rounded-xl border border-gray-200/90 bg-white/95 p-3.5 shadow-lg backdrop-blur-md dark:border-gray-600 dark:bg-gray-950/95'
+  'blog-post-vote-floating pointer-events-auto hidden fixed bottom-[max(1rem,env(safe-area-inset-bottom,0px))] left-[max(1rem,env(safe-area-inset-left,0px))] z-[35] w-[min(calc(100vw-2rem),17.5rem)] rounded-xl border border-gray-200/90 bg-white/95 p-3.5 shadow-lg backdrop-blur-md dark:border-gray-600 dark:bg-gray-950/95 lg:block'
+
+/** In-flow at end of article on smaller viewports only */
+const INLINE_SHELL =
+  'blog-post-vote-inline relative mt-10 w-full max-w-none rounded-xl border border-gray-200/90 bg-white/95 p-3.5 shadow-sm backdrop-blur-md dark:border-gray-600 dark:bg-gray-950/95 lg:hidden'
 
 function getOrCreateVoterId(): string {
   if (typeof window === 'undefined') return ''
@@ -33,19 +37,25 @@ function getStoredVote(slug: string): 'up' | 'down' | null {
   }
 }
 
+const VOTE_UPDATE_EVENT = 'shopguide-vote-update'
+
 function setStoredVote(slug: string, vote: 'up' | 'down') {
   try {
     localStorage.setItem(voteStorageKey(slug), vote)
   } catch {
     /* ignore */
   }
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(VOTE_UPDATE_EVENT, { detail: { slug } }))
+  }
 }
 
 type Props = {
   slug: string
+  variant?: 'floating' | 'inline'
 }
 
-export default function BlogPostVote({ slug }: Props) {
+export default function BlogPostVote({ slug, variant = 'floating' }: Props) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
   const [submitting, setSubmitting] = useState(false)
   const [currentVote, setCurrentVote] = useState<'up' | 'down' | null>(null)
@@ -53,6 +63,17 @@ export default function BlogPostVote({ slug }: Props) {
 
   useEffect(() => {
     setCurrentVote(getStoredVote(slug))
+  }, [slug])
+
+  useEffect(() => {
+    const onUpdate = (e: Event) => {
+      const detail = (e as CustomEvent<{ slug: string }>).detail
+      if (detail?.slug === slug) {
+        setCurrentVote(getStoredVote(slug))
+      }
+    }
+    window.addEventListener(VOTE_UPDATE_EVENT, onUpdate)
+    return () => window.removeEventListener(VOTE_UPDATE_EVENT, onUpdate)
   }, [slug])
 
   const submit = useCallback(
@@ -87,8 +108,10 @@ export default function BlogPostVote({ slug }: Props) {
     [base, slug, submitting]
   )
 
+  const shellClass = variant === 'inline' ? INLINE_SHELL : FLOAT_SHELL
+
   return (
-    <aside className={FLOAT_SHELL} aria-label="Article feedback" data-blog-post-vote>
+    <aside className={shellClass} aria-label="Article feedback" data-blog-post-vote>
       <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Was this helpful?</p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button

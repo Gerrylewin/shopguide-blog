@@ -15,10 +15,11 @@ export function extractMainPoints(post: Blog, maxPoints: number = 5): string[] {
 
   // Extract headings (H2, H3) from the TOC to get main sections
   if (post.toc && Array.isArray(post.toc)) {
-    const headings = post.toc
-      .filter((item: any) => item.lvl === 2 || item.lvl === 3) // H2 and H3 headings
+    type TocHeading = { lvl?: number; content?: string }
+    const headings = (post.toc as TocHeading[])
+      .filter((item) => item.lvl === 2 || item.lvl === 3)
       .slice(0, maxPoints - (post.summary ? 1 : 0))
-      .map((item: any) => item.content)
+      .map((item) => item.content ?? '')
 
     mainPoints.push(...headings)
   }

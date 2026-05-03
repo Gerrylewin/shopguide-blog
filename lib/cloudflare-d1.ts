@@ -19,6 +19,20 @@ export function isCloudflareD1Available(): boolean {
   )
 }
 
+type D1SqlParam = string | number | boolean | null
+
+/** First batch object from D1 HTTP `query` response */
+interface D1QueryBatch {
+  results?: Array<Record<string, unknown>>
+  meta?: { changes?: number }
+}
+
+interface D1HttpEnvelope {
+  success?: boolean
+  errors?: unknown
+  result?: D1QueryBatch[] | D1QueryBatch | null
+}
+
 /**
  * Get Cloudflare D1 REST API base URL
  */
@@ -31,7 +45,7 @@ function getD1ApiUrl(): string {
 /**
  * Execute a query on Cloudflare D1
  */
-async function executeD1Query(query: string, params: any[] = []): Promise<any> {
+async function executeD1Query(query: string, params: D1SqlParam[] = []): Promise<D1QueryBatch> {
   if (!isCloudflareD1Available()) {
     throw new Error('Cloudflare D1 is not configured')
   }
@@ -61,7 +75,7 @@ async function executeD1Query(query: string, params: any[] = []): Promise<any> {
     throw new Error(`Cloudflare D1 API error: ${response.status} ${errorText}${hint}`)
   }
 
-  const result = await response.json()
+  const result = (await response.json()) as D1HttpEnvelope
 
   if (!result.success) {
     const errStr = JSON.stringify(result.errors)
@@ -80,7 +94,11 @@ async function executeD1Query(query: string, params: any[] = []): Promise<any> {
     return result.result[0]
   }
 
-  return result.result
+  if (result.result && !Array.isArray(result.result)) {
+    return result.result
+  }
+
+  return {}
 }
 
 /**
@@ -99,9 +117,9 @@ export async function getD1Subscribers(): Promise<Subscriber[]> {
       return []
     }
 
-    return rows.map((row: any) => ({
-      email: row.email,
-      subscribedAt: row.subscribed_at,
+    return rows.map((row) => ({
+      email: String((row as Record<string, unknown>).email ?? ''),
+      subscribedAt: String((row as Record<string, unknown>).subscribed_at ?? ''),
     }))
   } catch (error) {
     console.error('❌ [CLOUDFLARE D1] Error getting subscribers:', error)
@@ -119,9 +137,10 @@ export async function addD1Subscriber(email: string, subscribedAt: string): Prom
       [email.toLowerCase(), subscribedAt]
     )
     return true
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Check if it's a unique constraint violation (email already exists)
-    if (error.message?.includes('UNIQUE constraint') || error.message?.includes('already exists')) {
+    const message = error instanceof Error ? error.message : String(error)
+    if (message.includes('UNIQUE constraint') || message.includes('already exists')) {
       console.log('⚠️ [CLOUDFLARE D1] Email already exists:', email)
       return false
     }
@@ -160,7 +179,7 @@ export async function removeD1Subscriber(email: string): Promise<boolean> {
 
     // Check if any rows were affected
     // DELETE returns: { success: true, meta: { changes: number } }
-    return result && result.meta && result.meta.changes > 0
+    return (result?.meta?.changes ?? 0) > 0
   } catch (error) {
     console.error('❌ [CLOUDFLARE D1] Error removing subscriber:', error)
     // Return false if email doesn't exist or other non-critical errors
@@ -202,12 +221,15 @@ export async function getD1SentPosts(): Promise<SentPostRow[]> {
   )
   const rows = result?.results || []
   if (!Array.isArray(rows)) return []
-  return rows.map((row: any) => ({
-    slug: row.slug,
-    title: row.title,
-    date: row.date,
-    sentAt: row.sent_at,
-  }))
+  return rows.map((row) => {
+    const r = row as Record<string, unknown>
+    return {
+      slug: String(r.slug ?? ''),
+      title: String(r.title ?? ''),
+      date: String(r.date ?? ''),
+      sentAt: String(r.sent_at ?? ''),
+    }
+  })
 }
 
 /**
@@ -270,8 +292,8 @@ export async function getBlogVoteCountsForSlug(slug: string): Promise<BlogVoteCo
     return { thumbsUp: 0, thumbsDown: 0 }
   }
   return {
-    thumbsUp: Number(row.thumbs_up) || 0,
-    thumbsDown: Number(row.thumbs_down) || 0,
+    thumbsUp: Number(row['thumbs_up']) || 0,
+    thumbsDown: Number(row['thumbs_down']) || 0,
   }
 }
 
@@ -284,11 +306,14 @@ export async function getAllBlogVoteCountRows(): Promise<
   )
   const rows = result?.results || []
   if (!Array.isArray(rows)) return []
-  return rows.map((row: any) => ({
-    slug: row.slug,
-    thumbsUp: Number(row.thumbs_up) || 0,
-    thumbsDown: Number(row.thumbs_down) || 0,
-  }))
+  return rows.map((row) => {
+    const r = row as Record<string, unknown>
+    return {
+      slug: String(r.slug ?? ''),
+      thumbsUp: Number(r.thumbs_up) || 0,
+      thumbsDown: Number(r.thumbs_down) || 0,
+    }
+  })
 }
 
 function isSqliteUniqueConstraintError(e: unknown): boolean {

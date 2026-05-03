@@ -180,7 +180,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
       <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
         <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
       </Layout>
-      {isCloudflareD1Available() ? <BlogPostVote slug={slug} /> : null}
+      {isCloudflareD1Available() ? <BlogPostVote slug={slug} variant="floating" /> : null}
     </>
   )
 }
