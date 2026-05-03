@@ -2,6 +2,7 @@ import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import { getAllBlogVoteCountRows, isCloudflareD1Available } from '@/lib/cloudflare-d1'
+import { getAdminSecret } from '@/lib/admin-access'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,13 +17,8 @@ type Row = {
   pctHelpful: number | null
 }
 
-export default async function BlogVotesAdminPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ token?: string }>
-}) {
-  const token = (await searchParams).token
-  const secret = process.env.BLOG_VOTES_ADMIN_SECRET
+export default async function BlogVotesAdminPage() {
+  const secret = getAdminSecret()
 
   if (!secret) {
     return (
@@ -30,28 +26,21 @@ export default async function BlogVotesAdminPage({
         <div className="max-w-lg rounded-lg border border-gray-200 bg-white p-6 text-gray-800 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
           <h1 className="text-lg font-semibold">Blog vote dashboard</h1>
           <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            This page is protected. Add environment variable{' '}
+            Add{' '}
+            <code className="rounded bg-gray-100 px-1 font-mono text-xs dark:bg-gray-900">
+              ADMIN_ACCESS_SECRET
+            </code>{' '}
+            (recommended) or{' '}
             <code className="rounded bg-gray-100 px-1 font-mono text-xs dark:bg-gray-900">
               BLOG_VOTES_ADMIN_SECRET
             </code>{' '}
-            (e.g. in Vercel → Project → Settings → Environment Variables), redeploy, then open:
-          </p>
-          <p className="text-primary-600 dark:text-primary-400 mt-3 font-mono text-sm break-all">
-            /admin/blog-votes?token=YOUR_SECRET_VALUE
-          </p>
-          <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-            Use the same string for <code className="font-mono text-xs">token</code> as you set in
-            the env var. Share that URL only with trusted teammates.
+            in Vercel → Environment Variables, redeploy, then visit{' '}
+            <code className="rounded bg-gray-100 px-1 font-mono text-xs dark:bg-gray-900">
+              /admin/blog-votes?token=YOUR_SECRET
+            </code>{' '}
+            once to set your browser session.
           </p>
         </div>
-      </div>
-    )
-  }
-
-  if (token !== secret) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <p className="text-gray-600 dark:text-gray-400">Not found</p>
       </div>
     )
   }
@@ -128,7 +117,8 @@ export default async function BlogVotesAdminPage({
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
             Thumbs up/down collected from post pages. Higher &quot;Net&quot; means more readers
-            found the post helpful. Bookmark this URL privately; do not share the token.
+            found the post helpful. Access requires an admin session (sign in with{' '}
+            <code className="font-mono text-xs">?token=</code> when prompted).
           </p>
           <div className="mt-4 flex flex-wrap gap-4">
             <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800">

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdminApi } from '@/lib/admin-access'
 import { getSubscribers, addSubscriber, removeSubscriber } from '@/lib/newsletter-storage'
 
 export const dynamic = 'force-dynamic'
@@ -7,7 +8,9 @@ export const dynamic = 'force-dynamic'
  * GET /api/newsletter/subscribers
  * Get all newsletter subscribers (admin only - you may want to add auth)
  */
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const denied = requireAdminApi(req)
+  if (denied) return denied
   try {
     const subscribers = await getSubscribers()
     return NextResponse.json({ subscribers, count: subscribers.length })
@@ -21,6 +24,8 @@ export async function GET() {
  * Add a subscriber manually
  */
 export async function POST(req: NextRequest) {
+  const denied = requireAdminApi(req)
+  if (denied) return denied
   try {
     const body = await req.json()
     const { email } = body
@@ -45,6 +50,8 @@ export async function POST(req: NextRequest) {
  * Remove a subscriber
  */
 export async function DELETE(req: NextRequest) {
+  const denied = requireAdminApi(req)
+  if (denied) return denied
   try {
     const body = await req.json()
     const { email } = body
