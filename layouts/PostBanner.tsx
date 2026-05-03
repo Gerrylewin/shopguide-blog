@@ -71,8 +71,8 @@ export default function PostBanner({ content, next, prev, children }: LayoutProp
               )}
             </div>
             <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
-            <BlogAdInlineWithInsertion />
             {isBlogVoteStorageAvailable() ? <BlogPostVote slug={slug} variant="inline" /> : null}
+            <BlogAdInlineWithInsertion />
             {siteMetadata.comments && (
               <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
                 <Comments slug={slug} />

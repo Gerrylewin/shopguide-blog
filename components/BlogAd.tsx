@@ -146,7 +146,7 @@ export default function BlogAd() {
 export function BlogAdInline() {
   return (
     <div
-      className="blog-ad-inline not-prose my-12 lg:hidden"
+      className="blog-ad-inline not-prose mt-0 mb-10 lg:hidden"
       id="blog-ad-inline-mobile"
       style={{ display: 'none' }}
     >
@@ -177,8 +177,8 @@ export function BlogAdInlineWithInsertion() {
         adElement.style.display = 'block'
         faqHeading.parentNode.insertBefore(adElement, faqHeading)
       } else {
+        // Keep ad in layout order (below vote, above Discuss/footer) — do not append to `.prose`
         adElement.style.display = 'block'
-        proseElement.appendChild(adElement)
       }
     }
 
