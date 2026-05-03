@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 const VOTER_STORAGE_KEY = 'shopguide-blog-voter-id'
 const voteStorageKey = (slug: string) => `shopguide-blog-vote:${slug}`
@@ -9,9 +9,9 @@ const voteStorageKey = (slug: string) => `shopguide-blog-vote:${slug}`
 const FLOAT_SHELL =
   'blog-post-vote-floating pointer-events-auto hidden fixed bottom-[max(1rem,env(safe-area-inset-bottom,0px))] left-[max(1rem,env(safe-area-inset-left,0px))] z-[35] w-[min(calc(100vw-2rem),17.5rem)] rounded-xl border border-gray-200/90 bg-white/95 px-3.5 pb-3.5 pt-4 shadow-lg backdrop-blur-md transition-opacity duration-300 ease-out dark:border-gray-600 dark:bg-gray-950/95 lg:block'
 
-/** In-flow right after article body on mobile; CTA ad follows (see layouts + BlogAd insertion) */
+/** Mobile/tablet: base slot is after `.prose` in layout; if the post has an FAQ `h2`, we move this node before that heading (matches `BlogAdInlineWithInsertion`). */
 const INLINE_SHELL =
-  'blog-post-vote-inline relative mt-0 w-full max-w-none rounded-xl border border-gray-200/90 bg-white/95 px-3.5 pb-3.5 pt-4 shadow-sm backdrop-blur-md transition-opacity duration-300 ease-out dark:border-gray-600 dark:bg-gray-950/95 lg:hidden max-sm:pt-6'
+  'blog-post-vote-inline not-prose relative mt-0 mb-8 w-full max-w-none rounded-xl border border-gray-200/90 bg-white/95 px-3.5 pb-3.5 pt-4 shadow-sm backdrop-blur-md transition-opacity duration-300 ease-out dark:border-gray-600 dark:bg-gray-950/95 lg:hidden max-sm:pt-6'
 
 function getOrCreateVoterId(): string {
   if (typeof window === 'undefined') return ''
@@ -66,6 +66,28 @@ export default function BlogPostVote({ slug, variant = 'floating' }: Props) {
   const [fadeOut, setFadeOut] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
+  const asideRef = useRef<HTMLElement>(null)
+
+  /** Same FAQ `h2` detection as `BlogAdInlineWithInsertion` — insert vote before FAQ so it stays with the article, not below the accordion. */
+  useLayoutEffect(() => {
+    if (variant !== 'inline') return
+    const el = asideRef.current
+    if (!el) return
+
+    const proseElements = document.querySelectorAll('.prose')
+    const proseElement =
+      Array.from(proseElements).find((p) => p.querySelector('h2') !== null) || proseElements[0]
+    if (!proseElement) return
+
+    const faqHeading = Array.from(proseElement.querySelectorAll('h2')).find((heading) => {
+      const text = heading.textContent?.trim().toLowerCase()
+      return text === 'frequently asked questions' || text === 'faq'
+    })
+
+    if (faqHeading?.parentNode) {
+      faqHeading.parentNode.insertBefore(el, faqHeading)
+    }
+  }, [variant, slug])
 
   useLayoutEffect(() => {
     setFadeOut(false)
@@ -142,6 +164,7 @@ export default function BlogPostVote({ slug, variant = 'floating' }: Props) {
 
   return (
     <aside
+      ref={asideRef}
       className={`${shellClass} ${fadeClass}`}
       aria-label={phase === 'thanks' ? 'Feedback received' : 'Article feedback'}
       data-blog-post-vote
