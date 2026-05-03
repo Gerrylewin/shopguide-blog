@@ -47,8 +47,6 @@ type Props = {
 
 export default function BlogPostVote({ slug }: Props) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-  const [thumbsUp, setThumbsUp] = useState(0)
-  const [thumbsDown, setThumbsDown] = useState(0)
   const [enabled, setEnabled] = useState(true)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
@@ -73,8 +71,6 @@ export default function BlogPostVote({ slug }: Props) {
         }
         const data = await res.json()
         if (cancelled) return
-        setThumbsUp(Number(data.thumbsUp) || 0)
-        setThumbsDown(Number(data.thumbsDown) || 0)
         setEnabled(data.enabled !== false)
       } catch {
         if (!cancelled) setEnabled(false)
@@ -108,8 +104,6 @@ export default function BlogPostVote({ slug }: Props) {
           setNotice(typeof data.error === 'string' ? data.error : 'Something went wrong.')
           return
         }
-        setThumbsUp(Number(data.thumbsUp) || 0)
-        setThumbsDown(Number(data.thumbsDown) || 0)
         setCurrentVote(vote)
         setStoredVote(slug, vote)
       } catch {
@@ -124,26 +118,27 @@ export default function BlogPostVote({ slug }: Props) {
   if (loading) {
     return (
       <aside className={FLOAT_SHELL} aria-hidden aria-busy="true">
-        <div className="text-xs text-gray-500 dark:text-gray-400">Loading feedback…</div>
+        <div className="text-xs text-gray-500 dark:text-gray-400">Checking…</div>
       </aside>
     )
   }
 
   if (!enabled) {
     return (
-      <aside className={FLOAT_SHELL} aria-live="polite" aria-label="Article feedback unavailable">
+      <aside className={FLOAT_SHELL} aria-live="polite" aria-label="Submit feedback unavailable">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          We couldn’t load reader feedback. Please try again later.
+          We can’t record your feedback right now. Please try again later.
         </p>
       </aside>
     )
   }
 
-  const total = thumbsUp + thumbsDown
-  const upPct = total > 0 ? Math.round((thumbsUp / total) * 100) : null
-
   return (
-    <aside className={FLOAT_SHELL} aria-label="Article feedback" data-blog-post-vote>
+    <aside
+      className={FLOAT_SHELL}
+      aria-label="Tell us if this article was helpful"
+      data-blog-post-vote
+    >
       <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
         Was this article helpful?
       </p>
@@ -166,7 +161,6 @@ export default function BlogPostVote({ slug }: Props) {
             👍
           </span>
           Helpful
-          <span className="text-gray-500 dark:text-gray-400">({thumbsUp})</span>
         </button>
         <button
           type="button"
@@ -183,16 +177,8 @@ export default function BlogPostVote({ slug }: Props) {
             👎
           </span>
           Not helpful
-          <span className="text-gray-500 dark:text-gray-400">({thumbsDown})</span>
         </button>
       </div>
-      {total > 0 && (
-        <p className="mt-2 text-[11px] text-gray-500 dark:text-gray-400">
-          {upPct !== null ? `${upPct}% marked helpful` : ''}
-          {upPct !== null ? ` · ` : ''}
-          {total} {total === 1 ? 'reader' : 'readers'} responded
-        </p>
-      )}
       {notice && (
         <p className="mt-2 text-xs text-red-600 dark:text-red-400" role="alert">
           {notice}
