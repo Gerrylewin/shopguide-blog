@@ -5,6 +5,7 @@ import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import ClerkAuthNav from './ClerkAuthNav'
 import NextImage from 'next/image'
 
 // Header component with navigation and theme switching
@@ -49,17 +50,22 @@ const Header = () => {
           </Link>
           {headerNavLinks
             .filter((link) => link.href !== '/' && link.href !== '/tags')
-            .map((link) => (
-              <Link
-                key={link.title}
-                href={link.href}
-                className="hover:text-primary-500 dark:hover:text-primary-400 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
-              >
-                {link.title}
-              </Link>
-            ))}
+            .map((link) => {
+              const remote = /^https?:\/\//i.test(link.href)
+              return (
+                <Link
+                  key={link.title}
+                  href={link.href}
+                  {...(remote ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {})}
+                  className="hover:text-primary-500 dark:hover:text-primary-400 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
+                >
+                  {link.title}
+                </Link>
+              )
+            })}
         </div>
         <div className="flex items-center space-x-4 sm:space-x-6">
+          <ClerkAuthNav />
           <SearchButton />
           <ThemeSwitch />
           <MobileNav />

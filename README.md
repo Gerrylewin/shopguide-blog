@@ -1,7 +1,7 @@
 # ShopGuide Blog
 
 [![Blog](https://img.shields.io/badge/blog-blog.yourshopguide.com-blue)](https://blog.yourshopguide.com)
-[![Shopify App](https://img.shields.io/badge/Shopify-App%20Store-green)](https://apps.shopify.com/die-ai-agent-official-app)
+[![Shopify App](https://img.shields.io/badge/Shopify-App%20Store-green)](https://apps.shopify.com/shopguide)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 > The official blog for ShopGuide - Transforming Shopify stores with Agentic Commerce powered by AI agents.
@@ -81,7 +81,7 @@ All plans include a **14-day free trial** with full access to A/B testing capabi
 
 ### Installation
 
-1. Visit the [Shopify App Store](https://apps.shopify.com/die-ai-agent-official-app)
+1. Visit the [Shopify App Store](https://apps.shopify.com/shopguide)
 2. Click "Add app" on the ShopGuide listing
 3. Review permissions and click "Install app"
 4. Follow the setup guide in your ShopGuide dashboard
@@ -163,7 +163,7 @@ We welcome contributions! If you'd like to contribute:
 ## Resources
 
 - 📖 [ShopGuide Documentation](https://docs.yourshopguide.com)
-- 🛍️ [Shopify App Store Listing](https://apps.shopify.com/die-ai-agent-official-app)
+- 🛍️ [Shopify App Store Listing](https://apps.shopify.com/shopguide)
 - 🌐 [ShopGuide Website](https://www.yourshopguide.com)
 - 📧 [Contact Support](mailto:support@yourshopguide.com)
 

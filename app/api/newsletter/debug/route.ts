@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdminApi } from '@/lib/admin-access'
 import { getSubscribers } from '@/lib/newsletter-storage'
 
 export const dynamic = 'force-dynamic'
@@ -8,6 +9,8 @@ export const dynamic = 'force-dynamic'
  * Debug endpoint to check newsletter storage configuration
  */
 export async function GET(req: NextRequest) {
+  const denied = await requireAdminApi(req)
+  if (denied) return denied
   try {
     const cloudflareAccountId = process.env.CLOUDFLARE_ACCOUNT_ID
     const cloudflareApiToken = process.env.CLOUDFLARE_API_TOKEN

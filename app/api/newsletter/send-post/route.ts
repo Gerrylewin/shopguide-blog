@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdminApi } from '@/lib/admin-access'
 import { sendBlogPostEmails } from '@/lib/rss-email-sender'
 import { isPostAlreadySent, markPostAsSentBySlug } from '@/lib/blog-post-tracker'
 
@@ -10,6 +11,9 @@ export const dynamic = 'force-dynamic'
  * Idempotent: if this post was already sent, returns success without sending again.
  */
 export async function POST(req: NextRequest) {
+  const denied = await requireAdminApi(req)
+  if (denied) return denied
+
   try {
     const body = await req.json()
     const { title, slug, date, summary, images } = body

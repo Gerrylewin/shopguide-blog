@@ -8,10 +8,16 @@ const CustomLink = ({
   target,
   ...rest
 }: LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  const isInternalLink = href && href.startsWith('/')
-  const isAnchorLink = href && href.startsWith('#')
+  if (typeof href !== 'string') {
+    return <Link className="break-words" href={href} {...rest} />
+  }
 
-  if (isInternalLink) {
+  // Protocol-relative URLs (//example.com) start with "/" but must not use next/link.
+  const isProtocolRelative = href.startsWith('//')
+  const isInternalPath = href.startsWith('/') && !isProtocolRelative
+  const isAnchorLink = href.startsWith('#')
+
+  if (isInternalPath) {
     // Explicitly remove target for internal links to ensure same-tab navigation
     // target is already extracted from props, so rest doesn't contain it
     return <Link className="break-words" href={href} {...rest} />

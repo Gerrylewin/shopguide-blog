@@ -14,6 +14,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import Script from 'next/script'
+import { ClerkProvider } from '@clerk/nextjs'
 import { PostHogProvider } from '@/components/PostHogProvider'
 import { GoogleAnalyticsProvider } from '@/components/GoogleAnalytics'
 
@@ -213,7 +214,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               console.log('%c🚀 Ready to transform your store?', styles.accent);
               console.log('');
               console.log(
-                \`%c👉 Shopify App: %chttps://apps.shopify.com/die-ai-agent-official-app\`,
+                \`%c👉 Shopify App: %chttps://apps.shopify.com/shopguide\`,
                 styles.text,
                 styles.link
               );
@@ -284,22 +285,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white"
         suppressHydrationWarning
       >
-        <PostHogProvider>
-          <GoogleAnalyticsProvider>
-            <ThemeProviders>
-              <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
-              <SpeedInsights />
-              <VercelAnalytics />
-              <SectionContainer>
-                <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-                  <Header />
-                  <main className="mb-auto">{children}</main>
-                </SearchProvider>
-              </SectionContainer>
-              <Footer />
-            </ThemeProviders>
-          </GoogleAnalyticsProvider>
-        </PostHogProvider>
+        <ClerkProvider afterSignOutUrl="/">
+          <PostHogProvider>
+            <GoogleAnalyticsProvider>
+              <ThemeProviders>
+                <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
+                <SpeedInsights />
+                <VercelAnalytics />
+                <SectionContainer>
+                  <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+                    <Header />
+                    <main className="mb-auto">{children}</main>
+                  </SearchProvider>
+                </SectionContainer>
+                <Footer />
+              </ThemeProviders>
+            </GoogleAnalyticsProvider>
+          </PostHogProvider>
+        </ClerkProvider>
       </body>
     </html>
   )

@@ -698,7 +698,7 @@ If Giscus comments aren't showing:
 ## Additional Resources
 
 - 📖 [ShopGuide Documentation](https://docs.yourshopguide.com)
-- 🛍️ [Shopify App Store Listing](https://apps.shopify.com/die-ai-agent-official-app)
+- 🛍️ [Shopify App Store Listing](https://apps.shopify.com/shopguide)
 - 🌐 [ShopGuide Website](https://www.yourshopguide.com)
 - 📧 [Contact Support](mailto:support@yourshopguide.com)
 

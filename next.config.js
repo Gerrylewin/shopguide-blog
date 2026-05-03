@@ -4,16 +4,19 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-// You might need to insert additional domains in script-src if you are using external services
+// Third-party CSP: Clerk (FAPI + Cloudflare Turnstile), analytics, Giscus, Vercel Live preview fonts.
+// Clerk FAPI host is instance-specific (*.clerk.accounts.dev for dev; production may use *.clerk.com or a custom domain).
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is cloud.umami.is vercel.live us.i.posthog.com us-assets.i.posthog.com app.posthog.com www.googletagmanager.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is cloud.umami.is vercel.live us.i.posthog.com us-assets.i.posthog.com app.posthog.com www.googletagmanager.com https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com;
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
   media-src *.s3.amazonaws.com *.r2.dev;
   connect-src *;
-  font-src 'self';
-  frame-src giscus.app vercel.live
+  font-src 'self' https://vercel.live;
+  frame-src 'self' giscus.app vercel.live https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com;
+  worker-src 'self' blob:;
+  form-action 'self'
 `
 
 const securityHeaders = [

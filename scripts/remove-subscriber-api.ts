@@ -21,6 +21,14 @@ if (!email) {
 
 async function main() {
   try {
+    const token = process.env.ADMIN_ACCESS_SECRET || process.env.BLOG_VOTES_ADMIN_SECRET
+    if (!token) {
+      console.error(
+        '❌ Set ADMIN_ACCESS_SECRET or BLOG_VOTES_ADMIN_SECRET in the environment (same value as Vercel admin token).'
+      )
+      process.exit(1)
+    }
+
     console.log(`🔵 Attempting to remove: ${email}`)
     console.log(`🔵 Using API endpoint: ${baseUrl}/api/newsletter/subscribers`)
 
@@ -28,6 +36,7 @@ async function main() {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ email }),
     })
