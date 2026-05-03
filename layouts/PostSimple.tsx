@@ -10,7 +10,6 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
 import BlogAd, { BlogAdInlineWithInsertion } from '@/components/BlogAd'
-import BlogPostVote from '@/components/BlogPostVote'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -83,7 +82,6 @@ export default function PostSimple({ content, next, prev, children }: LayoutProp
                     </div>
                   )}
                 </div>
-                <BlogPostVote slug={slug} />
               </footer>
             </div>
           </div>

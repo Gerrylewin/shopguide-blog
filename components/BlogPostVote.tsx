@@ -5,6 +5,10 @@ import { useCallback, useEffect, useState } from 'react'
 const VOTER_STORAGE_KEY = 'shopguide-blog-voter-id'
 const voteStorageKey = (slug: string) => `shopguide-blog-vote:${slug}`
 
+/** Fixed bottom-left; keep below floating BlogAd (z-40) unless stacking issues arise */
+const FLOAT_SHELL =
+  'blog-post-vote-floating pointer-events-auto fixed bottom-[max(1rem,env(safe-area-inset-bottom,0px))] left-[max(1rem,env(safe-area-inset-left,0px))] z-[35] w-[min(calc(100vw-2rem),17.5rem)] rounded-xl border border-gray-200/90 bg-white/95 p-3.5 shadow-lg backdrop-blur-md dark:border-gray-600 dark:bg-gray-950/95'
+
 function getOrCreateVoterId(): string {
   if (typeof window === 'undefined') return ''
   try {
@@ -119,46 +123,40 @@ export default function BlogPostVote({ slug }: Props) {
 
   if (loading) {
     return (
-      <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-700" aria-hidden>
-        <div className="text-sm text-gray-500 dark:text-gray-400">Loading feedback…</div>
-      </div>
+      <aside className={FLOAT_SHELL} aria-hidden aria-busy="true">
+        <div className="text-xs text-gray-500 dark:text-gray-400">Loading feedback…</div>
+      </aside>
     )
   }
 
   if (!enabled) {
-    return (
-      <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-700">
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          Reader feedback is not enabled in this environment.
-        </p>
-      </div>
-    )
+    return null
   }
 
   const total = thumbsUp + thumbsDown
   const upPct = total > 0 ? Math.round((thumbsUp / total) * 100) : null
 
   return (
-    <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-700">
-      <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
+    <aside className={FLOAT_SHELL} aria-label="Article feedback" data-blog-post-vote>
+      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
         Was this article helpful?
       </p>
-      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-        Quick feedback helps us improve. One vote per browser; you can change your vote.
+      <p className="mt-0.5 text-[11px] leading-snug text-gray-600 dark:text-gray-400">
+        One vote per browser; you can change it anytime.
       </p>
-      <div className="mt-4 flex flex-wrap items-center gap-3">
+      <div className="mt-3 flex flex-wrap gap-2">
         <button
           type="button"
           onClick={() => submit('up')}
           disabled={submitting}
           aria-pressed={currentVote === 'up'}
-          className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition ${
+          className={`inline-flex min-w-[6.5rem] flex-1 items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
             currentVote === 'up'
               ? 'border-primary-600 bg-primary-50 text-primary-800 dark:border-primary-400 dark:bg-primary-950/40 dark:text-primary-200'
               : 'hover:border-primary-400 dark:hover:border-primary-500 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-800'
           }`}
         >
-          <span aria-hidden className="text-base leading-none select-none">
+          <span aria-hidden className="text-sm leading-none select-none">
             👍
           </span>
           Helpful
@@ -169,13 +167,13 @@ export default function BlogPostVote({ slug }: Props) {
           onClick={() => submit('down')}
           disabled={submitting}
           aria-pressed={currentVote === 'down'}
-          className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition ${
+          className={`inline-flex min-w-[6.5rem] flex-1 items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
             currentVote === 'down'
               ? 'border-amber-600 bg-amber-50 text-amber-900 dark:border-amber-500 dark:bg-amber-950/40 dark:text-amber-100'
               : 'border-gray-300 bg-white text-gray-800 hover:border-amber-400 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:hover:border-amber-500 dark:hover:bg-gray-800'
           }`}
         >
-          <span aria-hidden className="text-base leading-none select-none">
+          <span aria-hidden className="text-sm leading-none select-none">
             👎
           </span>
           Not helpful
@@ -183,17 +181,17 @@ export default function BlogPostVote({ slug }: Props) {
         </button>
       </div>
       {total > 0 && (
-        <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-[11px] text-gray-500 dark:text-gray-400">
           {upPct !== null ? `${upPct}% marked helpful` : ''}
           {upPct !== null ? ` · ` : ''}
           {total} {total === 1 ? 'reader' : 'readers'} responded
         </p>
       )}
       {notice && (
-        <p className="mt-2 text-sm text-red-600 dark:text-red-400" role="alert">
+        <p className="mt-2 text-xs text-red-600 dark:text-red-400" role="alert">
           {notice}
         </p>
       )}
-    </div>
+    </aside>
   )
 }

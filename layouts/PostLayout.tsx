@@ -12,7 +12,6 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
 import BlogAd, { BlogAdInlineWithInsertion } from '@/components/BlogAd'
-import BlogPostVote from '@/components/BlogPostVote'
 
 // Fallback for Bleed component if not available
 type BleedComponent = ({ children }: { children: ReactNode }) => ReactElement
@@ -252,10 +251,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   </Link>
                 </div>
               </footer>
-            </div>
-            {/* Full width below the xl sidebar + article grid so voting is not trapped in column 1 */}
-            <div className="pb-8 xl:ml-2.5">
-              <BlogPostVote slug={slug} />
             </div>
           </div>
         </article>
