@@ -47,8 +47,6 @@ type Props = {
 
 export default function BlogPostVote({ slug }: Props) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
-  const [enabled, setEnabled] = useState(true)
-  const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [currentVote, setCurrentVote] = useState<'up' | 'down' | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
@@ -57,35 +55,9 @@ export default function BlogPostVote({ slug }: Props) {
     setCurrentVote(getStoredVote(slug))
   }, [slug])
 
-  useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      try {
-        const res = await fetch(`${base}/api/blog-vote?slug=${encodeURIComponent(slug)}`, {
-          cache: 'no-store',
-        })
-        if (cancelled) return
-        if (!res.ok) {
-          setEnabled(false)
-          return
-        }
-        const data = await res.json()
-        if (cancelled) return
-        setEnabled(data.enabled !== false)
-      } catch {
-        if (!cancelled) setEnabled(false)
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [slug, base])
-
   const submit = useCallback(
     async (vote: 'up' | 'down') => {
-      if (!enabled || submitting) return
+      if (submitting) return
       const voterId = getOrCreateVoterId()
       if (!voterId) {
         setNotice('Unable to store your preference in this browser.')
@@ -112,71 +84,46 @@ export default function BlogPostVote({ slug }: Props) {
         setSubmitting(false)
       }
     },
-    [base, enabled, slug, submitting]
+    [base, slug, submitting]
   )
 
-  if (loading) {
-    return (
-      <aside className={FLOAT_SHELL} aria-hidden aria-busy="true">
-        <div className="text-xs text-gray-500 dark:text-gray-400">Checking…</div>
-      </aside>
-    )
-  }
-
-  if (!enabled) {
-    return (
-      <aside className={FLOAT_SHELL} aria-live="polite" aria-label="Submit feedback unavailable">
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          We can’t record your feedback right now. Please try again later.
-        </p>
-      </aside>
-    )
-  }
-
   return (
-    <aside
-      className={FLOAT_SHELL}
-      aria-label="Tell us if this article was helpful"
-      data-blog-post-vote
-    >
-      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-        Was this article helpful?
-      </p>
-      <p className="mt-0.5 text-[11px] leading-snug text-gray-600 dark:text-gray-400">
-        One vote per browser; you can change it anytime.
-      </p>
+    <aside className={FLOAT_SHELL} aria-label="Article feedback" data-blog-post-vote>
+      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Was this helpful?</p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button
           type="button"
           onClick={() => submit('up')}
           disabled={submitting}
           aria-pressed={currentVote === 'up'}
+          aria-label="Thumbs up"
           className={`inline-flex min-w-[6.5rem] flex-1 items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
             currentVote === 'up'
               ? 'border-primary-600 bg-primary-50 text-primary-800 dark:border-primary-400 dark:bg-primary-950/40 dark:text-primary-200'
               : 'hover:border-primary-400 dark:hover:border-primary-500 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-800'
           }`}
         >
-          <span aria-hidden className="text-sm leading-none select-none">
+          <span aria-hidden className="text-base leading-none select-none">
             👍
           </span>
-          Helpful
+          Yes
         </button>
         <button
           type="button"
           onClick={() => submit('down')}
           disabled={submitting}
           aria-pressed={currentVote === 'down'}
+          aria-label="Thumbs down"
           className={`inline-flex min-w-[6.5rem] flex-1 items-center justify-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
             currentVote === 'down'
               ? 'border-amber-600 bg-amber-50 text-amber-900 dark:border-amber-500 dark:bg-amber-950/40 dark:text-amber-100'
               : 'border-gray-300 bg-white text-gray-800 hover:border-amber-400 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:hover:border-amber-500 dark:hover:bg-gray-800'
           }`}
         >
-          <span aria-hidden className="text-sm leading-none select-none">
+          <span aria-hidden className="text-base leading-none select-none">
             👎
           </span>
-          Not helpful
+          No
         </button>
       </div>
       {notice && (
