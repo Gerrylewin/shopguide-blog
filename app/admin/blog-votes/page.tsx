@@ -1,7 +1,7 @@
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
 import Link from '@/components/Link'
-import { getAllBlogVoteCountRows, isCloudflareD1Available } from '@/lib/cloudflare-d1'
+import { getAllBlogVoteCountRows, isBlogVoteStorageAvailable } from '@/lib/cloudflare-d1'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,21 +17,25 @@ type Row = {
 }
 
 export default async function BlogVotesAdminPage() {
-  if (!isCloudflareD1Available()) {
+  if (!isBlogVoteStorageAvailable()) {
     return (
       <div className="min-h-screen bg-gray-50 px-4 py-10 dark:bg-gray-900">
         <div className="mx-auto max-w-3xl rounded-lg bg-white p-6 shadow dark:bg-gray-800">
           <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Blog votes</h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Cloudflare D1 is not configured. Add{' '}
+            Blog vote D1 is not configured. Add{' '}
             <code className="rounded bg-gray-100 px-1 dark:bg-gray-700">CLOUDFLARE_ACCOUNT_ID</code>
             ,{' '}
-            <code className="rounded bg-gray-100 px-1 dark:bg-gray-700">CLOUDFLARE_API_TOKEN</code>,
-            and{' '}
             <code className="rounded bg-gray-100 px-1 dark:bg-gray-700">
               CLOUDFLARE_D1_DATABASE_ID
+            </code>
+            , and either{' '}
+            <code className="rounded bg-gray-100 px-1 dark:bg-gray-700">
+              CLOUDFLARE_API_TOKEN_BLOG_VOTES
             </code>{' '}
-            to your environment (same as newsletter storage).
+            (dedicated token for voting) or{' '}
+            <code className="rounded bg-gray-100 px-1 dark:bg-gray-700">CLOUDFLARE_API_TOKEN</code>{' '}
+            (shared with newsletter when the vote-specific token is unset).
           </p>
         </div>
       </div>

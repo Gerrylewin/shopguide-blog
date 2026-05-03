@@ -13,7 +13,7 @@ import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
 import BlogAd, { BlogAdInlineWithInsertion } from '@/components/BlogAd'
 import BlogPostVote from '@/components/BlogPostVote'
-import { isCloudflareD1Available } from '@/lib/cloudflare-d1'
+import { isBlogVoteStorageAvailable } from '@/lib/cloudflare-d1'
 
 // Fallback for Bleed component if not available
 type BleedComponent = ({ children }: { children: ReactNode }) => ReactElement
@@ -192,7 +192,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="divide-y divide-gray-200 xl:col-span-4 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
                 <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
                 {!hideInlineAd && <BlogAdInlineWithInsertion />}
-                {isCloudflareD1Available() ? <BlogPostVote slug={slug} variant="inline" /> : null}
+                {isBlogVoteStorageAvailable() ? (
+                  <BlogPostVote slug={slug} variant="inline" />
+                ) : null}
                 <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
                   <Link href={discussUrl(path)} rel="nofollow">
                     Discuss on Twitter

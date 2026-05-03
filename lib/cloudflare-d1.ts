@@ -9,13 +9,36 @@ export interface Subscriber {
 }
 
 /**
- * Check if Cloudflare D1 is available
+ * Check if Cloudflare D1 is available (newsletter, sent-posts tracking, scripts).
+ * Uses `CLOUDFLARE_API_TOKEN` only.
  */
 export function isCloudflareD1Available(): boolean {
   return !!(
     process.env.CLOUDFLARE_ACCOUNT_ID &&
     process.env.CLOUDFLARE_API_TOKEN &&
     process.env.CLOUDFLARE_D1_DATABASE_ID
+  )
+}
+
+/**
+ * Token used for blog thumbs up/down D1 calls. When set, votes never use `CLOUDFLARE_API_TOKEN`.
+ * Falls back to `CLOUDFLARE_API_TOKEN` when unset (single-token setups).
+ */
+function blogVoteD1ApiToken(): string | undefined {
+  if (process.env.CLOUDFLARE_API_TOKEN_BLOG_VOTES) {
+    return process.env.CLOUDFLARE_API_TOKEN_BLOG_VOTES
+  }
+  return process.env.CLOUDFLARE_API_TOKEN
+}
+
+/**
+ * Whether blog vote storage can call D1 (same DB as newsletter; optional dedicated vote token).
+ */
+export function isBlogVoteStorageAvailable(): boolean {
+  return !!(
+    process.env.CLOUDFLARE_ACCOUNT_ID &&
+    process.env.CLOUDFLARE_D1_DATABASE_ID &&
+    blogVoteD1ApiToken()
   )
 }
 
@@ -42,15 +65,31 @@ function getD1ApiUrl(): string {
   return `https://api.cloudflare.com/client/v4/accounts/${accountId}/d1/database/${databaseId}/query`
 }
 
+type D1TokenMode = 'default' | 'blogVotes'
+
 /**
  * Execute a query on Cloudflare D1
  */
-async function executeD1Query(query: string, params: D1SqlParam[] = []): Promise<D1QueryBatch> {
-  if (!isCloudflareD1Available()) {
-    throw new Error('Cloudflare D1 is not configured')
+async function executeD1Query(
+  query: string,
+  params: D1SqlParam[] = [],
+  tokenMode: D1TokenMode = 'default'
+): Promise<D1QueryBatch> {
+  const tokenVarHint =
+    tokenMode === 'blogVotes'
+      ? 'CLOUDFLARE_API_TOKEN_BLOG_VOTES (or CLOUDFLARE_API_TOKEN if the vote-specific token is unset)'
+      : 'CLOUDFLARE_API_TOKEN'
+
+  if (tokenMode === 'default') {
+    if (!isCloudflareD1Available()) {
+      throw new Error('Cloudflare D1 is not configured')
+    }
+  } else if (!isBlogVoteStorageAvailable()) {
+    throw new Error('Blog vote D1 storage is not configured')
   }
 
-  const apiToken = process.env.CLOUDFLARE_API_TOKEN
+  const apiToken =
+    tokenMode === 'blogVotes' ? blogVoteD1ApiToken()! : process.env.CLOUDFLARE_API_TOKEN!
   const url = getD1ApiUrl()
 
   const response = await fetch(url, {
@@ -70,7 +109,9 @@ async function executeD1Query(query: string, params: D1SqlParam[] = []): Promise
     let hint = ''
     if (/7500|permission/i.test(errorText)) {
       hint =
-        ' Hint: Your CLOUDFLARE_API_TOKEN needs Account → D1 → Edit on the same account as CLOUDFLARE_ACCOUNT_ID. Read-only D1 tokens will fail. See https://developers.cloudflare.com/d1/tutorials/import-to-d1-with-rest-api/'
+        tokenMode === 'blogVotes'
+          ? ` Hint: ${tokenVarHint} needs Account → D1 → Edit on the same account as CLOUDFLARE_ACCOUNT_ID. Read-only D1 tokens will fail. See https://developers.cloudflare.com/d1/tutorials/import-to-d1-with-rest-api/`
+          : ' Hint: Your CLOUDFLARE_API_TOKEN needs Account → D1 → Edit on the same account as CLOUDFLARE_ACCOUNT_ID. Read-only D1 tokens will fail. See https://developers.cloudflare.com/d1/tutorials/import-to-d1-with-rest-api/'
     }
     throw new Error(`Cloudflare D1 API error: ${response.status} ${errorText}${hint}`)
   }
@@ -82,7 +123,9 @@ async function executeD1Query(query: string, params: D1SqlParam[] = []): Promise
     let hint = ''
     if (/7500|permission/i.test(errStr)) {
       hint =
-        ' Hint: Use an API token with Account → D1 → Edit (not D1 Read only). Match CLOUDFLARE_ACCOUNT_ID to the account that owns the database.'
+        tokenMode === 'blogVotes'
+          ? ` Hint: Use Account → D1 → Edit on ${tokenVarHint}. Match CLOUDFLARE_ACCOUNT_ID to the account that owns the database.`
+          : ' Hint: Use an API token with Account → D1 → Edit (not D1 Read only). Match CLOUDFLARE_ACCOUNT_ID to the account that owns the database.'
     }
     throw new Error(`Cloudflare D1 query failed: ${errStr}${hint}`)
   }
@@ -262,18 +305,22 @@ export async function markD1PostAsSent(slug: string, title: string, date: string
 const BLOG_VOTE_COUNTS_TABLE = 'blog_vote_counts'
 const BLOG_VOTERS_TABLE = 'blog_voters'
 
+function executeD1BlogVoteQuery(query: string, params: D1SqlParam[] = []): Promise<D1QueryBatch> {
+  return executeD1Query(query, params, 'blogVotes')
+}
+
 export interface BlogVoteCounts {
   thumbsUp: number
   thumbsDown: number
 }
 
 export async function ensureBlogVoteTables(): Promise<void> {
-  await executeD1Query(`CREATE TABLE IF NOT EXISTS ${BLOG_VOTE_COUNTS_TABLE} (
+  await executeD1BlogVoteQuery(`CREATE TABLE IF NOT EXISTS ${BLOG_VOTE_COUNTS_TABLE} (
   slug TEXT PRIMARY KEY,
   thumbs_up INTEGER NOT NULL DEFAULT 0,
   thumbs_down INTEGER NOT NULL DEFAULT 0
 )`)
-  await executeD1Query(`CREATE TABLE IF NOT EXISTS ${BLOG_VOTERS_TABLE} (
+  await executeD1BlogVoteQuery(`CREATE TABLE IF NOT EXISTS ${BLOG_VOTERS_TABLE} (
   slug TEXT NOT NULL,
   voter_id TEXT NOT NULL,
   vote TEXT NOT NULL CHECK (vote IN ('up', 'down')),
@@ -283,7 +330,7 @@ export async function ensureBlogVoteTables(): Promise<void> {
 
 export async function getBlogVoteCountsForSlug(slug: string): Promise<BlogVoteCounts> {
   await ensureBlogVoteTables()
-  const result = await executeD1Query(
+  const result = await executeD1BlogVoteQuery(
     `SELECT thumbs_up, thumbs_down FROM ${BLOG_VOTE_COUNTS_TABLE} WHERE slug = ? LIMIT 1`,
     [slug]
   )
@@ -301,7 +348,7 @@ export async function getAllBlogVoteCountRows(): Promise<
   Array<{ slug: string; thumbsUp: number; thumbsDown: number }>
 > {
   await ensureBlogVoteTables()
-  const result = await executeD1Query(
+  const result = await executeD1BlogVoteQuery(
     `SELECT slug, thumbs_up, thumbs_down FROM ${BLOG_VOTE_COUNTS_TABLE} ORDER BY slug ASC`
   )
   const rows = result?.results || []
@@ -332,12 +379,12 @@ export async function recordBlogVote(
   _retryDepth = 0
 ): Promise<BlogVoteCounts> {
   await ensureBlogVoteTables()
-  await executeD1Query(
+  await executeD1BlogVoteQuery(
     `INSERT OR IGNORE INTO ${BLOG_VOTE_COUNTS_TABLE} (slug, thumbs_up, thumbs_down) VALUES (?, 0, 0)`,
     [slug]
   )
 
-  const existingResult = await executeD1Query(
+  const existingResult = await executeD1BlogVoteQuery(
     `SELECT vote FROM ${BLOG_VOTERS_TABLE} WHERE slug = ? AND voter_id = ? LIMIT 1`,
     [slug, voterId]
   )
@@ -350,7 +397,7 @@ export async function recordBlogVote(
 
   if (!previousVote) {
     try {
-      await executeD1Query(
+      await executeD1BlogVoteQuery(
         `INSERT INTO ${BLOG_VOTERS_TABLE} (slug, voter_id, vote) VALUES (?, ?, ?)`,
         [slug, voterId, vote]
       )
@@ -361,12 +408,12 @@ export async function recordBlogVote(
       throw e
     }
     if (vote === 'up') {
-      await executeD1Query(
+      await executeD1BlogVoteQuery(
         `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_up = thumbs_up + 1 WHERE slug = ?`,
         [slug]
       )
     } else {
-      await executeD1Query(
+      await executeD1BlogVoteQuery(
         `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_down = thumbs_down + 1 WHERE slug = ?`,
         [slug]
       )
@@ -374,18 +421,17 @@ export async function recordBlogVote(
     return getBlogVoteCountsForSlug(slug)
   }
 
-  await executeD1Query(`UPDATE ${BLOG_VOTERS_TABLE} SET vote = ? WHERE slug = ? AND voter_id = ?`, [
-    vote,
-    slug,
-    voterId,
-  ])
+  await executeD1BlogVoteQuery(
+    `UPDATE ${BLOG_VOTERS_TABLE} SET vote = ? WHERE slug = ? AND voter_id = ?`,
+    [vote, slug, voterId]
+  )
   if (previousVote === 'up' && vote === 'down') {
-    await executeD1Query(
+    await executeD1BlogVoteQuery(
       `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_up = thumbs_up - 1, thumbs_down = thumbs_down + 1 WHERE slug = ?`,
       [slug]
     )
   } else if (previousVote === 'down' && vote === 'up') {
-    await executeD1Query(
+    await executeD1BlogVoteQuery(
       `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_down = thumbs_down - 1, thumbs_up = thumbs_up + 1 WHERE slug = ?`,
       [slug]
     )

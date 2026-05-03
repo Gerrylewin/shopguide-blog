@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
   try {
     const cloudflareAccountId = process.env.CLOUDFLARE_ACCOUNT_ID
     const cloudflareApiToken = process.env.CLOUDFLARE_API_TOKEN
+    const cloudflareBlogVoteToken = process.env.CLOUDFLARE_API_TOKEN_BLOG_VOTES
     const cloudflareD1Id = process.env.CLOUDFLARE_D1_DATABASE_ID
     const isVercel = !!process.env.VERCEL
     const nodeEnv = process.env.NODE_ENV
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
         cloudflareD1Configured: cloudflareD1Available,
         cloudflareAccountId: cloudflareAccountId ? 'Set (hidden)' : 'Not set',
         cloudflareApiToken: cloudflareApiToken ? 'Set (hidden)' : 'Not set',
+        cloudflareApiTokenBlogVotes: cloudflareBlogVoteToken ? 'Set (hidden)' : 'Not set',
         cloudflareD1Id: cloudflareD1Id ? 'Set (hidden)' : 'Not set',
       },
       storage: {

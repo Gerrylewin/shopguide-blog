@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { allBlogs } from 'contentlayer/generated'
 import {
-  isCloudflareD1Available,
+  isBlogVoteStorageAvailable,
   getBlogVoteCountsForSlug,
   recordBlogVote,
 } from '@/lib/cloudflare-d1'
@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
   if (!allowedSlugs().has(slug)) {
     return NextResponse.json({ error: 'Unknown post' }, { status: 404 })
   }
-  if (!isCloudflareD1Available()) {
+  if (!isBlogVoteStorageAvailable()) {
     return NextResponse.json({
       thumbsUp: 0,
       thumbsDown: 0,
@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isCloudflareD1Available()) {
+  if (!isBlogVoteStorageAvailable()) {
     return NextResponse.json({ error: 'Voting is not available' }, { status: 503 })
   }
 
