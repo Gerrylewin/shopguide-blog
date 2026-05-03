@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic'
  * - Via a cron job
  */
 export async function POST(req: NextRequest) {
-  const denied = requireCronOrAdminApi(req)
+  const denied = await requireCronOrAdminApi(req)
   if (denied) return denied
 
   try {
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
  * Get status of sent posts
  */
 export async function GET(req: NextRequest) {
-  const denied = requireCronOrAdminApi(req)
+  const denied = await requireCronOrAdminApi(req)
   if (denied) return denied
   try {
     const { getSentPosts } = await import('@/lib/blog-post-tracker')

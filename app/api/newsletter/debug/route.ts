@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
  * Debug endpoint to check newsletter storage configuration
  */
 export async function GET(req: NextRequest) {
-  const denied = requireAdminApi(req)
+  const denied = await requireAdminApi(req)
   if (denied) return denied
   try {
     const cloudflareAccountId = process.env.CLOUDFLARE_ACCOUNT_ID

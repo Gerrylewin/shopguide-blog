@@ -5,6 +5,7 @@ import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import ClerkAuthNav from './ClerkAuthNav'
 import NextImage from 'next/image'
 
 // Header component with navigation and theme switching
@@ -64,6 +65,7 @@ const Header = () => {
             })}
         </div>
         <div className="flex items-center space-x-4 sm:space-x-6">
+          <ClerkAuthNav />
           <SearchButton />
           <ThemeSwitch />
           <MobileNav />

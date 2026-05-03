@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
  * Get all newsletter subscribers (admin only - you may want to add auth)
  */
 export async function GET(req: NextRequest) {
-  const denied = requireAdminApi(req)
+  const denied = await requireAdminApi(req)
   if (denied) return denied
   try {
     const subscribers = await getSubscribers()
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
  * Add a subscriber manually
  */
 export async function POST(req: NextRequest) {
-  const denied = requireAdminApi(req)
+  const denied = await requireAdminApi(req)
   if (denied) return denied
   try {
     const body = await req.json()
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
  * Remove a subscriber
  */
 export async function DELETE(req: NextRequest) {
-  const denied = requireAdminApi(req)
+  const denied = await requireAdminApi(req)
   if (denied) return denied
   try {
     const body = await req.json()

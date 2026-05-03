@@ -2,7 +2,6 @@ import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import { getAllBlogVoteCountRows, isCloudflareD1Available } from '@/lib/cloudflare-d1'
-import { getAdminSecret } from '@/lib/admin-access'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,33 +17,6 @@ type Row = {
 }
 
 export default async function BlogVotesAdminPage() {
-  const secret = getAdminSecret()
-
-  if (!secret) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-900">
-        <div className="max-w-lg rounded-lg border border-gray-200 bg-white p-6 text-gray-800 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
-          <h1 className="text-lg font-semibold">Blog vote dashboard</h1>
-          <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Add{' '}
-            <code className="rounded bg-gray-100 px-1 font-mono text-xs dark:bg-gray-900">
-              ADMIN_ACCESS_SECRET
-            </code>{' '}
-            (recommended) or{' '}
-            <code className="rounded bg-gray-100 px-1 font-mono text-xs dark:bg-gray-900">
-              BLOG_VOTES_ADMIN_SECRET
-            </code>{' '}
-            in Vercel → Environment Variables, redeploy, then visit{' '}
-            <code className="rounded bg-gray-100 px-1 font-mono text-xs dark:bg-gray-900">
-              /admin/blog-votes?token=YOUR_SECRET
-            </code>{' '}
-            once to set your browser session.
-          </p>
-        </div>
-      </div>
-    )
-  }
-
   if (!isCloudflareD1Available()) {
     return (
       <div className="min-h-screen bg-gray-50 px-4 py-10 dark:bg-gray-900">
@@ -117,8 +89,7 @@ export default async function BlogVotesAdminPage() {
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
             Thumbs up/down collected from post pages. Higher &quot;Net&quot; means more readers
-            found the post helpful. Access requires an admin session (sign in with{' '}
-            <code className="font-mono text-xs">?token=</code> when prompted).
+            found the post helpful. Admin routes require signing in with Clerk.
           </p>
           <div className="mt-4 flex flex-wrap gap-4">
             <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800">

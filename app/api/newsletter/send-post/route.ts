@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
  * Idempotent: if this post was already sent, returns success without sending again.
  */
 export async function POST(req: NextRequest) {
-  const denied = requireAdminApi(req)
+  const denied = await requireAdminApi(req)
   if (denied) return denied
 
   try {

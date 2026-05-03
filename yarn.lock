@@ -1505,6 +1505,68 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@clerk/backend@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "@clerk/backend@npm:3.4.4"
+  dependencies:
+    "@clerk/shared": ^4.9.0
+    standardwebhooks: ^1.0.0
+    tslib: 2.8.1
+  checksum: 5d535fe69f9c27f2a2deb1f31b2dc8bbed41806fd3b1eb4e9801064f7e4ba9329569d7c894fb93fac2acc8b958ab7d381b9a5de2dd4d6422572d8a9f8550e003
+  languageName: node
+  linkType: hard
+
+"@clerk/nextjs@npm:latest":
+  version: 7.3.0
+  resolution: "@clerk/nextjs@npm:7.3.0"
+  dependencies:
+    "@clerk/backend": ^3.4.4
+    "@clerk/react": ^6.5.0
+    "@clerk/shared": ^4.9.0
+    server-only: 0.0.1
+    tslib: 2.8.1
+  peerDependencies:
+    next: ^15.2.8 || ^15.3.8 || ^15.4.10 || ^15.5.9 || ^15.6.0-0 || ^16.0.10 || ^16.1.0-0
+    react: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+    react-dom: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+  checksum: a3f577b744cedcbf0a881f1288c13bb968472a3b3a171df3a8db3b3ecb01a6e5209fa5383521f9302b7d6d1fed0b92795c002868b5c06f8c04bf60d8112a9a04
+  languageName: node
+  linkType: hard
+
+"@clerk/react@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "@clerk/react@npm:6.5.0"
+  dependencies:
+    "@clerk/shared": ^4.9.0
+    tslib: 2.8.1
+  peerDependencies:
+    react: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+    react-dom: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+  checksum: b2e6c055e0b68f98dfaa3822cab1199bd367622feba00fe7496b451529d0def0606648916a49d61e81a8ad93b4fb052f6a468e96774cba7f1f75555340fb4698
+  languageName: node
+  linkType: hard
+
+"@clerk/shared@npm:^4.9.0":
+  version: 4.9.0
+  resolution: "@clerk/shared@npm:4.9.0"
+  dependencies:
+    "@tanstack/query-core": ^5.100.6
+    dequal: 2.0.3
+    glob-to-regexp: 0.4.1
+    js-cookie: 3.0.5
+    std-env: ^3.9.0
+  peerDependencies:
+    react: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+    react-dom: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 98ee819ea8d7c8f6e3874683361418a385de11ec51bea6564274d6ef32ebb28d7aa11dd0d6b1d0fe5f001b56590af2264d513545cc808f2aa1766333d4b4f64f
+  languageName: node
+  linkType: hard
+
 "@cloudflare/workers-types@npm:^4.20251128.0":
   version: 4.20251128.0
   resolution: "@cloudflare/workers-types@npm:4.20251128.0"
@@ -3816,6 +3878,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:^5.100.6":
+  version: 5.100.8
+  resolution: "@tanstack/query-core@npm:5.100.8"
+  checksum: b2938f074c1ba75a69f0f9ad25b27d2e5d5e144c204e9bce4408206ca27e1cc43735413fbb8d7174a84a98b24fd559dbdcd4f9db3d7bedcb748793a996f16059
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-virtual@npm:^3.8.1":
   version: 3.13.12
   resolution: "@tanstack/react-virtual@npm:3.13.12"
@@ -5536,7 +5605,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dequal@npm:^2.0.0":
+"dequal@npm:2.0.3, dequal@npm:^2.0.0":
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
   checksum: 8679b850e1a3d0ebbc46ee780d5df7b478c23f335887464023a631d1b9af051ad4a6595a44220f9ff8ff95a8ddccf019b5ad778a976fd7bbf77383d36f412f90
@@ -6870,6 +6939,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob-to-regexp@npm:0.4.1":
+  version: 0.4.1
+  resolution: "glob-to-regexp@npm:0.4.1"
+  checksum: e795f4e8f06d2a15e86f76e4d92751cf8bbfcf0157cea5c2f0f35678a8195a750b34096b1256e436f0cebc1883b5ff0888c47348443e69546a5a87f9e1eb1167
+  languageName: node
+  linkType: hard
+
 "glob@npm:^11.0.3":
   version: 11.0.3
   resolution: "glob@npm:11.0.3"
@@ -7964,6 +8040,13 @@ __metadata:
   bin:
     jiti: lib/jiti-cli.mjs
   checksum: 9394e29c5e40d1ca8267923160d8d86706173c9ff30c901097883434b0c4866de2c060427b6a9a5843bb3e42fa3a3c8b5b2228531d3dd4f4f10c5c6af355bb86
+  languageName: node
+  linkType: hard
+
+"js-cookie@npm:3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 2dbd2809c6180fbcf060c6957cb82dbb47edae0ead6bd71cbeedf448aa6b6923115003b995f7d3e3077bfe2cb76295ea6b584eb7196cca8ba0a09f389f64967a
   languageName: node
   linkType: hard
 
@@ -11390,6 +11473,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"server-only@npm:0.0.1":
+  version: 0.0.1
+  resolution: "server-only@npm:0.0.1"
+  checksum: c432348956641ea3f460af8dc3765f3a1bdbcf7a1e0205b0756d868e6e6fe8934cdee6bff68401a1dd49ba4a831c75916517a877446d54b334f7de36fa273e53
+  languageName: node
+  linkType: hard
+
 "set-function-length@npm:^1.2.2":
   version: 1.2.2
   resolution: "set-function-length@npm:1.2.2"
@@ -11787,6 +11877,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"standardwebhooks@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "standardwebhooks@npm:1.0.0"
+  dependencies:
+    "@stablelib/base64": ^1.0.0
+    fast-sha256: ^1.3.0
+  checksum: 02b74a3e4cd131affe8bf18945360747a5a0bf81c1d62a7bbbea3d40976b4fef4bb37de71a35cdc0fdc4d6f0d951a3b6031052e78bd086dc9b09b629b82d3919
+  languageName: node
+  linkType: hard
+
+"std-env@npm:^3.9.0":
+  version: 3.10.0
+  resolution: "std-env@npm:3.10.0"
+  checksum: 51d641b36b0fae494a546fb8446d39a837957fbf902c765c62bd12af8e50682d141c4087ca032f1192fa90330c4f6ff23fd6c9795324efacd1684e814471e0e0
+  languageName: node
+  linkType: hard
+
 "stop-iteration-iterator@npm:^1.1.0":
   version: 1.1.0
   resolution: "stop-iteration-iterator@npm:1.1.0"
@@ -12131,6 +12238,7 @@ __metadata:
   resolution: "tailwind-nextjs-starter-blog@workspace:."
   dependencies:
     "@algolia/client-search": ^5.43.0
+    "@clerk/nextjs": latest
     "@cloudflare/workers-types": ^4.20251128.0
     "@docsearch/react": ^3.6.2
     "@eslint/eslintrc": ^3.2.0
@@ -12340,7 +12448,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.3, tslib@npm:^2.4.0, tslib@npm:^2.4.1, tslib@npm:^2.8.0":
+"tslib@npm:2.8.1, tslib@npm:^2.0.0, tslib@npm:^2.0.3, tslib@npm:^2.4.0, tslib@npm:^2.4.1, tslib@npm:^2.8.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
