@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from './Link'
 import Image from './Image'
+import { SHOPIFY_APP_STORE_URL } from '@/data/shopifyApp'
 
 interface ShopifyCTAProps {
   title?: string
@@ -13,7 +14,7 @@ const ShopifyCTA = ({
   title = 'Scale your Shopify store with AI Agents',
   description = 'Join the leading Shopify merchants using ShopGuide to automate discovery and increase AOV.',
   buttonText = 'View on Shopify App Store',
-  href = 'https://apps.shopify.com/die-ai-agent-official-app',
+  href = SHOPIFY_APP_STORE_URL,
 }: ShopifyCTAProps) => {
   return (
     <div className="my-8 overflow-hidden rounded-xl border border-gray-200 bg-[#f6f6f7] shadow-sm dark:border-gray-800 dark:bg-gray-900">

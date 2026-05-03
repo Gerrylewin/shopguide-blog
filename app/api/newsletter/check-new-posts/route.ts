@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { allBlogs } from 'contentlayer/generated'
+import { requireCronOrAdminApi } from '@/lib/admin-access'
 import { checkAndSendNewPosts } from '@/lib/blog-post-tracker'
 
 export const dynamic = 'force-dynamic'
@@ -14,15 +15,10 @@ export const dynamic = 'force-dynamic'
  * - Via a cron job
  */
 export async function POST(req: NextRequest) {
+  const denied = requireCronOrAdminApi(req)
+  if (denied) return denied
+
   try {
-    // Optional: Add authentication/authorization here
-    const authHeader = req.headers.get('authorization')
-    const expectedToken = process.env.NEWSLETTER_API_TOKEN
-
-    if (expectedToken && authHeader !== `Bearer ${expectedToken}`) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
     console.log('🔵 [NEWSLETTER CHECK] Checking for new blog posts to email...')
 
     const result = await checkAndSendNewPosts(allBlogs)
@@ -47,7 +43,9 @@ export async function POST(req: NextRequest) {
  * GET /api/newsletter/check-new-posts
  * Get status of sent posts
  */
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const denied = requireCronOrAdminApi(req)
+  if (denied) return denied
   try {
     const { getSentPosts } = await import('@/lib/blog-post-tracker')
     const sentPosts = await getSentPosts()

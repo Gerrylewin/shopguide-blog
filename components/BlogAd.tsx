@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from './Link'
 import Image from './Image'
 import { SHOPIFY_GREEN_WORDMARK_URL } from '@/lib/shopify-brand'
-
-const SHOPIFY_APP_URL = 'https://apps.shopify.com/die-ai-agent-official-app'
+import { SHOPIFY_APP_STORE_URL } from '@/data/shopifyApp'
 
 /**
  * Redesigned BlogAd - More Professional, Shopify-focused.
@@ -79,7 +78,12 @@ function BlogAdCard({
           </div>
         </div>
 
-        <Link href={SHOPIFY_APP_URL} target="_blank" rel="noopener noreferrer" className={btnCls}>
+        <Link
+          href={SHOPIFY_APP_STORE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={btnCls}
+        >
           Install ShopGuide
           <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
