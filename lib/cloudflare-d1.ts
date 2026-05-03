@@ -291,13 +291,20 @@ export async function getAllBlogVoteCountRows(): Promise<
   }))
 }
 
+function isSqliteUniqueConstraintError(e: unknown): boolean {
+  const msg = e instanceof Error ? e.message : String(e)
+  return /UNIQUE constraint|SQLITE_CONSTRAINT_UNIQUE|constraint failed/i.test(msg)
+}
+
 /**
  * Record or update a vote. Same voter can change from up to down (counts adjusted).
  */
 export async function recordBlogVote(
   slug: string,
   voterId: string,
-  vote: 'up' | 'down'
+  vote: 'up' | 'down',
+  /** @internal retry after concurrent INSERT race */
+  _retryDepth = 0
 ): Promise<BlogVoteCounts> {
   await ensureBlogVoteTables()
   await executeD1Query(
@@ -317,10 +324,17 @@ export async function recordBlogVote(
   }
 
   if (!previousVote) {
-    await executeD1Query(
-      `INSERT INTO ${BLOG_VOTERS_TABLE} (slug, voter_id, vote) VALUES (?, ?, ?)`,
-      [slug, voterId, vote]
-    )
+    try {
+      await executeD1Query(
+        `INSERT INTO ${BLOG_VOTERS_TABLE} (slug, voter_id, vote) VALUES (?, ?, ?)`,
+        [slug, voterId, vote]
+      )
+    } catch (e) {
+      if (_retryDepth < 1 && isSqliteUniqueConstraintError(e)) {
+        return recordBlogVote(slug, voterId, vote, _retryDepth + 1)
+      }
+      throw e
+    }
     if (vote === 'up') {
       await executeD1Query(
         `UPDATE ${BLOG_VOTE_COUNTS_TABLE} SET thumbs_up = thumbs_up + 1 WHERE slug = ?`,

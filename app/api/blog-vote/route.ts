@@ -10,6 +10,44 @@ export const dynamic = 'force-dynamic'
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
+/** Maps Cloudflare D1 failures to a safe client message (see Vercel logs for full detail). */
+function voteStorageResponse(e: unknown): { status: number; error: string } {
+  const msg = e instanceof Error ? e.message : String(e)
+
+  if (/Cloudflare D1 API error:\s*404/i.test(msg)) {
+    return {
+      status: 503,
+      error:
+        'Vote database was not found. Check CLOUDFLARE_D1_DATABASE_ID and that the D1 database exists in the Cloudflare account matching CLOUDFLARE_ACCOUNT_ID.',
+    }
+  }
+
+  if (
+    /7500|permission|not authorized|Cloudflare D1 API error:\s*(401|403)|D1 API error:\s*(401|403)/i.test(
+      msg
+    )
+  ) {
+    return {
+      status: 503,
+      error:
+        'Vote storage rejected the request. Create a Cloudflare API token with Account → D1 → Edit (not read-only), scoped to the account that owns the database.',
+    }
+  }
+
+  if (/Cloudflare D1 query failed/i.test(msg) && /7500|permission|authorize/i.test(msg)) {
+    return {
+      status: 503,
+      error:
+        'Vote storage permission denied. Confirm the API token has D1 Edit access for CLOUDFLARE_ACCOUNT_ID.',
+    }
+  }
+
+  return {
+    status: 500,
+    error: 'Could not save vote',
+  }
+}
+
 function allowedSlugs(): Set<string> {
   const isProduction = process.env.NODE_ENV === 'production'
   const posts = isProduction ? allBlogs.filter((p) => p.draft !== true) : allBlogs
@@ -86,6 +124,7 @@ export async function POST(req: NextRequest) {
     })
   } catch (e) {
     console.error('[blog-vote] record failed', e)
-    return NextResponse.json({ error: 'Could not save vote' }, { status: 500 })
+    const { status, error } = voteStorageResponse(e)
+    return NextResponse.json({ error }, { status })
   }
 }
