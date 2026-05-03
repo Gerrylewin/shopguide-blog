@@ -130,7 +130,13 @@ export default function BlogPostVote({ slug }: Props) {
   }
 
   if (!enabled) {
-    return null
+    return (
+      <aside className={FLOAT_SHELL} aria-live="polite" aria-label="Article feedback unavailable">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          We couldn’t load reader feedback. Please try again later.
+        </p>
+      </aside>
+    )
   }
 
   const total = thumbsUp + thumbsDown

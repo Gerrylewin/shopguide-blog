@@ -42,7 +42,43 @@ export default async function BlogVotesAdminPage() {
   const publishedPosts = isProduction ? allBlogs.filter((p) => p.draft !== true) : allBlogs
   const posts = allCoreContent(sortPosts(publishedPosts))
 
-  const countRows = await getAllBlogVoteCountRows()
+  let countRows: Awaited<ReturnType<typeof getAllBlogVoteCountRows>> = []
+  let loadError: string | null = null
+  try {
+    countRows = await getAllBlogVoteCountRows()
+  } catch (e) {
+    loadError = e instanceof Error ? e.message : String(e)
+  }
+
+  if (loadError) {
+    return (
+      <div className="min-h-screen bg-gray-50 px-4 py-10 dark:bg-gray-900">
+        <div className="mx-auto max-w-3xl rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Blog votes</h1>
+          <p className="mt-2 text-red-600 dark:text-red-400">{loadError}</p>
+          <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+            Create a Cloudflare API token with{' '}
+            <strong className="text-gray-800 dark:text-gray-200">Account → D1 → Edit</strong> for
+            the account that owns your D1 database (not D1 Read). Confirm{' '}
+            <code className="rounded bg-gray-100 px-1 dark:bg-gray-700">CLOUDFLARE_ACCOUNT_ID</code>{' '}
+            matches Workers dashboard → your account ID, and{' '}
+            <code className="rounded bg-gray-100 px-1 dark:bg-gray-700">
+              CLOUDFLARE_D1_DATABASE_ID
+            </code>{' '}
+            is the database UUID. Docs:{' '}
+            <a
+              className="text-primary-600 dark:text-primary-400 underline"
+              href="https://developers.cloudflare.com/d1/tutorials/import-to-d1-with-rest-api/"
+            >
+              D1 REST API token setup
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   const countMap = new Map(countRows.map((r) => [r.slug, r]))
 
   const merged: Row[] = posts.map((p) => {

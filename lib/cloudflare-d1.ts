@@ -53,13 +53,24 @@ async function executeD1Query(query: string, params: any[] = []): Promise<any> {
 
   if (!response.ok) {
     const errorText = await response.text()
-    throw new Error(`Cloudflare D1 API error: ${response.status} ${errorText}`)
+    let hint = ''
+    if (/7500|permission/i.test(errorText)) {
+      hint =
+        ' Hint: Your CLOUDFLARE_API_TOKEN needs Account → D1 → Edit on the same account as CLOUDFLARE_ACCOUNT_ID. Read-only D1 tokens will fail. See https://developers.cloudflare.com/d1/tutorials/import-to-d1-with-rest-api/'
+    }
+    throw new Error(`Cloudflare D1 API error: ${response.status} ${errorText}${hint}`)
   }
 
   const result = await response.json()
 
   if (!result.success) {
-    throw new Error(`Cloudflare D1 query failed: ${JSON.stringify(result.errors)}`)
+    const errStr = JSON.stringify(result.errors)
+    let hint = ''
+    if (/7500|permission/i.test(errStr)) {
+      hint =
+        ' Hint: Use an API token with Account → D1 → Edit (not D1 Read only). Match CLOUDFLARE_ACCOUNT_ID to the account that owns the database.'
+    }
+    throw new Error(`Cloudflare D1 query failed: ${errStr}${hint}`)
   }
 
   // Cloudflare D1 REST API returns: { success: true, result: [{ results: [...], meta: {...} }] }

@@ -31,12 +31,21 @@ export async function GET(req: NextRequest) {
       enabled: false,
     })
   }
-  const counts = await getBlogVoteCountsForSlug(slug)
-  return NextResponse.json({
-    thumbsUp: counts.thumbsUp,
-    thumbsDown: counts.thumbsDown,
-    enabled: true,
-  })
+  try {
+    const counts = await getBlogVoteCountsForSlug(slug)
+    return NextResponse.json({
+      thumbsUp: counts.thumbsUp,
+      thumbsDown: counts.thumbsDown,
+      enabled: true,
+    })
+  } catch (e) {
+    console.error('[blog-vote] GET counts failed', e)
+    return NextResponse.json({
+      thumbsUp: 0,
+      thumbsDown: 0,
+      enabled: false,
+    })
+  }
 }
 
 export async function POST(req: NextRequest) {
