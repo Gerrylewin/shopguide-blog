@@ -145,6 +145,18 @@ export async function recordClick(
 }
 
 /**
+ * Generate a signature for tracking URLs to prevent open redirects
+ */
+export function generateTrackingSignature(emailId: string, email: string, url: string): string {
+  const secret = process.env.NEWSLETTER_TRACKING_SECRET
+  if (!secret && process.env.NODE_ENV === 'production') {
+    throw new Error('NEWSLETTER_TRACKING_SECRET must be set in production')
+  }
+  const effectiveSecret = secret || 'newsletter-tracking-secret-dev-fallback'
+  return crypto.createHmac('sha256', effectiveSecret).update(`${emailId}:${email}:${url}`).digest('hex')
+}
+
+/**
  * Generate tracking pixel URL
  */
 export function getTrackingPixelUrl(emailId: string, email: string, baseUrl: string): string {
@@ -160,5 +172,12 @@ export function getTrackedLinkUrl(
   originalUrl: string,
   baseUrl: string
 ): string {
-  return `${baseUrl}/api/newsletter/track/click?emailId=${emailId}&email=${encodeURIComponent(email)}&url=${encodeURIComponent(originalUrl)}`
+  const sig = generateTrackingSignature(emailId, email, originalUrl)
+  const params = new URLSearchParams({
+    emailId,
+    email,
+    url: originalUrl,
+    sig,
+  })
+  return `${baseUrl}/api/newsletter/track/click?${params.toString()}`
 }
