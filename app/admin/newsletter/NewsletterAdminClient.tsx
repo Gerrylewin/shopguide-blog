@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from '@/components/Link'
 import { formatDate } from '@/lib/formatDate'
@@ -95,15 +95,15 @@ export default function NewsletterAdminClient({ posts, trackingData }: Props) {
     }
   }
 
-  const getPostStats = (postSlug: string) => {
-    return trackingData.find((t) => t.postSlug === postSlug)
-  }
+  const trackingMap = useMemo(() => {
+    return new Map(trackingData.map((t) => [t.postSlug, t]))
+  }, [trackingData])
 
   return (
     <div className="space-y-6">
       {posts.map((post) => {
         const postSlug = post.slug
-        const stats = getPostStats(postSlug)
+        const stats = trackingMap.get(postSlug)
         const status = sendStatus[postSlug]
         const isSending = sending === postSlug
 
