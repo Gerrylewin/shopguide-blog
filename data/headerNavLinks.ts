@@ -5,6 +5,7 @@ const headerNavLinks = [
   { href: '/blog', title: 'Blog' },
   { href: '/tags', title: 'Tags' },
   { href: '/integrations', title: 'Integrations' },
+  { href: '/newsletter', title: 'Newsletter' },
   { href: SHOPIFY_APP_STORE_URL, title: 'Install' },
   { href: '/about', title: 'Team' },
 ]

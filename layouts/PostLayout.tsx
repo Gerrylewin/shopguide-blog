@@ -14,6 +14,7 @@ import ReadingProgressBar from '@/components/ReadingProgressBar'
 import BlogAd, { BlogAdInlineWithInsertion } from '@/components/BlogAd'
 import BlogPostVote from '@/components/BlogPostVote'
 import { isBlogVoteStorageAvailable } from '@/lib/cloudflare-d1'
+import NewsletterFormWithLogging from '@/components/NewsletterFormWithLogging'
 
 // Fallback for Bleed component if not available
 type BleedComponent = ({ children }: { children: ReactNode }) => ReactElement
@@ -210,6 +211,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     <Comments slug={slug} />
                   </div>
                 )}
+                <div className="mt-8 flex justify-center border-t border-gray-200 pt-8 pb-8 dark:border-gray-700">
+                  <NewsletterFormWithLogging />
+                </div>
               </div>
               <footer>
                 <div className="divide-gray-200 text-sm leading-5 font-medium xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
