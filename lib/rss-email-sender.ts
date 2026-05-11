@@ -155,20 +155,6 @@ export async function sendBlogPostEmails(post: BlogPost) {
     `
     }
 
-    const emailText = `
-${siteMetadata.title}
-
-${post.title}
-
-${post.summary || ''}
-
-Read the full article: ${postUrl}
-
----
-You're receiving this because you subscribed to our newsletter.
-Unsubscribe: ${unsubscribeUrl}
-    `.trim()
-
     // Check if Resend API key is configured
     if (!process.env.RESEND_API_KEY) {
       console.error('RESEND_API_KEY is not set in environment variables')
