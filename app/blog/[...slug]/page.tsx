@@ -23,20 +23,26 @@ const layouts = {
   PostBanner,
 }
 
+const isProduction = process.env.NODE_ENV === 'production'
+const publishedPosts = isProduction ? allBlogs.filter((p) => p.draft !== true) : allBlogs
+const sortedCoreContents = allCoreContent(sortPosts(publishedPosts))
+
+// Pre-compute maps for O(1) lookups
+const postMap = new Map(publishedPosts.map((post) => [post.slug, post]))
+const postIndexMap = new Map(sortedCoreContents.map((post, index) => [post.slug, index]))
+const authorMap = new Map(allAuthors.map((author) => [author.slug, coreContent(author as Authors)]))
+
 export async function generateMetadata(props: {
   params: Promise<{ slug: string[] }>
 }): Promise<Metadata | undefined> {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
   // Filter out drafts in production
-  const isProduction = process.env.NODE_ENV === 'production'
-  const publishedPosts = isProduction ? allBlogs.filter((p) => p.draft !== true) : allBlogs
-  const post = publishedPosts.find((p) => p.slug === slug)
+  const post = postMap.get(slug)
   const authorList = post?.authors || ['default']
-  const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults as Authors)
-  })
+  const authorDetails = authorList
+    .map((author) => authorMap.get(author) || authorMap.get('default'))
+    .filter((a): a is NonNullable<typeof a> => !!a)
   if (!post) {
     return
   }
@@ -115,8 +121,6 @@ export async function generateMetadata(props: {
 
 export const generateStaticParams = async () => {
   // Filter out drafts in production
-  const isProduction = process.env.NODE_ENV === 'production'
-  const publishedPosts = isProduction ? allBlogs.filter((p) => p.draft !== true) : allBlogs
   return publishedPosts.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
 }
 
@@ -124,22 +128,18 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
   // Filter out drafts in production
-  const isProduction = process.env.NODE_ENV === 'production'
-  const publishedPosts = isProduction ? allBlogs.filter((p) => p.draft !== true) : allBlogs
-  const sortedCoreContents = allCoreContent(sortPosts(publishedPosts))
-  const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
+  const postIndex = postIndexMap.get(slug) ?? -1
   if (postIndex === -1) {
     return notFound()
   }
 
   const prev = sortedCoreContents[postIndex + 1]
   const next = sortedCoreContents[postIndex - 1]
-  const post = publishedPosts.find((p) => p.slug === slug) as Blog
+  const post = postMap.get(slug) as Blog
   const authorList = post?.authors || ['default']
-  const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults as Authors)
-  })
+  const authorDetails = authorList
+    .map((author) => authorMap.get(author) || authorMap.get('default'))
+    .filter((a): a is NonNullable<typeof a> => !!a)
   const mainContent = coreContent(post)
   const canonicalPath = `/${post.path}`
   const canonicalUrl = `${siteMetadata.siteUrl}${canonicalPath}`

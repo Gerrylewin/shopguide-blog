@@ -153,7 +153,10 @@ export function generateTrackingSignature(emailId: string, email: string, url: s
     throw new Error('NEWSLETTER_TRACKING_SECRET must be set in production')
   }
   const effectiveSecret = secret || 'newsletter-tracking-secret-dev-fallback'
-  return crypto.createHmac('sha256', effectiveSecret).update(`${emailId}:${email}:${url}`).digest('hex')
+  return crypto
+    .createHmac('sha256', effectiveSecret)
+    .update(`${emailId}:${email}:${url}`)
+    .digest('hex')
 }
 
 /**
