@@ -33,7 +33,7 @@ interface QuoteCardProps {
   sourceLabel?: string
   caption?: string
   image?: string
-  /** Skip grayscale on the avatar (e.g. brand logos that should stay full color). */
+  /** Reserved for future avatar treatments; avatars are always full color. */
   imageVivid?: boolean
 }
 
@@ -44,7 +44,7 @@ export default function QuoteCard({
   sourceLabel,
   caption,
   image,
-  imageVivid,
+  imageVivid: _imageVivid,
 }: QuoteCardProps) {
   const resolvedImage =
     image ??
@@ -54,9 +54,6 @@ export default function QuoteCard({
         ? SHOPIFY_BAG_MARK_PATH
         : undefined)
   const resolvedImageUrl = resolvedImage ? publicAssetUrl(resolvedImage) : undefined
-  const useImageVivid =
-    imageVivid || (!image && isShopifyOfficialAttribution(attribution) && !!resolvedImage)
-
   const attributionEl: ReactNode = source ? (
     <Link
       href={source}
@@ -133,17 +130,16 @@ export default function QuoteCard({
           <footer className="border-primary-500/20 mt-12 flex flex-col gap-x-3 gap-y-4 border-t pt-6 not-italic sm:flex-row sm:items-center">
             <div className="flex items-center gap-x-3">
               {resolvedImageUrl && (
-                <Image
-                  src={resolvedImageUrl}
-                  alt=""
-                  aria-label={attribution}
-                  width={40}
-                  height={40}
-                  className={
-                    'border-primary-500/30 ring-primary-500/20 h-10 w-10 shrink-0 rounded-full border bg-gray-900 object-cover shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 transition-all duration-500 ring-inset' +
-                    (useImageVivid ? '' : ' grayscale group-hover/card:grayscale-0')
-                  }
-                />
+                <span className="border-primary-500/30 ring-primary-500/20 relative h-10 w-10 shrink-0 overflow-hidden rounded-full border bg-gray-900 shadow-[0_0_15px_rgba(46,154,179,0.2)] ring-1 ring-inset">
+                  <Image
+                    src={resolvedImageUrl}
+                    alt=""
+                    aria-label={attribution}
+                    width={40}
+                    height={40}
+                    className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover/card:scale-[1.06] motion-reduce:transition-none motion-reduce:group-hover/card:scale-100"
+                  />
+                </span>
               )}
               <div className="flex items-center gap-x-2">
                 <span className="bg-primary-500/60 h-px w-6" />
