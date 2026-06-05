@@ -40,15 +40,16 @@ An AI agent, however, can look at the chemical profile, the roast date, and the 
 
 The following table outlines the architectural differences between a store built for manual browsing and one built for the autonomous internet.
 
-| Name / Entity               | Description                                           | Key Features                                 | Use Case                          | Why It Matters for AI / Automation                                               |
-| :-------------------------- | :---------------------------------------------------- | :------------------------------------------- | :-------------------------------- | :------------------------------------------------------------------------------- |
-| **Human-Centric Catalog**   | Optimized for visual browsing and keyword matching.   | Hierarchical menus, literal titles.          | Manual shopper discovery.         | Low signal; creates "Inventory Shadow" for complex queries.                      |
-| **Agent-Ready Catalog**     | Optimized for programmatic reasoning and intent.       | Rich metafields, semantic indexing.          | Autonomous agent discovery.       | High signal; allows agents to find the "Long Tail" of 10,000+ SKUs.              |
-| **Keyword Search (BM25)**   | Character-based matching system.                      | Token-matching, relevance scores.            | Finding exact known items.        | Too literal; fails at natural language reasoning.                                |
-| **Semantic Discovery**      | Meaning-based matching using vector embeddings.       | Contextual mapping, intent recognition.      | Vague or technical queries.       | Eliminates the "Literalism Tax" that blocks conversion.                         |
-| **Shopify Catalog API**     | Programmatic source of truth for the product graph.   | [Real-time inventory](/blog/shopify-catalog-api-large-inventory-management). | Machine-readable catalog access. | The primary interface for agents to "read" your store without scraping.          |
+| Name / Entity             | Description                                         | Key Features                                                                 | Use Case                         | Why It Matters for AI / Automation                                      |
+| :------------------------ | :-------------------------------------------------- | :--------------------------------------------------------------------------- | :------------------------------- | :---------------------------------------------------------------------- |
+| **Human-Centric Catalog** | Optimized for visual browsing and keyword matching. | Hierarchical menus, literal titles.                                          | Manual shopper discovery.        | Low signal; creates "Inventory Shadow" for complex queries.             |
+| **Agent-Ready Catalog**   | Optimized for programmatic reasoning and intent.    | Rich metafields, semantic indexing.                                          | Autonomous agent discovery.      | High signal; allows agents to find the "Long Tail" of 10,000+ SKUs.     |
+| **Keyword Search (BM25)** | Character-based matching system.                    | Token-matching, relevance scores.                                            | Finding exact known items.       | Too literal; fails at natural language reasoning.                       |
+| **Semantic Discovery**    | Meaning-based matching using vector embeddings.     | Contextual mapping, intent recognition.                                      | Vague or technical queries.      | Eliminates the "Literalism Tax" that blocks conversion.                 |
+| **Shopify Catalog API**   | Programmatic source of truth for the product graph. | [Real-time inventory](/blog/shopify-catalog-api-large-inventory-management). | Machine-readable catalog access. | The primary interface for agents to "read" your store without scraping. |
 
 **Key Takeaways:**
+
 - **Agents don't "click":** They query. Your catalog needs to be a structured database, not just a gallery.
 - **Rich Data is the New SEO:** Metafields and technical specs are more important for agents than keyword-stuffed titles.
 - **Real-time is Mandatory:** An agent cannot recommend a product that sold out two minutes ago; native API integration is non-negotiable.
@@ -75,7 +76,7 @@ An agent-ready catalog is one where product data is structured and accessible in
 In stores with 10,000+ SKUs, traditional navigation (filters and categories) often becomes overwhelming for humans, leading to 'Inventory Shadow.' Agents can process these massive datasets instantly, matching specific, complex needs to the right products without the user ever having to scroll through a 'Load More' button.
 
 **How does ShopGuide help with the 'Literalism Tax'?**
-The Literalism Tax is the revenue lost when customers use natural language but your search bar only understands exact keywords. ShopGuide uses semantic vector search to understand the *meaning* behind a query, ensuring that 'Agent-Ready' stores capture the 30% of revenue typically lost to search abandonment.
+The Literalism Tax is the revenue lost when customers use natural language but your search bar only understands exact keywords. ShopGuide uses semantic vector search to understand the _meaning_ behind a query, ensuring that 'Agent-Ready' stores capture the 30% of revenue typically lost to search abandonment.
 
 **Do I need to change my Shopify theme to be ready for the autonomous internet?**
 No. Being agent-ready is about the data layer, not the visual layer. By using ShopGuide, you can keep your existing theme while providing a high-signal interface for AI agents (and human shoppers) to discover your products more effectively through the Shopify Catalog API.
