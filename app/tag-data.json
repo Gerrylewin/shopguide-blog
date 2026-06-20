@@ -1,6 +1,6 @@
 {
   "agentic-commerce": 96,
-  "shopify-plus": 11,
+  "shopify-plus": 12,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 10,
@@ -43,7 +43,7 @@
   "tools": 1,
   "customer-experience": 8,
   "shopping-guide-website": 1,
-  "agentic-discovery": 2,
+  "agentic-discovery": 3,
   "shopify-seo": 3,
   "large-catalog-discovery": 1,
   "compatibility-anxiety": 1,
@@ -131,7 +131,8 @@
   "large-catalog-management": 1,
   "automation": 1,
   "specialty-retail": 1,
-  "high-sku": 1,
+  "high-sku": 2,
   "automated-product-categorization": 1,
-  "roi": 1
+  "roi": 1,
+  "luxury-commerce": 1
 }
