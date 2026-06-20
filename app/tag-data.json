@@ -1,11 +1,11 @@
 {
-  "agentic-commerce": 87,
+  "agentic-commerce": 88,
   "shopify-plus": 6,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 9,
   "guided-shopping": 26,
-  "shopify-large-catalog": 55,
+  "shopify-large-catalog": 56,
   "online-shopping-guides": 6,
   "discovery-tax": 1,
   "increase-aov-shopify": 14,
@@ -118,5 +118,7 @@
   "pricing": 1,
   "bfcm": 1,
   "supplement-discovery": 1,
-  "wellness-ecommerce": 1
+  "wellness-ecommerce": 1,
+  "shopify-api-large-catalog": 1,
+  "search-abandonment": 1
 }
