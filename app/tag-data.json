@@ -1,6 +1,6 @@
 {
   "agentic-commerce": 96,
-  "shopify-plus": 10,
+  "shopify-plus": 11,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 10,
@@ -12,8 +12,8 @@
   "high-sku-shopify": 5,
   "ecommerce-navigation": 1,
   "ecommerce-scaling": 2,
-  "ecommerce-strategy": 2,
-  "large-catalog": 4,
+  "ecommerce-strategy": 3,
+  "large-catalog": 5,
   "productivity": 1,
   "shopify-roas": 1,
   "ecommerce-marketing": 1,
@@ -43,7 +43,7 @@
   "tools": 1,
   "customer-experience": 8,
   "shopping-guide-website": 1,
-  "agentic-discovery": 1,
+  "agentic-discovery": 2,
   "shopify-seo": 3,
   "large-catalog-discovery": 1,
   "compatibility-anxiety": 1,
@@ -132,5 +132,6 @@
   "automation": 1,
   "specialty-retail": 1,
   "high-sku": 1,
-  "automated-product-categorization": 1
+  "automated-product-categorization": 1,
+  "roi": 1
 }
