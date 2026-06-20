@@ -1,12 +1,12 @@
 {
-  "agentic-commerce": 89,
-  "shopify-plus": 6,
+  "agentic-commerce": 90,
+  "shopify-plus": 7,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 10,
   "guided-shopping": 27,
   "shopify-large-catalog": 56,
-  "online-shopping-guides": 7,
+  "online-shopping-guides": 8,
   "discovery-tax": 1,
   "increase-aov-shopify": 14,
   "high-sku-shopify": 5,
@@ -120,5 +120,7 @@
   "supplement-discovery": 1,
   "wellness-ecommerce": 1,
   "shopify-api-large-catalog": 1,
-  "search-abandonment": 1
+  "search-abandonment": 1,
+  "holiday-marketing": 1,
+  "gift-guide": 1
 }
