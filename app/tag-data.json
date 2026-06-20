@@ -1,10 +1,10 @@
 {
-  "agentic-commerce": 94,
-  "shopify-plus": 8,
+  "agentic-commerce": 95,
+  "shopify-plus": 9,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 10,
-  "guided-shopping": 29,
+  "guided-shopping": 30,
   "shopify-large-catalog": 57,
   "online-shopping-guides": 10,
   "discovery-tax": 1,
@@ -129,5 +129,7 @@
   "inventory-discovery-shopify": 1,
   "dead-stock": 1,
   "large-catalog-management": 1,
-  "automation": 1
+  "automation": 1,
+  "specialty-retail": 1,
+  "high-sku": 1
 }
