@@ -1,6 +1,6 @@
 {
-  "agentic-commerce": 96,
-  "shopify-plus": 12,
+  "agentic-commerce": 97,
+  "shopify-plus": 13,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 10,
@@ -134,5 +134,8 @@
   "high-sku": 2,
   "automated-product-categorization": 1,
   "roi": 1,
-  "luxury-commerce": 1
+  "luxury-commerce": 1,
+  "global-ecommerce": 1,
+  "multi-language": 1,
+  "cross-border": 1
 }
