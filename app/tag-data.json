@@ -1,5 +1,5 @@
 {
-  "agentic-commerce": 92,
+  "agentic-commerce": 93,
   "shopify-plus": 7,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
@@ -13,7 +13,7 @@
   "ecommerce-navigation": 1,
   "ecommerce-scaling": 2,
   "ecommerce-strategy": 2,
-  "large-catalog": 2,
+  "large-catalog": 3,
   "productivity": 1,
   "shopify-roas": 1,
   "ecommerce-marketing": 1,
@@ -125,5 +125,7 @@
   "gift-guide": 1,
   "shopify-large-catalog-search": 1,
   "increase-conversion-shopify": 1,
-  "music-gear": 1
+  "music-gear": 1,
+  "inventory-discovery-shopify": 1,
+  "dead-stock": 1
 }
