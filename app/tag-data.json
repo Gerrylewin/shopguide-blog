@@ -1,12 +1,12 @@
 {
-  "agentic-commerce": 91,
+  "agentic-commerce": 92,
   "shopify-plus": 7,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 10,
-  "guided-shopping": 28,
-  "shopify-large-catalog": 56,
-  "online-shopping-guides": 9,
+  "guided-shopping": 29,
+  "shopify-large-catalog": 57,
+  "online-shopping-guides": 10,
   "discovery-tax": 1,
   "increase-aov-shopify": 14,
   "high-sku-shopify": 5,
@@ -124,5 +124,6 @@
   "holiday-marketing": 1,
   "gift-guide": 1,
   "shopify-large-catalog-search": 1,
-  "increase-conversion-shopify": 1
+  "increase-conversion-shopify": 1,
+  "music-gear": 1
 }
