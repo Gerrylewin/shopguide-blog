@@ -1,6 +1,6 @@
 {
-  "agentic-commerce": 93,
-  "shopify-plus": 7,
+  "agentic-commerce": 94,
+  "shopify-plus": 8,
   "high-sku-discovery": 3,
   "ecommerce-scalability": 1,
   "ai-product-recommendation-shopify": 10,
@@ -127,5 +127,7 @@
   "increase-conversion-shopify": 1,
   "music-gear": 1,
   "inventory-discovery-shopify": 1,
-  "dead-stock": 1
+  "dead-stock": 1,
+  "large-catalog-management": 1,
+  "automation": 1
 }
