@@ -1,5 +1,5 @@
 {
-  "agentic-commerce": 84,
+  "agentic-commerce": 85,
   "ai-agents": 19,
   "shopify": 21,
   "chatbots": 7,
@@ -64,8 +64,10 @@
   "ltv": 2,
   "shop-guide": 2,
   "ecommerce-navigation": 1,
-  "shopify-plus": 6,
+  "shopify-plus": 7,
   "mobile-ux": 1,
+  "multi-brand": 1,
+  "retail-strategy": 1,
   "ai-training": 1,
   "efficiency": 2,
   "alia": 1,
