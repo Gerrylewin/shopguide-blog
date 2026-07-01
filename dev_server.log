@@ -1,0 +1,52 @@
+
+> tailwind-nextjs-starter-blog@2.4.0 start
+> next dev
+
+   ▲ Next.js 15.2.8
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+   - Experiments (use with caution):
+     ✓ optimizeCss
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+Contentlayer config change detected. Updating type definitions and data...
+(node:37432) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Ready in 4.8s
+successCallback /app/.contentlayer
+Local search index generated...
+Generated 111 documents in .contentlayer
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 1770ms (256 modules)
+ ○ Compiling /blog/[...slug] ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (201kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled /blog/[...slug] in 13.1s (2102 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=nil31087hk2gbw70q2dsybbn8w345970p71qy8ri&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+ HEAD /blog/the-amazon-discovery-gap-high-sku-shopify 200 in 17430ms
+ GET /blog/the-amazon-discovery-gap-high-sku-shopify 200 in 622ms
+ GET /blog/clerk-sync-keyless?returnUrl=http%3A%2F%2Flocalhost%3A3000%2Fblog%2Fthe-amazon-discovery-gap-high-sku-shopify 200 in 154ms
+ POST /blog/the-amazon-discovery-gap-high-sku-shopify 303 in 272ms
+ GET /blog/clerk-sync-keyless?returnUrl=http%3A%2F%2Flocalhost%3A3000%2Fblog%2Fthe-amazon-discovery-gap-high-sku-shopify 200 in 52ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 1785ms (1990 modules)
+ GET /blog 200 in 2956ms
+ GET /blog/the-amazon-discovery-gap-high-sku-shopify 200 in 447ms
+ GET /blog/the-amazon-discovery-gap-high-sku-shopify 200 in 642ms
+ GET /blog/clerk-sync-keyless?returnUrl=http%3A%2F%2Flocalhost%3A3000%2Fblog%2Fthe-amazon-discovery-gap-high-sku-shopify 200 in 168ms
+ POST /blog/the-amazon-discovery-gap-high-sku-shopify 303 in 298ms
+ GET /blog/clerk-sync-keyless?returnUrl=http%3A%2F%2Flocalhost%3A3000%2Fblog%2Fthe-amazon-discovery-gap-high-sku-shopify 200 in 41ms
+ GET /blog/the-amazon-discovery-gap-high-sku-shopify 200 in 779ms
+ POST /blog/the-amazon-discovery-gap-high-sku-shopify 200 in 129ms
+ GET /blog/the-amazon-discovery-gap-high-sku-shopify 200 in 764ms
+ GET /blog/clerk-sync-keyless?returnUrl=http%3A%2F%2Flocalhost%3A3000%2Fblog%2Fthe-amazon-discovery-gap-high-sku-shopify 200 in 116ms
+ POST /blog/the-amazon-discovery-gap-high-sku-shopify 303 in 217ms
+ GET /blog/clerk-sync-keyless?returnUrl=http%3A%2F%2Flocalhost%3A3000%2Fblog%2Fthe-amazon-discovery-gap-high-sku-shopify 200 in 45ms
