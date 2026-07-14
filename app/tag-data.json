@@ -1,5 +1,5 @@
 {
-  "agentic-commerce": 118,
+  "agentic-commerce": 119,
   "ai-agents": 19,
   "shopify": 24,
   "chatbots": 7,
@@ -22,7 +22,7 @@
   "boost-aov": 3,
   "creative-supplies": 1,
   "guided-shopping": 38,
-  "shopify-plus": 21,
+  "shopify-plus": 22,
   "shopify-returns": 1,
   "customer-experience": 9,
   "automotive-parts-shopify": 1,
@@ -53,7 +53,7 @@
   "increase-aov": 4,
   "food-beverage": 1,
   "high-sku": 7,
-  "personalization": 3,
+  "personalization": 4,
   "discovery-tax": 1,
   "electronics-shopify-agent": 1,
   "technical-spec-discovery": 1,
@@ -160,5 +160,6 @@
   "cart-abandonment": 1,
   "universal-cart": 1,
   "shopify-checkout": 1,
+  "shopify-zero-party-data-ai": 1,
   "reduce-returns-shopify": 1
 }
