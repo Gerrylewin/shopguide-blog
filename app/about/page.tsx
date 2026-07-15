@@ -111,7 +111,7 @@ export default function Page() {
             <p>
               <strong>Sales and execution</strong> – Noah’s background is in sales and
               entrepreneurship: pre-sales at Enpal (renewables), co-founder of Spotee-Golf, and
-              three-plus years across sales roles. He believes &quot;Sales is everything&quot;—and
+              three-plus years across sales roles. He believes "Sales is everything"—and
               built ShopGuide so the agent does the selling, not just the talking.
             </p>
             <p>
@@ -127,6 +127,33 @@ export default function Page() {
           <AuthorLayout content={mainContent} hideHeading>
             <MDXLayoutRenderer code={author.body.code} />
           </AuthorLayout>
+        </div>
+
+        {/* Maxim Chepurin CTO section */}
+        <div className="pt-8">
+          <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8">
+            <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 dark:border-gray-700/70 dark:bg-gray-900/60">
+              <div className="flex flex-col items-center">
+                <Image
+                  src="https://pbs.twimg.com/profile_images/2058557670882164736/bS3bug-A.jpg"
+                  alt="Maxim Chepurin"
+                  width={192}
+                  height={192}
+                  className="h-48 w-48 rounded-full object-cover"
+                />
+                <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Maxim Chepurin</h3>
+                <div className="text-gray-600 dark:text-gray-300">Chief Technology Officer</div>
+                <div className="flex space-x-3 pt-6">
+                  <SocialIcon kind="linkedin" href="https://www.linkedin.com/in/maxim-chepurin" />
+                  <SocialIcon kind="twitter" href="https://x.com/maximchepurin" />
+                </div>
+              </div>
+            </div>
+            <div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
+              <p><strong>Maxim Chepurin is the new CTO of ShopGuide.</strong> He brings deep expertise in agentic systems, scalable AI infrastructure, and Shopify integrations to lead our technical direction.</p>
+              <p>Maxim ensures our agents are production-grade, high-performance, and deliver real ROI for merchants with large catalogs.</p>
+            </div>
+          </div>
         </div>
       </div>
     </>
