@@ -122,25 +122,42 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Isaac Lewin section: image left, text right */}
-        <div className="pt-8">
-          <AuthorLayout content={mainContent} hideHeading>
-            <MDXLayoutRenderer code={author.body.code} />
-          </AuthorLayout>
-        </div>
-
         {/* Maxim Chepurin CTO section */}
         <div className="pt-8">
-          <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8">
+          <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
             <div className="relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/70 px-6 pt-8 pb-6 dark:border-gray-700/70 dark:bg-gray-900/60">
-              <div className="flex flex-col items-center">
-                <Image
-                  src="https://pbs.twimg.com/profile_images/2058557670882164736/bS3bug-A.jpg"
-                  alt="Maxim Chepurin"
-                  width={192}
-                  height={192}
-                  className="h-48 w-48 rounded-full object-cover"
-                />
+              <BinaryFlowOverlay accentColor="#0891b2" />
+              <div className="relative z-10 flex flex-col items-center space-x-2">
+                <a
+                  href="https://www.linkedin.com/in/maxim-chepurin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer transition-opacity hover:opacity-80"
+                >
+                  <div className="group/avatar relative isolate inline-flex">
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-[-10px] rounded-full bg-cyan-500/25 blur-xl transition-opacity duration-300 group-hover/avatar:opacity-95"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-[-3px] rounded-full bg-cyan-400/45 blur-md transition-opacity duration-300 group-hover/avatar:opacity-100"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-cyan-300/50"
+                    />
+                    <span className="relative z-10 inline-flex rounded-full">
+                      <Image
+                        src="/static/images/maxim-chepurin.jpg"
+                        alt="Maxim Chepurin"
+                        width={192}
+                        height={192}
+                        className="h-48 w-48 rounded-full object-cover"
+                      />
+                    </span>
+                  </div>
+                </a>
                 <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">
                   Maxim Chepurin
                 </h3>
@@ -163,6 +180,13 @@ export default function Page() {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Isaac Lewin section: image left, text right */}
+        <div className="pt-8">
+          <AuthorLayout content={mainContent} hideHeading>
+            <MDXLayoutRenderer code={author.body.code} />
+          </AuthorLayout>
         </div>
       </div>
     </>
