@@ -111,8 +111,8 @@ export default function Page() {
             <p>
               <strong>Sales and execution</strong> – Noah’s background is in sales and
               entrepreneurship: pre-sales at Enpal (renewables), co-founder of Spotee-Golf, and
-              three-plus years across sales roles. He believes "Sales is everything"—and
-              built ShopGuide so the agent does the selling, not just the talking.
+              three-plus years across sales roles. He believes "Sales is everything"—and built
+              ShopGuide so the agent does the selling, not just the talking.
             </p>
             <p>
               <strong>Focused on Shopify</strong> – Noah and the team specialize only on Shopify:
@@ -141,7 +141,9 @@ export default function Page() {
                   height={192}
                   className="h-48 w-48 rounded-full object-cover"
                 />
-                <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Maxim Chepurin</h3>
+                <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">
+                  Maxim Chepurin
+                </h3>
                 <div className="text-gray-600 dark:text-gray-300">Chief Technology Officer</div>
                 <div className="flex space-x-3 pt-6">
                   <SocialIcon kind="linkedin" href="https://www.linkedin.com/in/maxim-chepurin" />
@@ -150,8 +152,15 @@ export default function Page() {
               </div>
             </div>
             <div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
-              <p><strong>Maxim Chepurin is the new CTO of ShopGuide.</strong> He brings deep expertise in agentic systems, scalable AI infrastructure, and Shopify integrations to lead our technical direction.</p>
-              <p>Maxim ensures our agents are production-grade, high-performance, and deliver real ROI for merchants with large catalogs.</p>
+              <p>
+                <strong>Maxim Chepurin is the new CTO of ShopGuide.</strong> He brings deep
+                expertise in agentic systems, scalable AI infrastructure, and Shopify integrations
+                to lead our technical direction.
+              </p>
+              <p>
+                Maxim ensures our agents are production-grade, high-performance, and deliver real
+                ROI for merchants with large catalogs.
+              </p>
             </div>
           </div>
         </div>
