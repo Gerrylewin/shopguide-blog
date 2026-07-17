@@ -1,0 +1,34 @@
+name: PR Checks
+
+# Runs the same pre-build gates that Vercel enforces during deployment, but on
+# every pull request — so a formatting slip or a duplicate blog hero image is
+# caught on the PR instead of silently aborting the Vercel deploy after merge.
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    name: Format & blog hero image checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --no-immutable
+
+      - name: Prettier format check
+        run: yarn format:check
+
+      - name: Blog hero image uniqueness check
+        run: node ./scripts/check-blog-hero-unique.mjs
