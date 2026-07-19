@@ -44,6 +44,7 @@ Thumbs.db
 # IDE
 .vscode
 .idea
+.clerk
 
 # Other
 coverage
