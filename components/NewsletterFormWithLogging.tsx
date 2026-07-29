@@ -176,12 +176,14 @@ export default function NewsletterFormWithLogging({
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className={`rounded-full border-2 border-white bg-gray-200 dark:border-gray-900 ${narrow ? 'h-5 w-5' : 'h-6 w-6'}`}
+              className={`relative overflow-hidden rounded-full border-2 border-white bg-gray-200 dark:border-gray-900 ${narrow ? 'h-5 w-5' : 'h-6 w-6'}`}
             >
-              <img
+              <Image
                 src={`https://i.pravatar.cc/40?img=${i + 10}`}
                 alt="Merchant"
-                className="rounded-full"
+                fill
+                className="object-cover"
+                unoptimized
               />
             </div>
           ))}

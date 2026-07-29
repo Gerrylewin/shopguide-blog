@@ -60,7 +60,7 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
 
         {/* Main image container */}
         <div
-          className="relative aspect-video w-full overflow-hidden bg-black/50"
+          className="relative aspect-video w-full overflow-hidden bg-black/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           role="button"
           tabIndex={0}
           onClick={() => openLightbox(currentIndex)}
@@ -112,7 +112,7 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-200 ${
+              className={`h-2 rounded-full transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                 index === currentIndex
                   ? 'bg-primary-500 w-8 shadow-[0_0_10px_rgba(46,154,179,0.8)]'
                   : 'bg-primary-500/30 hover:bg-primary-500/50 w-2'
