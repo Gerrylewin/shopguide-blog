@@ -44,10 +44,10 @@ Thumbs.db
 # IDE
 .vscode
 .idea
+.clerk
 
 # Other
 coverage
 .cache
 test-results
 .cursor
-
