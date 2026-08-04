@@ -18,109 +18,72 @@ summary: >-
   Path Explorer is ShopGuide's intent-to-action engine. It detects shopper intent from on-page behavior and chat inputs, classifies the journey stage, selects the best next action, and continuously updates the path. It feeds real outcomes into analytics and experimentation so merchants can measure assisted CVR, revenue per session, and AOV impact.
 authors: ['default']
 layout: PostLayout
+images:
+  - 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80'
 ---
 
 ## From Passive Browsing to Measurable Assisted Revenue
 
-Every merchant with a sizable catalog knows the frustration. A customer lands on your site, spends time clicking around, adds a few items… and then disappears. They were _interested_, but the path from interest to purchase was unclear.
+High-SKU Shopify stores live with a quiet tax: shoppers browse, filter, and leave without buying because the path from intent to product is too long or too unclear.
 
-Traditional tools put the burden on the shopper. Path Explorer puts the intelligence in the agent.
+Path Explorer is the engine inside ShopGuide that shortens that distance. It turns raw signals — page views, filter usage, dwell time, chat messages — into a live, stage-aware path that the on-page agent follows. Every step is logged so you can see the conversion and revenue impact.
 
-**Path Explorer** is the feature inside ShopGuide that turns raw browsing signals and chat intent into a dynamic, guided path to purchase. It doesn't just recommend — it classifies where the shopper is in their journey and chooses the highest-confidence next action.
+## What "Shortest Path" Actually Means
 
-## What Path Explorer Actually Does
+It is not a static funnel. It is a real-time decision layer:
 
-Path Explorer continuously observes on-page actions (views, filters, dwell time, comparisons) + explicit chat inputs. It then:
+1. **Detect intent** from behavior + language with confidence scores.
+2. **Classify stage** (discovery → comparison → validation → ready-to-buy).
+3. **Select the highest-confidence next action** for that combination (clarifying question, shortlist, objection handler, or direct offer).
+4. **Deliver through the agent** and update as new signals arrive.
+5. **Attribute outcomes** so assisted sessions show up in revenue numbers.
 
-- Detects and tags shopper intent
-- Classifies the current funnel stage (discovery, comparison, validation, checkout)
-- Selects and executes the best next action (clarifying question, focused shortlist, objection handling, add-to-cart nudge, checkout push)
-- Updates the shopper profile and path in real time as new signals arrive
-- Logs every action and outcome for measurement
+The merchant sees the lift. The shopper feels guided instead of lost.
 
-The result is a living, intent-driven conversation that reduces mid-funnel friction and creates trackable assisted conversions.
+## Why High-SKU Catalogs Need This
 
-## Core Components
+At a few hundred SKUs, search and filters can limp along. At thousands or tens of thousands the combinatorial problem explodes. Shoppers cannot name the exact SKU or the internal category structure. They abandon or open support tickets.
 
-**1. Signal Capture & Intent Parsing**  
-Pulls from Shopify storefront events + chat. Outputs intent tags + confidence scores.
+Path Explorer does not require the shopper to speak your taxonomy. It reads the signals they already give and maps them to the right products and next steps.
 
-**2. Stage Classification**  
-Uses behavior timeline + intent to score where the shopper is (Discovery → Comparison → Validation → Checkout).
+## Built for Measurement
 
-**3. Action Selector & Response Generator**  
-Chooses the optimal next step and generates the agent response or store action (recommendation, cart add, policy answer, etc.).
+Because every guided interaction is logged, you get:
 
-**4. Outcome Tracking & Analytics**  
-Every action is logged. Outcomes (add-to-cart, purchase, bounce) flow into dashboards for assisted revenue, CVR lift, AOV delta, time-to-cart, and objection resolution rates.
+- Assisted conversion rate
+- Revenue attributed to Path Explorer sessions
+- AOV differences on guided vs unguided traffic
+- Data for native A/B tests on openers, guidance style, and placement
 
-**5. Guardrails & Experimentation**  
-Confidence thresholds gate high-impact actions. Falls back to safe guidance when uncertain. Designed for A/B testing and iterative tuning.
+This is the difference between "the agent feels helpful" and "the agent moved the needle."
 
-## Real Integration Points
+## Practical Limits
 
-Path Explorer connects directly to:
+Path Explorer works best when product data has reasonable structure (variants, key metafields). Extremely sparse catalogs will produce less precise guidance. It is also not a full support replacement — complex custom requests still need humans.
 
-- Catalog + Inventory API (accurate, in-stock recommendations)
-- Cart/Checkout API (seamless add-to-cart and nudge)
-- Reviews API (social proof at the right moment)
-- Lifecycle/Email API (follow-up triggered by assisted actions)
-- Analytics + Experimentation layer (KPI dashboards and lift measurement)
-
-## Why This Matters for Merchants
-
-**Higher Assisted Conversions**  
-By guiding instead of guessing, more high-intent visitors complete purchases.
-
-**Measurable Revenue Impact**  
-Track assisted conversion rate, revenue per assisted session, and AOV lift vs control.
-
-**Reduced Friction & Support Load**  
-Fewer abandoned carts from indecision; fewer "where is X?" or "is this compatible?" tickets.
-
-**Data-Driven Iteration**  
-Every session contributes to better stage scoring and action selection over time.
-
-**Competitive Edge Without Heavy Engineering**  
-Amazon-level intent understanding and guided paths, instrumented for your own experimentation.
-
-## How It Shows Up in Practice
-
-A shopper views several technical products, filters by specs, then asks a compatibility question in chat.
-
-Path Explorer:
-
-1. Tags intent as "technical validation + comparison"
-2. Classifies stage as Validation
-3. Selects action: Answer objection with fit/price/returns data + show short curated list
-4. Logs the interaction
-5. If purchase happens → attributes assisted revenue
-
-All measurable. All tunable.
+Start with the traffic you already have. The system improves as more sessions feed the measurement loop.
 
 ## Frequently Asked Questions
 
-**How is Path Explorer different from simple product recommendations?**  
-Traditional recs are often static or history-based. Path Explorer is live, stage-aware, and action-oriented — it chooses _what to do next_ based on where the shopper is in their journey.
+**Is this just another recommendation engine?**  
+No. Recommendations usually rank products. Path Explorer decides the *next action* based on stage and intent, then uses the catalog to fulfill it.
 
-**Does it require custom development?**  
-No. It works with standard Shopify APIs and the ShopGuide agent. Merchants instrument events once; the rest is handled inside the platform.
+**How is it different from chatbots?**  
+Most chatbots answer questions from a knowledge base. Path Explorer is wired to live catalog data and session signals so it can guide the purchase path, not just reply.
 
-**How do I measure the impact?**  
-Dashboards show assisted CVR, revenue per assisted session, AOV delta, time-to-cart, and objection resolution rates. A/B tests are built in.
+**Do I need to retrain models constantly?**  
+No continuous training job. Intent and stage logic run on the live signals + your product data.
 
-**What happens when confidence is low?**  
-Safe fallback to general guidance or clarifying questions. High-impact actions (auto add-to-cart) are gated behind confidence thresholds.
+**Can I A/B test the guidance?**  
+Yes. ShopGuide includes native experiments so you can test different launch messages, visibility rules, and guidance intensity against real revenue.
 
-**Can it handle long-tail and niche products?**  
-Yes — by matching specific intent signals to the exact products and complementary items that complete the buyer's project.
+**What if the shopper has low-confidence signals?**  
+The system falls back to safe clarifying questions rather than aggressive recommendations.
 
 ---
 
-**Ready to turn browsing signals into guided, measurable purchase paths?**
+**Ready to measure the shortest path from browse to buy?**
 
-Install ShopGuide and activate Path Explorer.
+Turn on Path Explorer inside ShopGuide and start attributing assisted revenue.
 
-The future of agentic commerce isn’t more filters. It’s smarter, data-driven next actions.
-
-_ShopGuide — Agentic Commerce that actually converts._
+_ShopGuide — Agentic commerce that converts._
