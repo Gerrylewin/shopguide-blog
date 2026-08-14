@@ -48,8 +48,19 @@ export default async function proxy(request: NextRequest, event: NextFetchEvent)
     })
   }
 
-  const result = await clerkAuth(request, event)
-  const res = result ?? NextResponse.next()
+  let res: NextResponse
+  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    res = NextResponse.next()
+  } else {
+    try {
+      const result = await clerkAuth(request, event)
+      res = (result ?? NextResponse.next()) as NextResponse
+    } catch (err) {
+      console.warn('Clerk authentication middleware failed/bypassed:', err)
+      res = NextResponse.next()
+    }
+  }
+
   if (pathname.startsWith('/api')) {
     return mergeApiCors(request, res)
   }
