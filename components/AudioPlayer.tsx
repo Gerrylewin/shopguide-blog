@@ -184,6 +184,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
             max={duration || 0}
             value={currentTime}
             onChange={handleSeek}
+            aria-label="Audio playback progress"
             className="accent-primary-500 h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
           />
           <span className="text-sm text-gray-600 dark:text-gray-400">{formatTime(duration)}</span>
