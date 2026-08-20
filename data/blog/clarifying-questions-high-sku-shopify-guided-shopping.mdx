@@ -1,0 +1,95 @@
+---
+title: 'Clarifying Questions: How ShopGuide Turns Vague Searches into Exact Matches on High-SKU Shopify Stores'
+date: '2026-08-20'
+lastmod: '2026-08-20'
+tags:
+  - 'agentic-commerce'
+  - 'guided-shopping'
+  - 'high-sku-shopify'
+  - 'clarifying-questions'
+  - 'on-page-agent'
+  - 'product-discovery'
+  - 'aov'
+draft: false
+callout: 'A customer types "something for the backyard" into a 4,000 SKU store and gets 300 results. They leave. ShopGuide asks one clarifying question and surfaces the three products that actually fit. That is the difference between a search bar and guided shopping.'
+summary: >-
+  High-SKU Shopify stores lose sales when customers do not know the exact product name or filter combination. ShopGuide uses clarifying questions to turn vague intent into precise matches from the live Catalog API. No filter wall. No zero results. Just the on-page agent doing the work a good floor person would do.
+images:
+  - 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&q=80'
+authors: ['default']
+layout: PostLayout
+---
+
+Look.
+
+Your customer knows what they need. They just cannot name it the way your catalog is written.
+
+They type "lightweight summer jacket under 100" or "gasket for the old blender" or "gift for a new baker." Native search returns a wall of partial matches or nothing at all. Filters max out or disappear past a few thousand products. The shopper stares for thirty seconds and leaves.
+
+That is the discovery gap on high-SKU stores. Merchants talk about it constantly. Filters vanish. SKU search breaks. Zero-result rates stay high. Support tickets pile up with the same basic product questions.
+
+ShopGuide closes the gap with one simple behavior: clarifying questions.
+
+## What clarifying questions actually do
+
+The on-page agent does not treat every query as a finished keyword search. When the intent is broad, it asks one or two short follow-ups.
+
+"Is this for outdoor use or indoor?"  
+"Any size or temperature rating you need to hit?"  
+"Looking for something under a specific budget?"
+
+Those answers let the agent query the live Shopify Catalog API with real constraints. It pulls current inventory, variants, and attributes. Then it shows the two or three products that fit instead of a hundred that almost fit.
+
+No extra database. No nightly retrain. The same Catalog API connection that keeps stock and prices accurate also powers the reasoning.
+
+## Why this matters on large catalogs
+
+On a 200-SKU store a customer can scroll and still find the item. On 5,000 or 20,000 SKUs the scroll becomes the problem. Shopify’s own filter limits kick in. Collections over 5,000 products hide filters. The 25-filter cap forces hard choices on technical catalogs. Merchants end up splitting collections just to keep the sidebar alive.
+
+Clarifying questions skip that entire interface. The customer never has to know the exact metafield name or the right collection hierarchy. They describe the need. The agent narrows it.
+
+Case studies on stores using the agent show assisted orders with higher AOV and larger baskets. Part of the lift is simply removing the dead ends. A shopper who gets a clear match is more likely to add the item and keep going.
+
+## The honest limits
+
+The agent can only work with the data that exists in Shopify. If critical specs live only in free-text descriptions and never in structured fields or metafields, the clarifying questions still help but the matching has fewer precise handles. Cleaner product data still wins.
+
+It also will not force a sale. If the catalog truly has nothing that fits, the agent says so instead of inventing a match. That protects trust.
+
+Aggressive or poorly timed questions can feel pushy. The dashboard lets you control tone, visibility, and frequency for a reason.
+
+## Where this sits in agentic commerce
+
+John Collison has said keyword search is a ridiculous way to find things to buy. He is right. The shift is from matching strings to understanding intent and acting on it.
+
+Harley Finkelstein put the merchant side clearly: AI agents match products with the buyer’s specific intent rather than just keywords. That favors specialized brands and long-tail catalogs that traditional search buried.
+
+ShopGuide is the on-page half of that shift. External agents (ChatGPT, Gemini, Copilot) discover products through Shopify Catalog. The on-page agent finishes the job inside your own store by asking the clarifying questions that turn a vague need into a confident cart.
+
+You keep the traffic you already pay for. You stop losing the shoppers who know what they want but cannot speak catalog language.
+
+That is the feature. Not more chat volume. Better guided discovery from the same visitors.
+
+[Install ShopGuide and turn on guided shopping](https://apps.shopify.com/shopguide)
+
+---
+
+## Frequently Asked Questions
+
+**How many clarifying questions does the agent ask?**  
+Usually one or two. Enough to add the constraints that matter without turning the conversation into an interrogation. You control the overall style in the app settings.
+
+**Does this replace my search bar?**  
+No. Most merchants keep native search for exact SKU or title lookups and let the agent handle the long-tail and intent-based queries where search fails.
+
+**Will it work if my product data is messy?**  
+It works with what you have. Structured metafields and clean variants give stronger results. The agent still reduces friction even on imperfect data by asking the customer instead of guessing.
+
+**How is this different from a regular chatbot FAQ?**  
+A FAQ bot answers fixed questions. Clarifying questions are part of active product discovery. The agent uses the answers to query live inventory and recommend real products from your Catalog API.
+
+**Does revenue attribution still apply?**  
+Yes. Guided sessions that lead to orders are linked in the dashboard so you can see the exact lift from the conversations that used clarifying questions.
+
+**Is this useful below 1,000 SKUs?**  
+The pain is sharpest on high-SKU stores where filters and search break down. Smaller catalogs can still benefit when customers use vague language or need help comparing options.
