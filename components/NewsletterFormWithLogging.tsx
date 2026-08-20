@@ -125,6 +125,7 @@ export default function NewsletterFormWithLogging({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your Shopify store email"
+              aria-label="Email address"
               required
               className={`min-w-0 flex-1 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:border-[#008060] focus:ring-2 focus:ring-[#008060]/20 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 ${narrow ? 'px-3 py-2 text-sm' : 'px-4 py-3'}`}
             />
