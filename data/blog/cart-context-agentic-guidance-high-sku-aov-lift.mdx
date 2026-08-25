@@ -1,0 +1,87 @@
+---
+title: 'Cart Context: How ShopGuide Turns What Is Already in the Cart into Higher AOV on High-SKU Stores'
+date: '2026-08-25'
+lastmod: '2026-08-25'
+tags:
+  - 'cart-context'
+  - 'agentic-commerce'
+  - 'high-sku-shopify'
+  - 'guided-shopping'
+  - 'aov'
+  - 'on-page-agent'
+  - 'product-discovery'
+draft: false
+callout: 'The agent can see the cart. It knows the size already chosen, the color sitting there, the single item that looks incomplete. That context turns a half-finished basket into a complete order instead of a bounce.'
+summary: >-
+  High-SKU Shopify stores lose AOV when the shopper adds one item and leaves because the complementary piece, the right variant, or the bulk option stayed invisible. ShopGuide passes live cart context to the on-page agent so guidance stays relevant to what is already selected. The result is larger baskets from the traffic you already paid for.
+images:
+  - 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80'
+authors: ['default']
+layout: PostLayout
+---
+
+Look.
+
+A customer on a 5,000 SKU store finds one product, adds it, and stares at the cart. They know something is missing. The matching accessory. The second size. The bulk pack that actually fits the job. They do not know the exact name or the filter combination that would surface it. They leave.
+
+That is the AOV leak on large catalogs. The discovery problem does not stop at the collection page. It continues inside the cart.
+
+ShopGuide closes it with cart context.
+
+## What cart context actually does
+
+The on-page agent receives the current cart contents as part of the conversation. Line items, variants, quantities, and available related attributes travel with the session.
+
+When the shopper asks a question or the agent opens a turn, the guidance is grounded in what is already selected. "You already have the 12-inch shaft. Here is the compatible coupling that fits it." Or "That single bag is in the cart. The 25-pound option is still available and drops the unit cost."
+
+No separate recommendation widget fighting the theme. No "people also bought" list that ignores the exact variant just chosen. The same Catalog API connection that keeps stock accurate also lets the agent reason about the open cart.
+
+## Why this matters on high-SKU stores
+
+Merchants with big inventories talk about the same pattern in forums and Reddit threads. Filters hit the 25-cap or vanish past 5,000 products in a collection. Search returns noise or zero. Support tickets fill with "does this fit with X" and "is there a bulk version."
+
+Once something is in the cart the friction changes. The shopper has already decided they want that category. The remaining work is completing the set or upgrading the choice. An agent that cannot see the cart is still guessing. An agent that can see the cart can finish the job a good floor person would finish.
+
+Case studies on assisted orders show higher average order values and more items per basket. Cart context is one of the practical reasons. The guidance stays relevant to the items already chosen instead of restarting from zero every time.
+
+## The honest limits
+
+Cart context only works when there is a cart. Empty sessions stay on discovery and clarifying questions. That is by design.
+
+The agent still depends on the product data Shopify returns. If related items are never linked by metafield, collection, or clear attributes, the suggestions have fewer strong handles. Cleaner catalog structure still wins.
+
+And the merchant controls how aggressive the agent is. Some stores want quiet help. Others want the agent to surface the complementary item early. The dashboard settings exist for that reason.
+
+## Where this sits in agentic commerce
+
+John Collison called keyword search a ridiculous way to find things to buy. He is right. The same logic applies after the first add-to-cart. The shopper has already expressed intent. The agent that can act on that intent, using live cart and catalog data, is the one that turns a partial basket into a complete order.
+
+Harley Finkelstein described agentic commerce as merit-based. The product that actually fits surfaces. Cart context is how that merit shows up inside the session instead of only on the collection page.
+
+You keep the traffic you already pay for. You stop leaving money on the table when the customer has already started the purchase.
+
+That is the feature. Not more chat volume. Better guided completion from the same visitors.
+
+[Install ShopGuide and turn on cart-aware guidance](https://apps.shopify.com/shopguide)
+
+---
+
+## Frequently Asked Questions
+
+**Does the agent see the full cart or only the last item?**  
+It receives the current cart contents for the session, including variants and quantities when available through the Shopify context.
+
+**Will it push upsells even when the shopper just wants to check out?**  
+You control tone and aggressiveness in the app settings. The goal is relevant completion, not aggressive stacking.
+
+**Does this work with empty carts?**  
+No. Empty sessions use discovery and clarifying questions. Cart context activates once items are present.
+
+**How is this different from a standard product recommendation app?**  
+Most recommendation apps show static or popularity-based lists. Cart context lets the agent reason in conversation about the specific items already chosen and the live catalog that matches them.
+
+**Does revenue attribution still apply?**  
+Yes. Sessions that use cart context and convert are still linked in the dashboard so you can see the contribution.
+
+**Is this useful below 1,000 SKUs?**  
+The AOV opportunity exists at any size. The discovery and completion friction simply grows as the catalog and variant complexity increase.
