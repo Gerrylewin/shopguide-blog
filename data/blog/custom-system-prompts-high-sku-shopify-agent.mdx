@@ -1,0 +1,127 @@
+---
+title: 'Custom System Prompts: How High-SKU Shopify Stores Teach the Agent House Rules'
+date: '2026-08-27'
+lastmod: '2026-08-27'
+tags:
+  - 'custom-system-prompts'
+  - 'high-sku-shopify'
+  - 'agentic-commerce'
+  - 'guided-shopping'
+  - 'ai-training'
+  - 'brand-voice'
+draft: false
+callout: 'The custom system prompt in ShopGuide is one box of extra instructions. It does not rewrite the agent. It appends your house rules to a prompt ShopGuide already builds. On a high-SKU catalog that is enough to keep voice, hours, and loyalty mentions consistent without pretending you can prompt-engineer the whole stack.'
+summary: >-
+  Custom system prompts in ShopGuide sit under Additional instructions from the shop owner. High-SKU Shopify merchants use that box for brand voice, store facts, and selling priorities. The agent still answers from the live catalog. Your text is a supplement, not a replacement.
+images:
+  - 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80'
+authors: ['default']
+layout: PostLayout
+---
+
+Look.
+
+Merchants do not want another chatbot that sounds like a generic help desk. They want the thing on the page to talk like the store.
+
+That complaint shows up everywhere. Reddit threads about Shopify chat apps. Forum posts about widgets that pop "How can I help you today?" on a 6,000 SKU parts catalog. Shoppers ignore it. Support still gets the same fitment questions. The long tail stays invisible.
+
+ShopGuide already answers from live Shopify catalog data. Titles, variants, metafields, inventory. That part is the product. The custom system prompt is the smaller control next to it.
+
+It lives in Settings, on the AI Behavior tab. One free-text box.
+
+That is the feature. Not a second brain. Not a prompt studio.
+
+## What a custom system prompt actually is
+
+ShopGuide builds the real system prompt itself. Identity, tools, response rules, language handling, store context. Roughly fifteen fixed sections. You do not see those. You do not edit them.
+
+Whatever you type gets appended at the end, under a heading that reads Additional instructions from the shop owner. It rides along in the main chat flow. When the intent router builds a specialized prompt for a question type, your block can ride along there too.
+
+People use it for three boring, useful things:
+
+- Brand voice. Always sign off with the tagline. Stay short. Do not sound like a call center.
+- Store facts worth repeating. Closed the last week of the month for inventory. Free shipping over a set threshold. Sets sold as pairs, not singles.
+- Priorities. Mention the loyalty program when price comes up. Offer the compatible spare before a substitute from a different brand.
+
+On a high-SKU store those lines matter. The catalog is large. Native filters drop off collections past Shopify's documented 5,000-product cap. Search stays literal. The agent is often the only place a shopper can say the job they need done. If that agent also forgets you sell sets, or talks like a different brand, you paid for guided shopping and got a generic bot.
+
+![Notes and a laptop on a desk, the kind of short house rules you put in a custom system prompt](https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&q=80)
+
+## Why merchants care about this box
+
+High-SKU operators are not hunting for prompt-engineering hobbies. They are trying to stop two leaks.
+
+First, discovery. Shoppers type intent, not your internal title. The agent can reason over the catalog. Your extra instructions tell it which commercial facts to keep in the room while it does that.
+
+Second, trust. A shopper on a product page who gets a warm, on-brand answer about compatibility is more likely to stay. A shopper who gets a peppy paragraph that contradicts your shipping page opens a ticket. Or leaves.
+
+That is the value. Consistency. Not magic AOV from a paragraph of instructions.
+
+Assisted orders in public case studies still come from the whole stack: live catalog answers, on-page placement, attribution. The custom system prompt is how you keep the voice and the house rules from fighting that stack.
+
+## How this compares to the other levers
+
+| Control | What it changes | What it does not change |
+| --- | --- | --- |
+| Live catalog / Catalog API | Stock, variants, metafields, price | Tone, hours, loyalty mentions |
+| Launch messages | First line and buttons by page type | How the agent reasons after the first reply |
+| Custom system prompt | Extra owner instructions appended to the built prompt | Role, tools, language routing |
+| Human corrections in chat logs | A specific wrong answer you already saw | The global house rules for every new thread |
+
+Use the box for rules that should apply most of the time. Use launch messages for the greeting. Use catalog data for facts that already live on the product. Do not paste your entire shipping policy into the prompt if it already exists as a page the agent can read.
+
+## The honest limits
+
+The docs are blunt about this, so the blog should be too.
+
+You do not get to rewrite the agent's role. You do not get to change tool access. You do not get to change language behavior. Those stay fixed.
+
+This is an addition, not a swap. Conflicting instructions lose. ShopGuide already tells the model to be honest about inventory and pricing and to use the tools it has. If you write "always promise next-day delivery" and the catalog or policy says otherwise, expect messy answers. Keep the extra text short and unambiguous.
+
+There is no variable system in that box. No "if the customer is on collection X, say Y." No separate config for when a human should take over. Page-level greetings belong in custom launch messages. Escalation still needs a person and a process.
+
+Dirty catalog data still wins. A custom system prompt cannot invent a voltage metafield you never stored. It cannot fix titles that only make sense to your warehouse. Hidden gems stay hidden if the product record is a blob.
+
+And a long manifesto in that box is worse than a short one. Extra tokens do not make the agent smarter. They make it more likely to ignore you.
+
+## Where this sits in agentic commerce
+
+Harley Finkelstein keeps pointing at the same shift. Agents should surface what fits the shopper, not what paid for the slot.
+
+<QuoteCard
+  quote="The products that will be found will be merit-based as opposed to ad-based. I think that's democracy. That'll level the playing field."
+  attribution="Harley Finkelstein, President of Shopify"
+  source="https://www.retailbrew.com/stories/2026/01/16/shopify-president-agentic-commerce-could-usher-in-merit-based-shopping"
+  sourceLabel="Retail Brew"
+  caption="Harley Finkelstein on merit-based discovery inside agentic commerce."
+/>
+
+Merit on a high-SKU storefront is two jobs. The agent has to find the SKU that actually matches the ask. The merchant has to keep the agent from sounding like a rented widget while it does that.
+
+Custom system prompts cover the second job. Brand voice. The closed week. The loyalty nudge. The reminder that some SKUs sell as sets.
+
+The first job is still the live catalog. Write the extra instructions. Then go look at whether the product data can support them.
+
+[Install ShopGuide and add your custom system prompt in AI Behavior](https://apps.shopify.com/shopguide)
+
+---
+
+## Frequently Asked Questions
+
+**What is a custom system prompt in ShopGuide?**  
+It is the free-text field on the AI Behavior tab. Your text is appended under Additional instructions from the shop owner. It does not replace the prompt ShopGuide already builds.
+
+**Can I use it to change how the agent searches the catalog?**  
+No. Catalog access and tools stay in the built-in prompt. Use the box for voice, repeating store facts, and priorities. Keep product truth in Shopify.
+
+**How long should the instructions be?**  
+Short. A few clear rules beat a page of brand guidelines. Conflicting text gets ignored or makes answers inconsistent.
+
+**Is this the same as launch messages?**  
+No. Launch messages are the first line and buttons when chat opens, scoped by page type and language. The custom system prompt shapes later replies across the conversation.
+
+**Will this automatically raise AOV?**  
+Not by itself. AOV lift in assisted sessions comes from shoppers finding the right products and adding with more confidence. The prompt keeps the agent on-brief while that happens.
+
+**Do I still need clean product data?**  
+Yes. Specs that only live in a paragraph of description stay hard to use. Metafields and consistent variants make both catalog answers and your extra instructions more reliable.
