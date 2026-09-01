@@ -19,7 +19,7 @@ jobs:
         with:
           ref: blog/humanize-jules-titles
       - name: Apply title map
-        run: node scripts/rewrite-jules-titles.mjs
+        run: node --input-type=commonjs scripts/rewrite-jules-titles.mjs
       - name: Remove one-shot files
         run: |
           rm -f scripts/rewrite-jules-titles.mjs .github/workflows/rewrite-jules-titles.yml
