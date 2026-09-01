@@ -1,0 +1,32 @@
+name: Rewrite Jules titles once
+
+on:
+  push:
+    branches: [blog/humanize-jules-titles]
+    paths:
+      - scripts/rewrite-jules-titles.mjs
+      - .github/workflows/rewrite-jules-titles.yml
+
+permissions:
+  contents: write
+
+jobs:
+  rewrite:
+    runs-on: ubuntu-latest
+    if: github.event.head_commit.message != 'Rewrite formulaic Jules blog titles to sound more human'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: blog/humanize-jules-titles
+      - name: Apply title map
+        run: node scripts/rewrite-jules-titles.mjs
+      - name: Remove one-shot files
+        run: |
+          rm -f scripts/rewrite-jules-titles.mjs .github/workflows/rewrite-jules-titles.yml
+      - name: Commit title updates
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Rewrite formulaic Jules blog titles to sound more human"
+          git push
