@@ -1,0 +1,155 @@
+---
+title: 'Shopify Apps That Work Together: Integration Partners Inside the Conversation'
+date: '2026-09-02'
+lastmod: '2026-09-02'
+tags:
+  - 'shopify-apps-that-work-together'
+  - 'integration-partners'
+  - 'klaviyo'
+  - 'shopify-app-integrations'
+  - 'agentic-commerce'
+  - 'high-sku-shopify'
+draft: false
+callout: 'Shopify merchants are not hunting for a fifteenth app. They want the ones they already pay for to show up in one conversation. ShopGuide integration partners put reviews, points, offers, and Slack handoffs on the same path as the live Shopify Catalog API.'
+summary: >-
+  What Shopify merchants say they want to read: fewer half-jobs, more Shopify apps that work together. How ShopGuide is wired into Shopify, and what Klaviyo, Judge.me, Rivyo, Smile.io, Alia, and Slack actually do in the on-page agent.
+images:
+  - 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80'
+authors: ['default']
+layout: PostLayout
+---
+
+Merchants do not sit down at night hoping to read another "AI-powered" listing.
+
+They sit down hoping someone will admit the stack is already paid for, and still silent.
+
+That is the thread that keeps showing up in public. On r/shopifyDev, one operator put it bluntly: messy integrations, tracking mismatches, and too many apps doing half-jobs. "Merchants don’t want more tools they want ones that actually work together."
+
+Same energy on r/shopify. The "app tax" is not just the invoice. It is another script, another dashboard, another widget the shopper never opens.
+
+This post is about one feature. ShopGuide integration partners. The apps on the [integrations page](https://blog.yourshopguide.com/integrations) that feed the on-page agent so you get Shopify apps that work together instead of six tabs that never meet.
+
+![Laptop showing analytics charts on a wooden desk](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80)
+
+## The feature: partner context at talk time
+
+ShopGuide is an on-page agent. You install it from the Shopify App Store. You add the ShopGuide Chat section in the theme editor. The admin lives in the Shopify sidebar. Home, Dashboard, Test your Guide, Chats, Path Explorer, Appearance, Integrations, Settings.
+
+The catalog side is native. During a conversation the agent looks up products on the Shopify Catalog API. Stock, variants, and price come from the store, not from a file you uploaded last Tuesday.
+
+The partner side is smaller than the marketing copy on most apps. Keep Klaviyo. Keep Judge.me or Rivyo. Keep Smile.io. Keep Slack. Keep Alia if you already run it. ShopGuide reads those systems when the shopper is already talking, and writes back only where the partner actually accepts it.
+
+Most pairings come on when both apps are installed. Slack is the exception. That one needs an incoming webhook URL in ShopGuide settings. Review apps use tokens on the Integrations screen in the admin.
+
+You are not buying a second review widget. You are giving the stack you already run a place to speak.
+
+## How ShopGuide itself is integrated
+
+Three wires. That is the product.
+
+**Theme block.** One storefront surface. Launch messages, visibility, and styling sit in the app admin. Partner apps keep their own scripts. ShopGuide does not install a second copy of Klaviyo or Judge.me.
+
+**Shopify Admin.** Analytics, transcripts, A/B tests, and an Integrations page live next to the rest of your apps. Chat-attributed revenue shows up there. You do not leave Shopify to see if a conversation sold anything.
+
+**Live Catalog API plus partner reads.** Catalog is the source of truth for products. Partners fill the gaps Shopify does not store: verified reviews, loyalty balance, a dismissed popup offer, a human handoff.
+
+There is a second Klaviyo path that is easy to miss if you only look at the storefront chat. Path Explorer can sync reachable segments into a Klaviyo list with properties like `path_explorer_cohort` and `path_explorer_label`. Cart abandoners and chat-assisted buyers can land in a flow you already run. That is documented. It is not a promise that every anonymous browser becomes a profile.
+
+If you want the partner map without the wiring, it already exists: [ShopGuide integration partners](/blog/integration-partners-connect-existing-shopify-stack). If you want the plug without the merchant thread, that exists too: [How ShopGuide is wired into Shopify](/blog/how-shopguide-is-wired-into-shopify-app-integrations). This post is the merchant version. Why people even ask for Shopify apps that work together.
+
+## What each partner is for
+
+This is the current public set. No "coming soon" row.
+
+| Partner | Already in the stack as | What ShopGuide does | What the merchant gets |
+| :------ | :---------------------- | :------------------ | :--------------------- |
+| **Shopify Catalog API** | Product source of truth | Live lookup of inventory, variants, and price | The agent does not sell a sold-out SKU as in stock |
+| **Klaviyo** | Email and popups | Recovers a dismissed offer in chat, can add a captured email, and can sync Path Explorer segments | The list and the conversation stop living in different rooms |
+| **Judge.me** | Verified reviews | Pulls a matching review and photo proof into the reply | Social proof at the decision, not under the fold |
+| **Rivyo** | Reviews and UGC | Surfaces Rivyo reviews inside the recommendation | Same job if Rivyo is the review app you kept |
+| **Smile.io** | Points and VIP tiers | Reads live balance and mentions it while they decide | Dormant points become a reason to check out |
+| **Alia** | Personalized incentives | Keeps the Alia offer in context after the popup closes | The discount does not die with the modal |
+| **Slack** | Team channel | Posts customer, cart, and transcript on a handoff rule | Humans start mid-sentence instead of from a blank ticket |
+
+Deep dives if you only need one pairing: [Klaviyo](/blog/klaviyo-shopguide-integration-guide), [Judge.me and Rivyo](/blog/social-proof-judgeme-rivyo-ai-agent), [Smile.io](/blog/smile-io-loyalty-ai-agent-automation), [Slack](/blog/slack-integration-customer-support-efficiency).
+
+![Team working together around laptops in a bright office](https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80)
+
+## Why this is what merchants want to read
+
+High-SKU operators already run a lean version of the same kit. Email. Reviews. Loyalty. A channel for the team. Maybe a popup tool.
+
+A 10k-store scrape that hit r/shopify_geeks in 2026 put numbers on the fatigue. Average store in that set: 4.84 apps and 76 scripts per page. Stores with 10+ apps averaged a 39 mobile score. Correlation between app count and mobile score was negative and consistent.
+
+An audit thread on a $1.8M store paying $2,200 a month in apps said the quiet part out loud. Four apps talked through Zapier. Shopify updates broke the glue. Data sat in five dashboards. Loyalty had been "coming soon" for 18 months and they were still paying for it.
+
+Another merchant cut 14 apps down to 6 with one rule: an app stays if you can point to revenue it produced in the last 30 days. Email and reviews survived. The ticker and the countdown timer did not.
+
+That is the reading diet. Not "here are 21 new AI apps." Proof that the stack you kept can show up at the moment the shopper hesitates.
+
+On a 200-SKU boutique this is polite. On a 10,000-SKU catalog it is how "does this run large" stops becoming a ticket.
+
+## Honest limits
+
+Say these before you flip switches.
+
+ShopGuide does not replace Klaviyo, Judge.me, Rivyo, Smile.io, Alia, or Slack. If the partner is missing or the token is wrong, there is nothing to read.
+
+Reviews in chat are only as good as the reviews you have collected.
+
+Smile.io only helps once the shopper is identified. A first-time anonymous visitor has no points.
+
+Slack is one-way. ShopGuide posts context into a channel. Your team still resolves in Shopify or the ShopGuide admin. You do not run the whole thread from Slack replies.
+
+Klaviyo does not invent a list. Popup recovery needs Klaviyo actually on the store. Path Explorer sync only pushes reachable people, the ones with an email or a Shopify customer id.
+
+The agent cannot invent metafields that live only inside another app and never in Shopify. Dirty product data still produces thin answers. The [Catalog API post](/blog/live-catalog-api-keeps-agent-answers-accurate-high-sku-shopify) is about stock honesty, not about writing your descriptions.
+
+Use the partners you already run. A store on Judge.me and Klaviyo does not need Rivyo or Alia for the agent to be useful.
+
+<QuoteCard
+  quote="Agents will become a common way people shop. Commerce just plugs in and feels seamless in conversations."
+  attribution="Tobi Lütke, CEO of Shopify"
+  source="https://x.com/tobi/status/1952800271257706676"
+  sourceLabel="X"
+  caption="The job of integration partners is that sentence. Plug the stack into the conversation. Do not add another tab."
+/>
+
+That is the climax, and it is not a ShopGuide slogan. It is how Shopify is describing the channel.
+
+ShopGuide's job is smaller. Put the agent on the page. Read the catalog. Bring in the partner facts you already paid for. Hand a human the transcript when the agent is stuck.
+
+Shopify apps that work together is the whole pitch. Connect the ones you run. Leave the rest alone.
+
+[Install ShopGuide and connect your stack](https://apps.shopify.com/shopguide)
+
+---
+
+## Frequently Asked Questions
+
+**What does "Shopify apps that work together" mean here?**
+ShopGuide integration partners are the apps the on-page agent can read from or write to during a session: Klaviyo, Judge.me, Rivyo, Smile.io, Alia, and Slack, plus the native Shopify Catalog API. The shopper stays in one conversation.
+
+**How is ShopGuide integrated into Shopify?**
+Three places. A theme block on the storefront. A native app in the Shopify admin for analytics, settings, and partner tokens. Direct reads from the Shopify Catalog API during chat. Partners attach to that same conversation.
+
+**Do I have to replace Klaviyo or my review app?**
+No. Keep the apps that already work. ShopGuide reads them. It does not ask you to rip the stack out.
+
+**How do I turn a partner on?**
+Install both apps. Most pairings activate when both are live. Slack needs a webhook URL in ShopGuide settings. Review apps use tokens on the Integrations page in the admin.
+
+**Will this add more scripts and slow the storefront?**
+ShopGuide is one theme block. It does not install a second copy of Klaviyo or Judge.me. Partner apps keep their own scripts. The integration is the agent reading those systems, not another pixel farm.
+
+**What if I only use some of the partners?**
+Use the ones you have. Partial stacks still work.
+
+**Can Path Explorer send people to Klaviyo?**
+Yes, for reachable segments. ShopGuide pushes known emails into a Klaviyo list with cohort properties. Anonymous browsers with no email do not become profiles.
+
+**Does Slack let my team reply inside Slack?**
+No. Slack gets a structured alert with context and a link to the transcript. Resolution stays in Shopify or the ShopGuide admin so history lives in one place.
+
+**Where is the public partner list?**
+The current cards live on the [ShopGuide integrations page](https://blog.yourshopguide.com/integrations).
