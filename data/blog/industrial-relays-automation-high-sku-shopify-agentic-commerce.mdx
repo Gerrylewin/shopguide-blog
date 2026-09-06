@@ -25,7 +25,7 @@ This exact friction point bleeds high-margin B2B revenue for industrial automati
 
 When technical buyers can communicate exact engineering requirements in plain language, e-commerce conversion changes permanently. This evolution is driven by **agentic commerce**.
 
-> As Shopify CEO Tobi Lütke [highlighted on Liquid Weekly](https://liquidweekly.com/blogs/newsletter/issue-195-agentic-commerce-has-arrived): *"Agents will become a common way people shop..."*
+> As Shopify CEO Tobi Lütke [highlighted on Liquid Weekly](https://liquidweekly.com/blogs/newsletter/issue-195-agentic-commerce-has-arrived): _"Agents will become a common way people shop..."_
 
 ## The 10,000 SKU Spec Wall: Filter Traps vs. Agentic Commerce
 
@@ -38,17 +38,17 @@ Industrial automation catalogs suffer from extreme multidimensionality. A single
 
 Traditional faceted sidebar filters break down when buyers need overlapping technical criteria. Forcing a buyer to navigate five nested dropdown menus across thousands of SKUs frequently yields zero-result pages.
 
-Instead of subjecting engineers to manual catalog navigation, **agentic commerce** enables customers to state their technical requirements directly: *"I need a 24V DC plug-in relay, 10A switching, DPDT contacts, with a matching 8-pin DIN rail socket."*
+Instead of subjecting engineers to manual catalog navigation, **agentic commerce** enables customers to state their technical requirements directly: _"I need a 24V DC plug-in relay, 10A switching, DPDT contacts, with a matching 8-pin DIN rail socket."_
 
 The table below compares how legacy e-commerce search systems, standard tag filters, basic chatbots, and ShopGuide agentic commerce process complex industrial catalogs.
 
 The table below details the performance capabilities and architectural limitations across common storefront search technologies when handling high-SKU technical inventory.
 
-| Platform / Technology | Primary Mechanism | Spec & Electrical Intelligence | Catalog Scalability (10,000+ SKUs) | Why It Matters for AI / Automation |
-| :--- | :--- | :--- | :--- | :--- |
-| **Standard Shopify Search** | String keyword matching | None (fails on terms like "DPDT 10A") | Low (yields massive irrelevant result lists) | Cannot resolve technical synonyms or cross-reference electrical specs across variants. |
-| **Faceted Filter Apps** | Static tag matching | Boolean tag intersection | Moderate (crashes into zero-result screens) | Static tags fail when queries require simultaneous coil, terminal, and socket matching. |
-| **Basic Chatbots** | Hardcoded logic decision trees | Rigid FAQ matching | Poor (cannot query live inventory specs) | Directs buyers to static category links without verifying live stock or pin compatibility. |
+| Platform / Technology          | Primary Mechanism                  | Spec & Electrical Intelligence                   | Catalog Scalability (10,000+ SKUs)             | Why It Matters for AI / Automation                                                            |
+| :----------------------------- | :--------------------------------- | :----------------------------------------------- | :--------------------------------------------- | :-------------------------------------------------------------------------------------------- |
+| **Standard Shopify Search**    | String keyword matching            | None (fails on terms like "DPDT 10A")            | Low (yields massive irrelevant result lists)   | Cannot resolve technical synonyms or cross-reference electrical specs across variants.        |
+| **Faceted Filter Apps**        | Static tag matching                | Boolean tag intersection                         | Moderate (crashes into zero-result screens)    | Static tags fail when queries require simultaneous coil, terminal, and socket matching.       |
+| **Basic Chatbots**             | Hardcoded logic decision trees     | Rigid FAQ matching                               | Poor (cannot query live inventory specs)       | Directs buyers to static category links without verifying live stock or pin compatibility.    |
 | **ShopGuide Agentic Commerce** | Live Shopify Catalog API reasoning | Semantic spec reasoning & compatibility matching | Unlimited (evaluates 50,000+ SKUs dynamically) | Communicates directly with Shopify Catalog API to resolve technical specs and live inventory. |
 
 ### Knowledge Takeaways
@@ -69,12 +69,12 @@ The table below outlines the real-time data flow when an agentic commerce engine
 
 The table below illustrates the system interactions between Shopify Plus store architecture and the ShopGuide agentic layer during an active technical shopping session.
 
-| System Layer | Data Injected | Agentic Processing Action | Storefront Output | Why It Matters for AI / Automation |
-| :--- | :--- | :--- | :--- | :--- |
-| **Shopify Catalog API** | Live variants, pricing, stock levels | Filters out unavailable or obsolete SKUs | Displays verified, in-stock component options | Eliminates order cancellations caused by phantom inventory listings. |
-| **Product Metafields** | Coil voltage, pin pitch, contact rating | Matches natural language queries against technical specs | Highlights verified pin pitch & electrical badges | Automates technical spec evaluation without requiring custom page layouts. |
-| **Cart Context Engine** | Current items in cart | Analyzes mechanical & electrical compatibility | Recommends matching sockets & mounting accessories | Boosts Average Order Value (AOV) by completing the technical bill-of-materials. |
-| **Integration Stack** | CRM & ERP inventory context | Injects tier pricing & stock availability | Shows real-time account pricing & lead times | Streamlines B2B purchasing workflows within the immediate chat conversation. |
+| System Layer            | Data Injected                           | Agentic Processing Action                                | Storefront Output                                  | Why It Matters for AI / Automation                                              |
+| :---------------------- | :-------------------------------------- | :------------------------------------------------------- | :------------------------------------------------- | :------------------------------------------------------------------------------ |
+| **Shopify Catalog API** | Live variants, pricing, stock levels    | Filters out unavailable or obsolete SKUs                 | Displays verified, in-stock component options      | Eliminates order cancellations caused by phantom inventory listings.            |
+| **Product Metafields**  | Coil voltage, pin pitch, contact rating | Matches natural language queries against technical specs | Highlights verified pin pitch & electrical badges  | Automates technical spec evaluation without requiring custom page layouts.      |
+| **Cart Context Engine** | Current items in cart                   | Analyzes mechanical & electrical compatibility           | Recommends matching sockets & mounting accessories | Boosts Average Order Value (AOV) by completing the technical bill-of-materials. |
+| **Integration Stack**   | CRM & ERP inventory context             | Injects tier pricing & stock availability                | Shows real-time account pricing & lead times       | Streamlines B2B purchasing workflows within the immediate chat conversation.    |
 
 ### Knowledge Takeaways
 
