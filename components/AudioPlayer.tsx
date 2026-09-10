@@ -195,7 +195,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
           <div className="flex items-center gap-3">
             <button
               onClick={rewind}
-              className="rounded-full p-1.5 text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+              className="focus-visible:ring-primary-500 rounded-full p-1.5 text-gray-700 transition-colors hover:bg-gray-200 focus-visible:ring-2 focus-visible:outline-none dark:text-gray-300 dark:hover:bg-gray-700"
               aria-label="Rewind 10 seconds"
               title="Rewind 10 seconds"
             >
@@ -217,7 +217,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
 
             <button
               onClick={togglePlayPause}
-              className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 rounded-full p-2 text-white transition-colors"
+              className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 focus-visible:ring-primary-500 rounded-full p-2 text-white transition-colors focus-visible:ring-2 focus-visible:outline-none"
               aria-label={isPlaying ? 'Pause' : 'Play'}
               title={isPlaying ? 'Pause' : 'Play'}
             >
@@ -256,7 +256,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
 
             <button
               onClick={fastForward}
-              className="rounded-full p-1.5 text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+              className="focus-visible:ring-primary-500 rounded-full p-1.5 text-gray-700 transition-colors hover:bg-gray-200 focus-visible:ring-2 focus-visible:outline-none dark:text-gray-300 dark:hover:bg-gray-700"
               aria-label="Fast forward 10 seconds"
               title="Fast forward 10 seconds"
             >
@@ -282,7 +282,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
             <span className="text-xs text-gray-600 dark:text-gray-400">Speed:</span>
             <button
               onClick={() => handleSpeedChange(1)}
-              className={`rounded px-2 py-0.5 text-xs transition-colors ${
+              className={`focus-visible:ring-primary-500 rounded px-2 py-0.5 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none ${
                 playbackRate === 1
                   ? 'dark:bg-primary-600 bg-primary-500 text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
@@ -292,7 +292,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
             </button>
             <button
               onClick={() => handleSpeedChange(2)}
-              className={`rounded px-2 py-0.5 text-xs transition-colors ${
+              className={`focus-visible:ring-primary-500 rounded px-2 py-0.5 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none ${
                 playbackRate === 2
                   ? 'dark:bg-primary-600 bg-primary-500 text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
@@ -302,7 +302,7 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
             </button>
             <button
               onClick={() => handleSpeedChange(4)}
-              className={`rounded px-2 py-0.5 text-xs transition-colors ${
+              className={`focus-visible:ring-primary-500 rounded px-2 py-0.5 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none ${
                 playbackRate === 4
                   ? 'dark:bg-primary-600 bg-primary-500 text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
