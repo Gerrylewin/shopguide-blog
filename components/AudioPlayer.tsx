@@ -160,7 +160,11 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
         Your browser does not support the audio element.
       </audio>
       {error && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
+        <div
+          className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200"
+          role="alert"
+          aria-live="assertive"
+        >
           <p className="font-semibold">Audio Error</p>
           <p className="mt-1">{error}</p>
           <p className="mt-2 text-xs">
@@ -170,7 +174,13 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
         </div>
       )}
       {isLoading && !error && (
-        <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">Loading audio...</div>
+        <div
+          className="mb-4 text-sm text-gray-600 dark:text-gray-400"
+          role="status"
+          aria-live="polite"
+        >
+          Loading audio...
+        </div>
       )}
       <div className="space-y-4">
         {/* Progress Bar */}
@@ -278,38 +288,22 @@ export default function AudioPlayer({ src, title = 'Audio Player' }: AudioPlayer
           </div>
 
           {/* Speed Controls */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5" role="group" aria-label="Playback speed">
             <span className="text-xs text-gray-600 dark:text-gray-400">Speed:</span>
-            <button
-              onClick={() => handleSpeedChange(1)}
-              className={`focus-visible:ring-primary-500 rounded px-2 py-0.5 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none ${
-                playbackRate === 1
-                  ? 'dark:bg-primary-600 bg-primary-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
-              }`}
-            >
-              1x
-            </button>
-            <button
-              onClick={() => handleSpeedChange(2)}
-              className={`focus-visible:ring-primary-500 rounded px-2 py-0.5 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none ${
-                playbackRate === 2
-                  ? 'dark:bg-primary-600 bg-primary-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
-              }`}
-            >
-              2x
-            </button>
-            <button
-              onClick={() => handleSpeedChange(4)}
-              className={`focus-visible:ring-primary-500 rounded px-2 py-0.5 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none ${
-                playbackRate === 4
-                  ? 'dark:bg-primary-600 bg-primary-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
-              }`}
-            >
-              4x
-            </button>
+            {[1, 2, 4].map((speed) => (
+              <button
+                key={speed}
+                onClick={() => handleSpeedChange(speed)}
+                aria-pressed={playbackRate === speed}
+                className={`focus-visible:ring-primary-500 rounded px-2 py-0.5 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none ${
+                  playbackRate === speed
+                    ? 'dark:bg-primary-600 bg-primary-500 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                }`}
+              >
+                {speed}x
+              </button>
+            ))}
           </div>
         </div>
       </div>
