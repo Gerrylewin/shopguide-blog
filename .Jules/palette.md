@@ -12,6 +12,7 @@
 
 **Learning:** Loading and error states often appear dynamically without a page reload. Screen readers may miss these updates if not properly configured.
 **Action:** Use `role="alert"` with `aria-live="assertive"` for critical error messages so they are announced immediately. Use `role="status"` with `aria-live="polite"` for non-critical status updates (like "Loading...") so they are announced at the next available pause.
+
 ## 2024-10-24 - Screen Reader Announcements for Dynamic Content
 
 **Learning:** When form validation errors, success messages, or component loading errors appear dynamically without a page reload, screen reader users may not be aware of them. Simply rendering the text is not enough.
