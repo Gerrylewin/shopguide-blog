@@ -30,7 +30,11 @@ class CommentsErrorBoundary extends Component<{ children: ReactNode }, ErrorBoun
   render() {
     if (this.state.hasError) {
       return (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200"
+        >
           <p className="font-semibold">Unable to load comments</p>
           <p className="mt-1">
             {this.state.error?.message ||
@@ -132,7 +136,11 @@ export default function Comments({ slug }: { slug: string }) {
 
   if (error) {
     return (
-      <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200">
+      <div
+        role="alert"
+        aria-live="assertive"
+        className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-200"
+      >
         <p className="font-semibold">Unable to load comments</p>
         <p className="mt-1">{error}</p>
       </div>

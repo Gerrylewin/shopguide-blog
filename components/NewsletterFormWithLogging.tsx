@@ -165,6 +165,8 @@ export default function NewsletterFormWithLogging({
           </div>
           {message && (
             <div
+              role={status === 'error' ? 'alert' : 'status'}
+              aria-live={status === 'error' ? 'assertive' : 'polite'}
               className={`rounded-md ${narrow ? 'mt-2 p-2' : 'mt-4 p-3'} ${status === 'success' ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
             >
               <p className={`font-medium ${narrow ? 'text-left text-xs' : 'text-center text-sm'}`}>
