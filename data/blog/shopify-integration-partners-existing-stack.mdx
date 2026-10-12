@@ -1,7 +1,7 @@
 ---
 title: 'Shopify Integration Partners: The Stack You Already Pay For, in the Conversation'
 date: '2026-09-04'
-lastmod: '2026-10-07'
+lastmod: '2026-10-08'
 tags:
   - 'shopify-integration-partners'
   - 'integration-partners'
@@ -17,7 +17,7 @@ callout: 'Merchants are not asking for another app. They are asking for the ones
 summary: >-
   The guide to Shopify integration partners. What Klaviyo, Judge.me, Rivyo, Smile.io, Alia, and Slack each do inside the on-page conversation, how ShopGuide itself is wired into Shopify, how to connect each one, and the honest limits.
 images:
-  - 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1200&q=80'
+  - 'https://images.unsplash.com/photo-1601599561213-832382fd07ba?w=1200&q=80'
 authors: ['default']
 layout: PostLayout
 ---
@@ -30,41 +30,41 @@ Not "I want more apps."
 
 That is the job of Shopify integration partners. Email. Reviews. Loyalty. Support. You already bought those seats. The shopper still has to hunt for them. Popup in one corner. Stars below the fold. Points in a widget they never open. A human ticket that starts from zero.
 
-This is the guide. What each partner does for the merchant. How ShopGuide itself is integrated, so those partners have somewhere to talk. How to connect them. What they will not do.
+This is the guide. One feature. The partner facts ride the on-page conversation. What each partner does for the merchant. How ShopGuide itself is integrated, so those partners have somewhere to talk. How to connect them. What they will not do.
 
-![A clothing shop floor, racks in a row, the kind of catalog a shopper has to walk](https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1200&q=80)
+![A grocery aisle, the kind of catalog a shopper has to walk](https://images.unsplash.com/photo-1601599561213-832382fd07ba?w=1200&q=80)
 
 ## What merchants actually say they want
 
 Public threads are not subtle.
 
-On February 21, 2026, r/shopifyDev asked what merchants are actually struggling with. The top reply, from u/EngineeringHuge1331, was the small daily stuff. Messy integrations. Tracking mismatches. Too many apps doing half-jobs. The line that matters: "Merchants don't want more tools they want ones that actually work together."
+On February 21, 2026, [r/shopifyDev](https://www.reddit.com/r/shopifyDev/comments/1rarbr9/) asked what merchants are actually struggling with. The top reply, from u/EngineeringHuge1331, was the small daily stuff. Messy integrations. Tracking mismatches. Too many apps doing half-jobs. The line that matters: "Merchants don't want more tools they want ones that actually work together."
 
-Three days earlier, on r/shopify_growth, a founder walked a store with 18 apps. Each one solved a small thing. Together they slowed the store and made the backend confusing. The useful comment under it was not "install a better app." It was that nobody on the team could say what half the apps even did, because three different people had installed them over two years.
+Three days earlier, on [r/shopify_growth](https://www.reddit.com/r/shopify_growth/comments/1r858s7/we_had_18_apps_on_a_shopify_store_and_it_wasnt/), a founder walked a store with 18 apps. Each one solved a small thing. Together they slowed the store and made the backend confusing. The useful comment under it was not "install a better app." It was that nobody on the team could say what half the apps even did, because three different people had installed them over two years.
 
-Loyalty gets the same treatment. On April 1, 2026, a merchant on r/shopify_growth wrote up a points program nobody used. Customers could not see a balance without logging in. There was no reminder. "The program existed but was essentially invisible. A loyalty program nobody interacts with is just a cost centre." Later that month, on r/shopifyDev, a Smile.io thread said the same thing in fewer words. u/Rich-Pass-3280: "biggest issue for us was how invisible it is to customers. unless someone is actively looking for it they don't even notice it exists."
+On March 1, [r/shopify](https://www.reddit.com/r/shopify/comments/1ri5yak/anyone_else_getting_annoyed_with_how_many_apps/) called the same thing the app tax. Monthly cost, plus the way extra scripts slow the store. A May 2026 scrape of 47,000 Shopify stores on the [community forum](https://community.shopify.com/t/i-spent-800-hours-scraping-47-000-shopify-stores-actually-heres-the-data-on-themes-niches-apps-and-speed/615505) put a number on it. Average store, 5.1 apps. App count was the strongest predictor of a bad mobile score in that set. Each extra app cost about 2 to 3 points.
+
+Loyalty gets the same treatment. On April 1, 2026, a merchant on [r/shopify_growth](https://www.reddit.com/r/shopify_growth/comments/1s9ohn5/i_built_a_loyalty_program_that_nobody_used/) wrote up a points program nobody used. Customers could not see a balance without logging in. There was no reminder. "The program existed but was essentially invisible. A loyalty program nobody interacts with is just a cost centre." Later that month, on [r/shopifyDev](https://www.reddit.com/r/shopifyDev/comments/1suse55/anyone_else_struggling_to_get_real_engagement/), a Smile.io thread said the same thing in fewer words. u/Rich-Pass-3280: "biggest issue for us was how invisible it is to customers. unless someone is actively looking for it they don't even notice it exists."
 
 None of that is a request for a fifteenth widget. It is a request for the paid context to show up where the shopper already is.
-
-The App Store is not going to solve that by getting longer. On October 5, 2026, a Shopify developer forum thread counted about 1,600 apps added in a month, most of them landing in categories that already hold over 1,000 apps. More logos. Same silence between them.
 
 ## The feature: partners ride the on-page conversation
 
 ShopGuide is an on-page agent. It lives in a theme block. It reads the live Shopify Catalog API during chat so stock, variants, and price match the warehouse.
 
-Shopify integration partners attach to that same conversation. They do not get their own chat window.
+Shopify integration partners attach to that same conversation. They do not get their own chat window. They do not get a second script farm.
 
 The partner set on the [integrations page](https://blog.yourshopguide.com/integrations) is the list that exists today. Not a roadmap slide.
 
-| Partner                 | What you bought it for        | What the shopper usually sees | What ShopGuide does with it                                       | How you connect it            |
-| :---------------------- | :---------------------------- | :---------------------------- | :---------------------------------------------------------------- | :---------------------------- |
-| **Shopify Catalog API** | Products, stock, price        | Search and filters            | Live lookup of inventory, variants, and price during the reply    | Native, nothing to connect    |
-| **Klaviyo**             | Email, SMS, and onsite popups | A modal, then silence         | Captures the email, tags the profile, fires named chat events     | Private API key in settings   |
-| **Judge.me**            | Verified reviews              | Stars under the fold          | Pulls a matching review and photo proof into the answer           | Public API token in settings  |
-| **Rivyo**               | Reviews and UGC               | Same job, different app       | Surfaces Rivyo proof inside the recommendation                    | Public API token in settings  |
-| **Smile.io**            | Points and VIP tiers          | A loyalty widget              | Reads live balance and tier, answers "how many points do I have?" | API token in settings         |
-| **Alia**                | Personalized incentives       | A popup that gets closed      | Keeps the Alia offer in context after the modal is gone           | On when your polls are active |
-| **Slack**               | Team comms                    | A blank ticket                | Posts customer, cart, and a transcript link for a handoff         | Incoming webhook URL          |
+| Partner | What you bought it for | What the shopper usually sees | What ShopGuide does with it | How you connect it |
+| :------ | :--------------------- | :---------------------------- | :-------------------------- | :----------------- |
+| **Shopify Catalog API** | Products, stock, price | Search and filters | Live lookup of inventory, variants, and price during the reply | Native, nothing to connect |
+| **Klaviyo** | Email, SMS, and onsite popups | A modal, then silence | Captures the email, tags the profile, fires named chat events | Private API key in settings |
+| **Judge.me** | Verified reviews | Stars under the fold | Pulls a matching review and photo proof into the answer | Public API token in settings |
+| **Rivyo** | Reviews and UGC | Same job, different app | Surfaces Rivyo proof inside the recommendation | Public API token in settings |
+| **Smile.io** | Points and VIP tiers | A loyalty widget | Reads live balance and tier, answers "how many points do I have?" | API token in settings |
+| **Alia** | Personalized incentives | A popup that gets closed | Keeps the Alia offer in context after the modal is gone | On when your polls are active |
+| **Slack** | Team comms | A blank ticket | Posts customer, cart, and a transcript link for a handoff | Incoming webhook URL |
 
 That is the merchant payoff:
 
@@ -75,6 +75,8 @@ That is the merchant payoff:
 
 On a 200-SKU boutique this is polite. On a 10,000-SKU catalog it is how the same question stops becoming a ticket.
 
+Klaviyo is the clearest example of the handoff, because the docs name the payload. Three events: ShopGuide Chat Engaged, ShopGuide Order Attributed, and ShopGuide NPS Submitted. Profile fields that actually land include `sg_journey_archetype`, `sg_persona`, `sg_last_chat_intent`, `sg_key_hesitation`, and `sg_dietary_tags`. Dietary tags stay on verifiable attributes (gluten-free, certified organic, non-GMO, raw). Not a vibe the model guessed. Klaviyo still owns the flow. ShopGuide hands it the moment.
+
 Want the deep dive on one pairing? [Klaviyo](/blog/klaviyo-shopguide-integration-guide), [Judge.me and Rivyo](/blog/social-proof-judgeme-rivyo-ai-agent), [Smile.io](/blog/smile-io-loyalty-ai-agent-automation), [Alia](/blog/personal-shopping-alia-shopguide-personalization), [Slack](/blog/slack-integration-customer-support-efficiency). How the scan finds what is already on the theme: [automatic app detection](/blog/automatic-app-detection-shopify-integration-partners).
 
 ![A shopper paying at the counter, the moment the stack should already know who they are](https://images.unsplash.com/photo-1556741533-6e6a62bd8b49?w=1200&q=80)
@@ -84,7 +86,7 @@ Want the deep dive on one pairing? [Klaviyo](/blog/klaviyo-shopguide-integration
 Three connections. Shopify integration partners only work because these three exist.
 
 **1. Theme block.**
-You add the ShopGuide Chat section in the theme editor. Launch messages, visibility, and styling live in the app admin. One storefront surface. Not a new script farm for every partner.
+You add the ShopGuide Chat section in the theme editor. Launch messages, visibility, and styling live in the app admin. One storefront surface. Not a new script for every partner.
 
 **2. Shopify Admin.**
 The dashboard sits in the Shopify admin sidebar. Home, analytics, Test your Guide, chat history, Integrations, Settings. Revenue attributed to chat sessions shows up there. There is no second login to babysit.
@@ -94,7 +96,7 @@ The agent looks up products from Shopify's Catalog API during the conversation. 
 
 That wiring is why the partner cards matter. The conversation is the place those facts get used.
 
-![The stack you already run, sitting on the counter next to the conversation](/static/images/integration-partners-conversation.jpg)
+![The counter where the conversation already is, no extra widget on the wall](/static/images/integration-partners-counter-chat.jpg)
 
 ## How to connect a partner
 
@@ -122,15 +124,15 @@ Docs also mention WhatsApp handoff and nine Sidekick tools inside Shopify Admin.
 
 Say this before you paste a token.
 
-ShopGuide does not replace Klaviyo, Judge.me, Rivyo, Smile.io, Alia, or Slack. If the partner app is missing or misconfigured, there is nothing to read.
+ShopGuide does not replace Klaviyo, Judge.me, Rivyo, Smile.io, Alia, or Slack. If the partner app is missing or misconfigured, there is nothing to read. Installing ShopGuide does not remove the scripts those apps already inject. The point is not a seventh app that does their jobs. The point is one place those facts get used.
 
 Detection is a heuristic. It sees app embeds on the published theme. An app installed but not on the theme will not badge itself. Connect it by hand.
 
 Reviews in chat are only as good as the reviews you collected. An empty review catalog means empty social proof.
 
-Smile.io only helps once the shopper is identified. A first-time anonymous visitor has no points to surface. A points program nobody can see is still a cost. The agent can mention a live balance. It cannot invent engagement. The April threads are right about that. Visibility is the job. Redemption is still yours.
+Smile.io only helps once the shopper is identified, and only for what the token can read. A first-time anonymous visitor has no points to surface. In October 2025 a merchant on r/shopify said their Starter plan did not even show a balance to the customer. If Smile's plan hides that data, ShopGuide cannot invent it. The April threads are right about the rest. Visibility is the job. Redemption is still yours.
 
-Klaviyo still owns the flow. ShopGuide hands it the moment. Follow-up only works if the shopper gives an email. Dietary tags only land on verifiable attributes (gluten-free, organic, non-GMO, raw), not on a vibe the model guessed.
+Klaviyo still owns the flow. ShopGuide hands it the moment. Follow-up only works if the shopper gives an email. Dietary tags only land on verifiable attributes, not on a lifestyle guess.
 
 Slack is a one-way webhook. ShopGuide posts context into a channel. Your team resolves in Shopify or the ShopGuide admin, not by replying in Slack.
 
@@ -148,7 +150,7 @@ Shopify integration partners are context in the path. They are not a new operati
 
 That line is not a ShopGuide slogan.
 
-Harley Finkelstein put the merchant version of the same idea in a January 16, 2026 Retail Brew interview: "The products that will be found will be merit-based as opposed to ad-based. I think that's democracy. That'll level the playing field."
+Harley Finkelstein put the merchant version of the same idea in a [January 16, 2026 Retail Brew interview](https://www.retailbrew.com/stories/2026/01/16/shopify-president-agentic-commerce-could-usher-in-merit-based-shopping): "The products that will be found will be merit-based as opposed to ad-based. I think that's democracy. That'll level the playing field."
 
 ShopGuide's job on your store is smaller than that vision. Put the agent on the page. Read the catalog. Bring in the partner facts you already pay for. Hand off to a human with the transcript when the agent is stuck.
 
