@@ -1,0 +1,146 @@
+---
+title: 'A Shopify NPS Survey Built for Chat-Assisted Orders'
+date: '2026-10-21'
+lastmod: '2026-10-21'
+tags:
+  - 'shopify-nps-survey'
+  - 'nps'
+  - 'post-purchase'
+  - 'agentic-commerce'
+  - 'high-sku-shopify'
+draft: false
+callout: 'ShopGuide can email a two-question Shopify NPS survey about 10 days after an order that came through chat. One score for your brand, one for the chat. A comment box opens only when the chat score is low. It is off until you turn it on.'
+summary: >-
+  Most post-purchase surveys ask every buyer the same thing and lump the answers together. ShopGuide's Shopify NPS survey only goes to customers whose order was attributed to a chat, and it scores the brand and the chat separately so you can tell which one needs work.
+images:
+  - 'https://images.unsplash.com/photo-1551930139-333de680709a?w=1200&q=80'
+authors: ['default']
+layout: PostLayout
+---
+
+You added an AI agent to your store. Some orders now come through a conversation.
+
+Here is the question nobody answers: did those buyers like it?
+
+Revenue attribution tells you the chat sold something. It does not tell you if the buyer would come back, or if the chat annoyed them on the way to checkout. That is what a Shopify NPS survey is for. ShopGuide ships one that only asks the people who bought through chat.
+
+## What it does
+
+When an order is attributed to a ShopGuide chat, and you have NPS turned on, the order goes into a queue. One row per order. No duplicates.
+
+A daily job picks up orders that are at least 10 days old and sends the survey. Ten days gives the package time to arrive. Nobody rates a store before the box shows up.
+
+The email comes from "Team at" plus your store name. The subject line is "How was shopping with" plus your store name. It greets the buyer by first name when Shopify has one and names the first product on the order.
+
+Then it asks two things, both on a 0 to 10 scale:
+
+1. "How likely are you to recommend" your store "to a friend or family member?"
+2. "How was your experience purchasing through our chat assistant?"
+
+If the chat score is 6 or lower, a third question opens: "What could we improve to make purchasing through chat better?"
+
+That is the whole survey. It takes under a minute.
+
+## Why two scores matter
+
+One NPS number blends everything together. Shipping, price, product quality, the chat. If it drops, you have no idea where to look.
+
+Splitting the questions fixes that.
+
+| Brand score (Q1) | Chat score (Q2) | What it probably means                         | Where to look first                   |
+| :--------------- | :-------------- | :--------------------------------------------- | :------------------------------------ |
+| 9 to 10          | 9 to 10         | The chat helped and the order landed well      | Nothing broken. Read the wins.        |
+| 9 to 10          | 0 to 6          | They like you. The chat got in the way.        | The comment, then the chat transcript |
+| 0 to 6           | 9 to 10         | The chat was fine. Something after it was not. | Shipping, product, fit, returns       |
+| 0 to 6           | 0 to 6          | Bad all around                                 | Both. Start with the comment.         |
+
+The brand score is classic NPS. Promoters are 9 and 10. Passives are 7 and 8. Detractors are 0 to 6. Your NPS is percent promoters minus percent detractors.
+
+The chat score is shown as an average out of 10.
+
+## What you see in the admin
+
+The NPS page in the ShopGuide admin has two tabs. Overview and Settings.
+
+Overview shows, for the period you pick:
+
+- **Queued:** orders waiting out the 10 days
+- **Surveys sent**
+- **Response rate:** responses over surveys sent
+- **Chat experience:** the average chat score
+- **Detractors:** how many, and their average brand score
+- **NPS trend:** a line over time, once there is enough history to draw one
+- **Responses:** each one with its date, both scores, and the comment if there was one
+
+The page also pulls out the latest written comment. Comments only exist when the chat score was low, so every one of them is worth reading.
+
+## How to turn it on
+
+It is off by default. Nothing goes out until you switch it on.
+
+Open the NPS page in ShopGuide, go to Settings, and turn it on. From then on, chat-attributed orders get queued. Orders from before you turned it on are not surveyed.
+
+If you have connected Klaviyo with your private API key, each response also updates the customer's Klaviyo profile and fires a "ShopGuide NPS Submitted" event. You can build a flow on it. Thank promoters. Reach out to detractors. That only works if Klaviyo is connected. It does not turn on by itself.
+
+<QuoteCard
+  quote="It's the worst, because they obviously don't care. It's the most disrespectful thing imaginable, is to ask you what do I need to do to fix it, and then get ignored."
+  attribution="Fred Reichheld, creator of the Net Promoter Score"
+  source="https://hbr.org/podcast/2011/09/customer-loyalty-in-the-twitte"
+  sourceLabel="HBR IdeaCast"
+  caption="Reichheld on detractors who give feedback and never hear back. The survey is the easy part. Reading the comments is the job."
+/>
+
+## Honest limits
+
+Say these out loud before you rely on the number.
+
+**It only covers chat-attributed orders.** Buyers who never opened the chat do not get this survey. This is not a store-wide NPS program. If you already run one, keep it.
+
+**It needs an email.** If the order has no customer email, nothing is queued.
+
+**The wait is fixed at about 10 days.** You cannot change the delay from the settings page. Fast-shipping stores may want it shorter. Slow freight may want it longer.
+
+**The copy is fixed.** The questions and the email layout are the same for every store. Your store name and the buyer's first name and product are filled in. That is it.
+
+**A tap in the email is not a response.** The email shows 0 to 10 buttons. Tapping one opens the survey with the first answer filled in. The response only counts once the buyer answers both questions and submits.
+
+**Links expire.** A survey link is valid for 30 days after it is sent.
+
+**Small numbers lie.** If you get a handful of chat orders a month, your NPS will swing hard on one person. Read the comments. Do not chase the score.
+
+**The chat question is about the chat.** A low chat score tells you the conversation fell short. It does not tell you which turn. Open the transcript for that.
+
+## Who this is for
+
+Stores where the agent is doing real selling. High-SKU catalogs where the chat answers fit, spec, and compatibility questions and then sends the buyer to checkout. If chat is a real channel for you, it deserves its own feedback loop.
+
+If chat is a novelty on your store, wait. You will not get enough responses to learn anything yet.
+
+The product page with screenshots is the [NPS page](https://www.yourshopguide.com/pages/nps-survey). How orders get credited to chat is covered in [revenue attribution](/blog/revenue-attribution-high-sku-shopify-agentic-commerce).
+
+Want to know what chat buyers really think? [Install ShopGuide](https://apps.shopify.com/shopguide), let it sell for a few weeks, then turn on the survey.
+
+---
+
+## Frequently Asked Questions
+
+**Who gets the Shopify NPS survey?**
+Customers whose order was attributed to a ShopGuide chat, after you turn NPS on. Each order gets one survey. Orders with no customer email are skipped.
+
+**When does the survey email go out?**
+About 10 days after the order. A daily job sends everything that has passed that mark.
+
+**What does it ask?**
+How likely they are to recommend your store to a friend or family member, and how their experience buying through the chat assistant was. Both on 0 to 10. If the chat score is 6 or lower, it asks what could make buying through chat better.
+
+**Is it on by default?**
+No. It is off until you turn it on in the NPS settings.
+
+**Does it send data to Klaviyo?**
+Only if you have connected Klaviyo with a private API key. Then each response updates the profile and fires a "ShopGuide NPS Submitted" event.
+
+**Can I change the questions or the timing?**
+Not today. The two questions, the follow-up, and the roughly 10-day wait are fixed.
+
+**Does this replace my store-wide NPS tool?**
+No. It only covers chat-assisted orders. Use it to judge the chat, and keep your existing survey for everything else.

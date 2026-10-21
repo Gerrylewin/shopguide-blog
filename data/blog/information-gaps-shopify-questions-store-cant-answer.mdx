@@ -1,0 +1,134 @@
+---
+title: "Information Gaps: What Your Shopify Store Can't Answer"
+date: '2026-10-21'
+lastmod: '2026-10-21'
+tags:
+  - 'information-gaps'
+  - 'knowledge-gaps'
+  - 'shopify-knowledge-base'
+  - 'agentic-commerce'
+  - 'high-sku-shopify'
+draft: false
+callout: "ShopGuide reviews every finished chat and pulls out the questions your store could not answer, in the shopper's own words. It groups them by topic, ranks them by how many of those shoppers left without buying, and lets you answer store questions straight into Shopify's Knowledge Base."
+summary: >-
+  Your chat transcripts are a list of everything your product pages forgot to say. ShopGuide's information gaps view turns them into a short, ranked to-do list: missing product info, unclear policies, products people wanted that you do not carry, and things on the store that are broken.
+images:
+  - 'https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?w=1200&q=80'
+authors: ['default']
+layout: PostLayout
+---
+
+Every store has questions it cannot answer.
+
+How is this packaged. Does it ship to Poland. Is this one new or refurbished. How many come in a box.
+
+On a small catalog you hear these in your inbox and fix them. On a high-SKU catalog they hide. Thousands of product pages. Nobody reads every transcript. The same question gets asked a hundred ways across fifty products, and it never looks like one problem.
+
+Information gaps is the ShopGuide feature that turns those chats into a list you can work through.
+
+## How it finds gaps
+
+When a conversation has been quiet for 30 minutes, ShopGuide treats it as finished. Thirty minutes matches the lifetime of Shopify's own session cookie, so the visit is really over, not paused.
+
+Then a review runs on the server over the whole transcript. Not one reply at a time. Not in the shopper's browser. That matters. An ad blocker or a closed tab cannot stop it, and it can see a chat going in circles, which a single reply never shows.
+
+The review records:
+
+- **Outcome:** resolved, partial, unresolved, or nothing was really asked
+- **Friction:** looping, the shopper repeating a question, a handoff to email, the shopper giving up
+- **Unmet needs:** up to four things the shopper wanted and did not get
+- **Wins:** things the agent answered well, so you know what already works
+
+Each unmet need carries the shopper's exact question, copied from the transcript. If that quote cannot be found in the transcript, the item is dropped. You will not see a paraphrase dressed up as a customer quote.
+
+Needs are grouped into topics that ignore the specific product. "How is the rice packaged" and "is the kamut in a bag or a bucket" are one topic: packaging. That is how a hundred scattered questions become one row.
+
+## What you see
+
+Open Chats in the ShopGuide admin and go to the Knowledge gaps list.
+
+Each row is a topic, labeled in plain language. It shows how many conversations raised it in the period you picked, how many of those shoppers did not order, and up to three recent phrasings. Rows are sorted by that "did not order" count, so the gaps costing you the most sit at the top.
+
+With 10 or more chats on a topic, the row also compares that topic's conversion to your store's normal chat conversion. If your chat has never produced an order, that comparison is hidden. It would read zero for everything.
+
+Rows are sorted into four kinds of work:
+
+| Label                | What it means                                                     | Example topic                          | What you do                              |
+| :------------------- | :---------------------------------------------------------------- | :------------------------------------- | :--------------------------------------- |
+| **Add product info** | The answer depends on the product and is not written down         | Packaging, materials, care, dimensions | Add it to the product page or metafields |
+| **Clarify a policy** | A store-wide rule is missing or unclear                           | Shipping cost, returns, pickup         | Write the policy answer                  |
+| **Customer demand**  | Shoppers wanted something you do not sell, or it was out of stock | A product you do not carry             | Decide if you should stock it            |
+| **Fix your store**   | Something on the storefront is broken                             | Add to cart not working, wrong price   | Fix the store                            |
+
+Rows link to the chats behind them, so you can read the real conversations behind the count. Then mark a row Resolved or Dismiss it.
+
+## What you do not see
+
+Some gaps are ShopGuide's fault, not yours. The agent used no lookup and stated a product fact anyway. A tool failed. It answered in the wrong language. It needed live order data it has no tool for.
+
+Those are routed to ShopGuide's own list and kept out of your view. An earlier version showed them to merchants under a tab called "App errors". That was the wrong place for them. Your list is for work you can actually do.
+
+## Answer once, reach every agent
+
+For "Add product info" and "Clarify a policy" rows, there is an **Answer in Knowledge Base** button.
+
+You type the answer. When you press save, ShopGuide writes it as a published FAQ into Shopify's own Knowledge Base app and marks the gap resolved. ShopGuide's chat reads it on the next turn. So do Shopify-connected AI shopping agents that answer from that Knowledge Base.
+
+Nothing is written until you press save. These answers go out under your store's name, to agents nobody at ShopGuide controls. That is your call to make, not an automation.
+
+<QuoteCard
+  quote="The knowledge base app will help [merchants] create hints for those AI shopping agents."
+  attribution="Mark William Lewis, founder of Netalico"
+  source="https://www.retailbrew.com/stories/2025/05/20/shopify-is-dropping-new-ai-tools-at-edition-with-an-eye-on-flexibility-and-customization"
+  sourceLabel="Retail Brew"
+  caption="On Shopify's Knowledge Base app, May 2025. Information gaps tells you which hints are missing."
+/>
+
+## Honest limits
+
+**A model does the review.** It reads the transcript and decides what was unmet. It can be wrong. That is why rows link to the chats and every quote must appear in the transcript. Check before you rewrite a product page.
+
+**Topics drift.** The grouping is good, not perfect. The same issue can end up in two rows, and an old label can stop matching what is inside it. That is why rows show recent phrasings, not just the first question ever asked.
+
+**It needs volume.** A store with a few chats a week gets a short list. Conversion comparisons only show at 10 or more chats on a topic.
+
+**It is not instant.** A chat has to be quiet for 30 minutes before it is reviewed.
+
+**Fixing is still your job.** The list tells you packaging info is missing. It does not write it for you, except for the store-level answers you choose to save into the Knowledge Base.
+
+**The Knowledge Base link leans on Shopify internals.** Shopify's Knowledge Base app stores its data in Shopify-owned entry types that are not a documented API. If Shopify changes them, that button may break until ShopGuide catches up. Shopify also asks for short answers, about one or two sentences.
+
+**It only sees chat.** Questions asked by email, phone, or not asked at all never show up here.
+
+## Where this fits
+
+If you have not set up shop knowledge yet, start with [Test your Guide](/blog/test-your-guide-shop-knowledge-high-sku-shopify). That is where you teach the agent your policies and preview its answers. Information gaps is what tells you what to teach it next.
+
+On a high-SKU store this is the cheapest content plan you will get. Your shoppers already wrote it. You just have to read it in order.
+
+[Install ShopGuide](https://apps.shopify.com/shopguide), let it run for a couple of weeks, then open Chats and look at the top three rows.
+
+---
+
+## Frequently Asked Questions
+
+**What are information gaps in ShopGuide?**
+Questions or needs that shoppers raised in chat and did not get answered. ShopGuide pulls them out of finished conversations, groups them by topic, and shows them in Chats under Knowledge gaps.
+
+**When does a chat get reviewed?**
+After it has been quiet for 30 minutes. The review runs on the server over the whole conversation.
+
+**Are the customer quotes real?**
+Yes. Each item must quote the shopper's own words from the transcript. If the quote is not found, the item is dropped. You can open the chats behind each row.
+
+**Will I see problems with the ShopGuide app itself?**
+No. Agent mistakes, tool failures, and missing capabilities go to ShopGuide's own list. Your view only shows work you can do on your store.
+
+**What does Answer in Knowledge Base do?**
+It saves your answer as a published FAQ in Shopify's Knowledge Base app and marks the gap resolved. ShopGuide's chat and Shopify-connected AI agents that read that Knowledge Base can then use it. Nothing is saved until you press save.
+
+**How are rows ranked?**
+By how many shoppers who raised the topic in your selected period did not place an order. The topics costing you the most come first.
+
+**Is this the same as Test your Guide?**
+No. Test your Guide is where you add shop knowledge and preview answers. Information gaps shows you which answers are missing, based on real chats.

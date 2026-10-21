@@ -1,0 +1,145 @@
+---
+title: 'AI Discount Codes on Shopify, With Limits You Set'
+date: '2026-10-21'
+lastmod: '2026-10-21'
+tags:
+  - 'ai-discount-codes'
+  - 'shopify-discounts'
+  - 'agentic-commerce'
+  - 'on-page-agent'
+  - 'high-sku-shopify'
+draft: false
+callout: 'ShopGuide can create a real, personal, time-limited Shopify discount code in the middle of a chat. Only for products or collections you pick. One active code per visitor, a shop-wide hourly cap, and it never makes up a code. It is off by default.'
+summary: >-
+  A sitewide promo code ends up on coupon sites within days. ShopGuide's AI discount codes are created one at a time, for one shopper, for the items you choose, and they expire. Here is exactly how the tool works, what it refuses to do, and where it can still be gamed.
+images:
+  - 'https://images.unsplash.com/photo-1644370644949-b175294cbceb?w=1200&q=80'
+authors: ['default']
+layout: PostLayout
+---
+
+Most store discounts are blunt.
+
+One code. Everyone gets it. It lands on a coupon site. Now full-price buyers pay less too.
+
+The other option is a popup that offers 10% to anyone with a pulse, before they have even looked at a product.
+
+AI discount codes in ShopGuide work the other way around. The agent talks to the shopper first. If they show real intent on something you chose to discount, it can create a personal code right there in the chat. A real Shopify code. With an expiry.
+
+## What actually happens
+
+You turn on the AI Discount Code Generator in ShopGuide settings. You pick the products and collections the agent is allowed to discount.
+
+Then, in a conversation, when the shopper shows clear purchase intent on one of those items, the agent calls a tool named `create_discount_code`. That tool:
+
+1. Checks the item is on your eligible list
+2. Checks this visitor does not already have a live code
+3. Checks the store has not hit its hourly cap
+4. Creates a basic discount code in your Shopify admin through the Admin API
+5. Hands the code back to the agent to show the shopper, with the expiry time
+
+The code is personal in a literal sense. The agent suggests a short base from the conversation, like a first name or the product type. The tool cleans it up and adds a random three-character suffix so it is unique. Something like `RUNNER-SHOES-K7Q`. If there is no suggestion, it falls back to `GUIDE-` plus random characters.
+
+In Shopify, it shows up under Discounts as "ShopGuide Personal Code" plus the code. You can see it, edit it, or kill it like any other discount.
+
+The agent is told to create the code before it shows one. It is not allowed to type out a code it made up.
+
+If you also use proactive openers, the settings page notes that the auto-scroll message on eligible pages gets extra context, so the agent can mention the discount when it starts the conversation. More on openers in [proactive conversation opening](/blog/proactive-conversation-opening-high-sku-shopify).
+
+## The settings
+
+| Setting                  | Options                                       | Default    | What it controls                                        |
+| :----------------------- | :-------------------------------------------- | :--------- | :------------------------------------------------------ |
+| **Enable generator**     | On or off                                     | Off        | Whether the agent has the tool at all                   |
+| **Eligible products**    | Search and pick                               | None       | Single products the agent may discount                  |
+| **Eligible collections** | Search and pick                               | None       | Every product in these collections, as of the last save |
+| **Discount type**        | Percentage off or fixed amount off            | Percentage | How the value is applied                                |
+| **Value**                | A number                                      | 10         | 10 means 10% off, or a fixed 10 off                     |
+| **Code valid for**       | 6 hours, 12 hours, 24 hours, 48 hours, 7 days | 24 hours   | When the Shopify code expires                           |
+| **One use per customer** | On or off                                     | On         | With it on, the code can be redeemed once               |
+
+If you switch it on and pick nothing, the settings page warns you. The agent has nothing to offer until you choose at least one product or collection.
+
+## What it refuses to do
+
+The guardrails matter more than the feature. A model that can mint real discounts needs hard limits, not polite instructions.
+
+| Situation                                             | What the tool does                                                             |
+| :---------------------------------------------------- | :----------------------------------------------------------------------------- |
+| Shopper asks for a code on a product you did not pick | Refuses, and tells the agent what the discount does cover so it can offer that |
+| Shopper already got a code that has not expired       | Returns the same code again. No second discount is created.                    |
+| Visitor cannot be identified (no tracking consent)    | No code. The agent keeps helping without one.                                  |
+| The store passed 30 new codes in the last hour        | No code. The agent tells the shopper codes are unavailable right now.          |
+| The limit check itself fails                          | No code. It fails closed rather than risk minting unlimited discounts.         |
+| Shopify rejects the discount                          | No code. The error goes back to the agent instead of a fake code.              |
+
+That second row came from a real bug in the code history. "One use per customer" only limits how often a single code can be redeemed. It never stopped one visitor from asking again and getting a brand-new code each time. So a separate table now records every issued code, and the tool checks it first.
+
+There is also no per-IP limit, on purpose. Requests reach the app through Shopify's app proxy, so they arrive from shared edge IPs. An IP cap would block unrelated shoppers.
+
+<QuoteCard
+  quote="The problem with the race to the bottom is that you might win. Even worse, you might come in second."
+  attribution="Seth Godin, author and marketer"
+  source="https://seths.blog/2014/05/the-tyranny-of-lowest-price/"
+  sourceLabel="Seth's Blog"
+  caption="From The tyranny of lowest price, May 30, 2014. A discount should be a decision you make on purpose, not the default."
+/>
+
+## Why scope beats a sitewide code
+
+For a high-SKU store the point is control.
+
+You probably do not want to discount your best sellers. You might want to move a slow collection, a discontinued line, or the accessory that pairs with a bigger purchase. Picking eligible items lets the agent use a discount as a closing tool on those, and only those.
+
+The shopper also gets something a popup cannot give. The code shows up after they asked real questions and found the right item. Not before.
+
+## Honest limits
+
+Read this before you turn it on.
+
+**It is real money.** Every code is a live Shopify discount. Pick your eligible items and value like you would for any promo.
+
+**The visitor ID comes from the browser.** The "one active code per visitor" rule keys on an ID the storefront sends. Someone who clears cookies or switches devices can look like a new visitor. The hourly cap of 30 codes per store bounds scripted abuse. It does not make abuse impossible.
+
+**Codes are not locked to an account.** Any customer can redeem the code. With "One use per customer" on, it can be used once. With it off, the code has no usage limit, so it can be shared and reused until it expires. Leave it on unless you have a reason.
+
+**Collections are a snapshot.** If you add products to an eligible collection later, re-save the settings so the list updates. The settings page says the same.
+
+**The agent decides when intent is clear.** That is model judgment. It will sometimes offer a code to someone who would have paid full price. Keep the value modest and the expiry short.
+
+**Check redemptions in Shopify.** The tool records which codes it issued and which conversation each came from. Whether a code was used, you check in Shopify like any other discount.
+
+**Stacking follows Shopify.** The tool creates a basic code discount. How it combines with your other discounts at checkout is up to your Shopify discount setup.
+
+## Who should try it
+
+Stores with real margin on some lines and dead weight on others. Stores already running a blanket welcome code that leaks. Stores where shoppers stall on one last question before buying a specific item.
+
+If every product in your catalog is thin margin, skip it. A smart discount is still a discount.
+
+Want to see it on a slow collection first? [Install ShopGuide](https://apps.shopify.com/shopguide), pick one collection, set a 24-hour code at a small value, and watch the chats.
+
+---
+
+## Frequently Asked Questions
+
+**Are these real Shopify discount codes?**
+Yes. The agent creates a basic code discount in your Shopify admin through the Admin API. It appears under Discounts as "ShopGuide Personal Code" plus the code.
+
+**Can the agent discount anything in my store?**
+Only products and collections you pick in settings. If a shopper asks about something else, the tool refuses and the agent explains what the discount covers.
+
+**Can one shopper keep asking for new codes?**
+No. If they already have a code that has not expired, the tool gives them the same one again. There is also a cap of 30 new codes per store per hour.
+
+**How long does a code last?**
+You choose 6 hours, 12 hours, 24 hours, 48 hours, or 7 days. The default is 24 hours.
+
+**Can the agent make up a code?**
+It is told never to. A code only exists if the tool created it in Shopify. If anything fails, the agent gets a failure, not a code.
+
+**Is it on by default?**
+No. You turn on the AI Discount Code Generator in settings and pick eligible items first.
+
+**What happens if a visitor declines tracking consent?**
+No code is created. The agent keeps helping them shop without one.
