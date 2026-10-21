@@ -17,3 +17,8 @@
 
 **Learning:** When form validation errors, success messages, or component loading errors appear dynamically without a page reload, screen reader users may not be aware of them. Simply rendering the text is not enough.
 **Action:** Use `role="alert"` with `aria-live="assertive"` for critical error messages (like form submission failures or component crash boundaries) so they are announced immediately, interrupting current speech if necessary. Use `role="status"` with `aria-live="polite"` for non-critical status updates (like successful form submission) so they are announced at the next available pause without interrupting the user.
+
+## 2024-10-24 - Avoid Hidden Class with Flex on Mobile Layouts
+
+**Learning:** When trying to add CSS transitions to elements that are conditionally shown/hidden across breakpoints, using `hidden` and `md:flex` classes in Tailwind can cause layout regressions. If `hidden` is removed to apply a transition via opacity, the element will default to `block` on mobile (under `md`), breaking any flexbox layouts.
+**Action:** Retain `hidden md:flex` if the component should absolutely not render on mobile. If it must render on mobile for transition purposes, ensure you provide the base mobile layout classes (e.g., `flex md:flex`) and hide it via opacity/pointer-events instead of `display: none` to maintain layout structure. In cases where the element _should_ remain completely hidden on mobile but transition on desktop, keep `hidden md:flex` and use opacity/transform for the desktop states.
