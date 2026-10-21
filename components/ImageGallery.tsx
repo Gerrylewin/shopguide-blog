@@ -118,6 +118,7 @@ export default function ImageGallery({ images, alt = 'Gallery images' }: ImageGa
                   : 'bg-primary-500/30 hover:bg-primary-500/50 w-2'
               }`}
               aria-label={`Go to image ${index + 1}`}
+              aria-current={index === currentIndex ? 'true' : undefined}
             />
           ))}
         </div>

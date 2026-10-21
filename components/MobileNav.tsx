@@ -30,6 +30,7 @@ const MobileNav = () => {
     <>
       <button
         aria-label="Toggle Menu"
+        aria-expanded={navShow}
         onClick={onToggleNav}
         className="focus-visible:ring-primary-500 rounded-md focus-visible:ring-2 focus-visible:outline-none sm:hidden"
       >
