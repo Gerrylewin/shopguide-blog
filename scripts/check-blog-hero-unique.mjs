@@ -29,6 +29,14 @@ if (dupes.length) {
   for (const [id, fl] of dupes) {
     console.error(`  ${id}:\n    ${fl.join('\n    ')}`)
   }
+  console.error(
+    '\nEach post hero image (frontmatter `images:`) must use a unique Unsplash photo ID.\n' +
+      'Fix: give the new or changed post a different Unsplash photo ID that no other\n' +
+      'post uses in its frontmatter, then re-run this check:\n' +
+      '  node ./scripts/check-blog-hero-unique.mjs\n' +
+      'Note: this runs as a pre-build gate in the Vercel build, so a duplicate here\n' +
+      'fails the whole deploy even though the post itself looks fine.'
+  )
   process.exit(1)
 }
 

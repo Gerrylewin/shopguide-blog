@@ -121,6 +121,18 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the blog.
 
+### Contributing a blog post
+
+Before pushing a new or edited post, run the same two gates the Vercel build runs first:
+
+```bash
+yarn format
+node ./scripts/check-blog-hero-unique.mjs
+```
+
+- Every post hero image (frontmatter `images:`) must use a unique Unsplash photo ID. A duplicate ID fails the whole deploy, even if the post itself looks fine.
+- Open a pull request to `main` for every post branch. PR Checks runs both gates in GitHub Actions, where the log is readable; the Vercel failure email carries no log excerpt. Web/API pushes bypass the husky pre-commit hook, so do not rely on it alone.
+
 ### Important Documentation
 
 - 📘 **[Complete Setup & Configuration Guide](docs/SETUP.md)** - All setup instructions, environment variables, newsletter system, customizations, and troubleshooting
