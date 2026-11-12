@@ -48,7 +48,7 @@ export const footerColumns: FooterColumn[] = [
       { label: 'About the team', href: 'https://blog.yourshopguide.com/about' },
       {
         label: 'Free ShopGuide Demo',
-        href: `${shopStoreUrl}/pages/book-a-call`,
+        href: 'https://cal.com/noah-mueller/book-a-call',
       },
       {
         label: 'ShopGuide Tutorial [YouTube]',

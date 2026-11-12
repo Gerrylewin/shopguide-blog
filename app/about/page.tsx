@@ -12,7 +12,7 @@ const MIRRORED_IMAGE =
 const NOAH_LINKEDIN = 'https://www.linkedin.com/in/noah-m%C3%BCller-18684b311/'
 const NOAH_GITHUB = 'https://github.com/ChefNoah007'
 const NOAH_EMAIL = 'noah.mueller@yourshopguide.com'
-const NOAH_BOOKING = 'https://api.leadconnectorhq.com/widget/booking/HIMiIRSQCRrr1QBz2Ai7'
+const NOAH_BOOKING = 'https://cal.com/noah-mueller/book-a-call'
 
 export const metadata = genPageMetadata({ title: 'Team' })
 
