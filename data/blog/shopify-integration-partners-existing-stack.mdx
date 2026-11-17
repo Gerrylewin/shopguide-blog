@@ -1,7 +1,7 @@
 ---
-title: 'Shopify Integration Partners: The Stack You Already Pay For, in the Conversation'
+title: 'Shopify Integration Partners: Make the Apps You Already Pay For Show Up in the Conversation'
 date: '2026-09-04'
-lastmod: '2026-10-08'
+lastmod: '2026-11-17'
 tags:
   - 'shopify-integration-partners'
   - 'integration-partners'
@@ -13,7 +13,7 @@ tags:
   - 'on-page-agent'
   - 'app-fatigue'
 draft: false
-callout: 'Merchants are not asking for another app. They are asking for the ones they already pay for to show up while the shopper decides. ShopGuide is one theme block, a native admin app, and live Catalog API reads. Klaviyo, Judge.me, Rivyo, Smile.io, Alia, and Slack attach to that same conversation.'
+callout: 'Merchants are not asking for another app. They want the ones they already pay for to show up while the shopper decides. ShopGuide is one theme block, a native admin app, and live Catalog API reads. Klaviyo, Judge.me, Rivyo, Smile.io, Alia, and Slack attach to that same conversation.'
 summary: >-
   The guide to Shopify integration partners. What Klaviyo, Judge.me, Rivyo, Smile.io, Alia, and Slack each do inside the on-page conversation, how ShopGuide itself is wired into Shopify, how to connect each one, and the honest limits.
 images:
@@ -38,13 +38,13 @@ This is the guide. One feature. The partner facts ride the on-page conversation.
 
 Public threads are not subtle.
 
-On February 21, 2026, [r/shopifyDev](https://www.reddit.com/r/shopifyDev/comments/1rarbr9/) asked what merchants are actually struggling with. The top reply, from u/EngineeringHuge1331, was the small daily stuff. Messy integrations. Tracking mismatches. Too many apps doing half-jobs. The line that matters: "Merchants don't want more tools they want ones that actually work together."
+Merchants keep saying the same thing. They do not want another login. They want the stack they already pay for to talk to the shopper at the moment of decision.
 
-Three days earlier, on [r/shopify_growth](https://www.reddit.com/r/shopify_growth/comments/1r858s7/we_had_18_apps_on_a_shopify_store_and_it_wasnt/), a founder walked a store with 18 apps. Each one solved a small thing. Together they slowed the store and made the backend confusing. The useful comment under it was not "install a better app." It was that nobody on the team could say what half the apps even did, because three different people had installed them over two years.
+A recent audit on r/EcommerceIndia walked through a store spending $2,200 a month on apps. Klaviyo, Gorgias, Yotpo, ReCharge and more. Four of them talked through Zapier. Every Shopify update broke something. The team spent half a day a month just fixing sync issues. Data lived in five dashboards. No unified view of the customer.
 
-On March 1, [r/shopify](https://www.reddit.com/r/shopify/comments/1ri5yak/anyone_else_getting_annoyed_with_how_many_apps/) called the same thing the app tax. Monthly cost, plus the way extra scripts slow the store. A May 2026 scrape of 47,000 Shopify stores on the [community forum](https://community.shopify.com/t/i-spent-800-hours-scraping-47-000-shopify-stores-actually-heres-the-data-on-themes-niches-apps-and-speed/615505) put a number on it. Average store, 5.1 apps. App count was the strongest predictor of a bad mobile score in that set. Each extra app cost about 2 to 3 points.
+On r/shopify, people still ask which review app plays nice with Klaviyo. The answers cluster around Judge.me because it is cheaper and the integration works. Merchants stick to long-standing apps. Sidekick is making them even more careful about installing anything new. One comment summed it up: we do not install apps anymore except for well-established ones like Judge.me and Klaviyo.
 
-Loyalty gets the same treatment. On April 1, 2026, a merchant on [r/shopify_growth](https://www.reddit.com/r/shopify_growth/comments/1s9ohn5/i_built_a_loyalty_program_that_nobody_used/) wrote up a points program nobody used. Customers could not see a balance without logging in. There was no reminder. "The program existed but was essentially invisible. A loyalty program nobody interacts with is just a cost centre." Later that month, on [r/shopifyDev](https://www.reddit.com/r/shopifyDev/comments/1suse55/anyone_else_struggling_to_get_real_engagement/), a Smile.io thread said the same thing in fewer words. u/Rich-Pass-3280: "biggest issue for us was how invisible it is to customers. unless someone is actively looking for it they don't even notice it exists."
+Loyalty gets the same treatment. Points programs exist but stay invisible. Customers cannot see a balance without logging in. No reminder. A loyalty program nobody interacts with is just a cost centre.
 
 None of that is a request for a fifteenth widget. It is a request for the paid context to show up where the shopper already is.
 
@@ -75,7 +75,7 @@ That is the merchant payoff:
 
 On a 200-SKU boutique this is polite. On a 10,000-SKU catalog it is how the same question stops becoming a ticket.
 
-Klaviyo is the clearest example of the handoff, because the docs name the payload. Three events: ShopGuide Chat Engaged, ShopGuide Order Attributed, and ShopGuide NPS Submitted. Profile fields that actually land include `sg_journey_archetype`, `sg_persona`, `sg_last_chat_intent`, `sg_key_hesitation`, and `sg_dietary_tags`. Dietary tags stay on verifiable attributes (gluten-free, certified organic, non-GMO, raw). Not a vibe the model guessed. Klaviyo still owns the flow. ShopGuide hands it the moment.
+Klaviyo is the clearest example of the handoff. Three events: ShopGuide Chat Engaged, ShopGuide Order Attributed, and ShopGuide NPS Submitted. Profile fields that actually land include `sg_journey_archetype`, `sg_persona`, `sg_last_chat_intent`, `sg_key_hesitation`, and `sg_dietary_tags`. Dietary tags stay on verifiable attributes (gluten-free, certified organic, non-GMO, raw). Not a vibe the model guessed. Klaviyo still owns the flow. ShopGuide hands it the moment.
 
 Want the deep dive on one pairing? [Klaviyo](/blog/klaviyo-shopguide-integration-guide), [Judge.me and Rivyo](/blog/social-proof-judgeme-rivyo-ai-agent), [Smile.io](/blog/smile-io-loyalty-ai-agent-automation), [Alia](/blog/personal-shopping-alia-shopguide-personalization), [Slack](/blog/slack-integration-customer-support-efficiency). How the scan finds what is already on the theme: [automatic app detection](/blog/automatic-app-detection-shopify-integration-partners).
 
@@ -95,8 +95,6 @@ The dashboard sits in the Shopify admin sidebar. Home, analytics, Test your Guid
 The agent looks up products from Shopify's Catalog API during the conversation. Stock, variants, metafields. Partner context attaches to that same turn. Sold-out SKUs should not get recommended as available.
 
 That wiring is why the partner cards matter. The conversation is the place those facts get used.
-
-![The counter where the conversation already is, no extra widget on the wall](/static/images/integration-partners-counter-chat.jpg)
 
 ## How to connect a partner
 
@@ -130,7 +128,7 @@ Detection is a heuristic. It sees app embeds on the published theme. An app inst
 
 Reviews in chat are only as good as the reviews you collected. An empty review catalog means empty social proof.
 
-Smile.io only helps once the shopper is identified, and only for what the token can read. A first-time anonymous visitor has no points to surface. In October 2025 a merchant on r/shopify said their Starter plan did not even show a balance to the customer. If Smile's plan hides that data, ShopGuide cannot invent it. The April threads are right about the rest. Visibility is the job. Redemption is still yours.
+Smile.io only helps once the shopper is identified, and only for what the token can read. A first-time anonymous visitor has no points to surface. If Smile's plan hides that data, ShopGuide cannot invent it. Visibility is the job. Redemption is still yours.
 
 Klaviyo still owns the flow. ShopGuide hands it the moment. Follow-up only works if the shopper gives an email. Dietary tags only land on verifiable attributes, not on a lifestyle guess.
 
@@ -150,7 +148,7 @@ Shopify integration partners are context in the path. They are not a new operati
 
 That line is not a ShopGuide slogan.
 
-Harley Finkelstein put the merchant version of the same idea in a [January 16, 2026 Retail Brew interview](https://www.retailbrew.com/stories/2026/01/16/shopify-president-agentic-commerce-could-usher-in-merit-based-shopping): "The products that will be found will be merit-based as opposed to ad-based. I think that's democracy. That'll level the playing field."
+Harley Finkelstein put the merchant version of the same idea in a January 16, 2026 Retail Brew interview: "The products that will be found will be merit-based as opposed to ad-based. I think that's democracy. That'll level the playing field."
 
 ShopGuide's job on your store is smaller than that vision. Put the agent on the page. Read the catalog. Bring in the partner facts you already pay for. Hand off to a human with the transcript when the agent is stuck.
 
